@@ -1,0 +1,32 @@
+{
+  "name": "generator-theia-extension",
+  "version": "0.1.0",
+  "description": "Helps to setup the project structure for developing extensions to the Theia IDE",
+  "repository": {
+    "type": "git",
+    "url": "generator-theia-extension"
+  },
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "TypeFox",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "yeoman-generator": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/yeoman-generator": "^1.0.3",
+    "rimraf": "^2.6.1",
+    "typescript": "^2.5.2"
+  },
+  "files": [
+    "generators",
+    "templates"
+  ],
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib",
+    "build": "tsc",
+    "watch": "tsc -w"
+  }
+}

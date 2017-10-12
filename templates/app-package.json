@@ -1,0 +1,30 @@
+{
+  "name": "<%= appMode %>-app",
+  "version": "<%= params.version %>",
+  "dependencies": {
+    "@theia/core": "<%= params.theiaVersion %>",
+    "@theia/filesystem": "<%= params.theiaVersion %>",
+    "@theia/workspace": "<%= params.theiaVersion %>",
+    "@theia/preferences": "<%= params.theiaVersion %>",
+    "@theia/navigator": "<%= params.theiaVersion %>",
+    "@theia/process": "<%= params.theiaVersion %>",
+    "@theia/terminal": "<%= params.theiaVersion %>",
+    "@theia/editor": "<%= params.theiaVersion %>",
+    "@theia/languages": "<%= params.theiaVersion %>",
+    "@theia/markers": "<%= params.theiaVersion %>",
+    "@theia/monaco": "<%= params.theiaVersion %>",
+    "@theia/typescript": "<%= params.theiaVersion %>",
+    "<%= params.extensionName %>-extension": "<%= params.version %>"
+  },
+  "devDependencies": {
+    "@theia/cli": "<%= params.theiaVersion %>"
+  },
+  "scripts": {
+    "prepare": "theia generate --target=<%= appMode %> && theia build",    
+    "start": "theia start",
+    "watch": "theia build --watch"
+  },
+  "theia": {
+    "target": "<%= appMode %>"
+  }
+}

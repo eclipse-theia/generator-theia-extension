@@ -1,0 +1,14 @@
+{
+    "private": true,
+    "scripts": {
+      "prepare": "lerna run prepare",
+      "rebuild:browser": "theia rebuild --target=browser",
+      "rebuild:electron": "theia rebuild --target=electron"
+    },
+    "devDependencies": {
+      "lerna": "<%= params.lernaVersion %>"
+    },
+    "workspaces": [
+      "<%= params.extensionName %>-extension"<% if (params.browser) { %>, "browser-app"<% } %><% if (params.electron) { %>, "electron-app"<% } %>
+    ]
+  }
