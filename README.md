@@ -1,5 +1,5 @@
 # generator-theia-extension
-A Yeoman generator that scaffolds a project for an extensions to the Theia IDE.
+A [Yeoman](yeoman.io) generator that scaffolds a project for an extensions to the [Theia IDE](https://github.com/theia-ide/theia).
 
 To use it, install yo
 
@@ -7,7 +7,7 @@ To use it, install yo
 npm install -g yo
 ```
 
-To create a sample project with a Theia extension, a browser app and an eletorn app, run
+To create a sample project with a Theia extension, a browser app and an electron app, run
 
 ```
 mkdir my-extension
