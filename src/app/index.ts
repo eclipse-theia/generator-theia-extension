@@ -89,7 +89,8 @@ module.exports = class TheiaExtension extends Base {
     configuring() {
         const options = this.options as any
         const extensionName = options.extensionName as string
-        const extensionPrefix = extensionName.substring(0, 1).toUpperCase() + extensionName.substring(1)
+        const extensionPrefix = extensionName.split('-').map(name => this._capitalize(name)).join('');
+        this.log(extensionPrefix)
         this.params = {
             author: options.author,
             version: options.version,
@@ -153,5 +154,9 @@ module.exports = class TheiaExtension extends Base {
 
     install() {
         this.spawnCommand('yarn', []);
+    }
+
+    private _capitalize(name: string): string {
+        return name.substring(0, 1).toUpperCase() + name.substring(1)
     }
 }
