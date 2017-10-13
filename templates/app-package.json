@@ -20,7 +20,7 @@
     "@theia/cli": "<%= params.theiaVersion %>"
   },
   "scripts": {
-    "prepare": "theia generate --target=<%= appMode %> && theia build",    
+    "prepare": "theia build",    
     "start": "theia start",
     "watch": "theia build --watch"
   },
