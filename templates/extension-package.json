@@ -35,10 +35,6 @@
     "build": "tsc",
     "watch": "tsc -w"
   },
-  "devDependencies": {
-    "rimraf": "latest",
-    "typescript": "latest"
-  },
   "theiaExtensions": [
     {
       "frontend": "lib/browser/<%= params.extensionName %>-frontend-module"
