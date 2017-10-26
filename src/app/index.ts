@@ -39,7 +39,7 @@ module.exports = class TheiaExtension extends Base {
             alias: 'v',
             description: 'The extension\'s version',
             type: String,
-            default: '0.1.0'
+            default: '0.0.0'
         });
         this.option('description', {
             alias: 'd',
