@@ -1,5 +1,5 @@
 import { injectable, inject } from "inversify";
-import { CommandContribution, CommandRegistry, MenuContribution, MenuModelRegistry, MAIN_MENU_BAR, MessageService } from "@theia/core/lib/common";
+import { CommandContribution, CommandRegistry, MenuContribution, MenuModelRegistry, MessageService } from "@theia/core/lib/common";
 import { CommonMenus } from "@theia/core/lib/browser";
 
 export const <%= params.extensionPrefix %>Command = {
@@ -15,13 +15,8 @@ export class <%= params.extensionPrefix %>CommandContribution implements Command
     ) { }
 
     registerCommands(registry: CommandRegistry): void {
-        registry.registerCommand(<%= params.extensionPrefix %>Command);
-        registry.registerHandler(<%= params.extensionPrefix %>Command.id, {
-            execute: (): any => {
-                this.messageService.info('Hello World!');
-                return null;
-            },
-            isEnabled: () => true
+        registry.registerCommand(<%= params.extensionPrefix %>Command, {
+            execute: () => this.messageService.info('Hello World!')
         });
     }
 }
@@ -30,13 +25,9 @@ export class <%= params.extensionPrefix %>CommandContribution implements Command
 export class <%= params.extensionPrefix %>MenuContribution implements MenuContribution {
 
     registerMenus(menus: MenuModelRegistry): void {
-        menus.registerMenuAction([
-            MAIN_MENU_BAR,
-            CommonMenus.EDIT_MENU,
-            CommonMenus.EDIT_MENU_FIND_REPLACE_GROUP
-        ], {
-                commandId: <%= params.extensionPrefix %>Command.id,
-                label: 'Say Hello'
-            });
+        menus.registerMenuAction(CommonMenus.EDIT_FIND, {
+            commandId: <%= params.extensionPrefix %>Command.id,
+            label: 'Say Hello'
+        });
     }
 }
