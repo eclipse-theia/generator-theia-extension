@@ -29,6 +29,12 @@ module.exports = class TheiaExtension extends Base {
             type: Boolean, 
             default: true
         });
+        this.option('vscode', {
+            alias: 'c',
+            description: 'Generate VS Code configs',
+            type: Boolean, 
+            default: true
+        })
 
         this.option('author', {
             alias: 'a',
@@ -132,6 +138,13 @@ module.exports = class TheiaExtension extends Base {
             this.destinationPath('README.md'),
             { params: this.params }
         )
+        if (this.params.vscode) {
+            this.fs.copyTpl(
+                this.templatePath('launch.json'),
+                this.destinationPath('.vscode/launch.json'),
+                { params: this.params }
+            )
+        }
 
         this.fs.copyTpl(
             this.templatePath('extension-package.json'),
