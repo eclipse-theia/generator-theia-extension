@@ -2,7 +2,20 @@ import Base = require('yeoman-generator');
 
 module.exports = class TheiaExtension extends Base {
 
-    params: any;
+    params: {
+        author: string
+        version: string
+        license: string
+        extensionName: string
+        githubURL: string
+        extensionPrefix: string
+        example: boolean
+        browser: boolean
+        electron: boolean
+        vscode: boolean
+        theiaVersion: string
+        lernaVersion: string
+    };
 
     constructor(args: string | string[], options: any) {
         super(args, options);
@@ -107,8 +120,9 @@ module.exports = class TheiaExtension extends Base {
             example: options.example,
             browser: options.browser,
             electron: options.electron,
+            vscode: options.vscode,
             theiaVersion: options["theia-version"],
-            lernaVersion: options["lerna-version"]
+            lernaVersion: options["lerna-version"],
         }
         options.params = this.params
         if ((this.options as any).browser)
