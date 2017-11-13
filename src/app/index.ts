@@ -67,7 +67,7 @@ module.exports = class TheiaExtension extends Base {
             alias: 't',
             description: 'The verision of Theia to use',
             type: String,
-            default: 'next'
+            default: 'latest'
         });
         this.option('lerna-version', {
             description: 'The verision of lerna to use',
