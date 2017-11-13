@@ -127,6 +127,11 @@ module.exports = class TheiaExtension extends Base {
             this.destinationPath('.gitignore'),
             { params: this.params }
         );
+        this.fs.copyTpl(
+            this.templatePath('README.md'),
+            this.destinationPath('README.md'),
+            { params: this.params }
+        )
 
         this.fs.copyTpl(
             this.templatePath('extension-package.json'),
