@@ -29,6 +29,10 @@
   "dependencies": {
     "@theia/core": "<%= params.theiaVersion %>"
   },
+  "devDependencies": {
+    "rimraf": "latest",
+    "typescript": "latest"
+  },
   "scripts": {
     "prepare": "yarn run clean && yarn run build",
     "clean": "rimraf lib",

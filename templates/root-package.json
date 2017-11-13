@@ -6,9 +6,7 @@
     "rebuild:electron": "theia rebuild:electron"
   },
   "devDependencies": {
-    "lerna": "<%= params.lernaVersion %>",
-    "rimraf": "latest",
-    "typescript": "latest"
+    "lerna": "<%= params.lernaVersion %>"
   },
   "workspaces": [
     "<%= params.extensionName %>-extension"<% if (params.browser) { %>, "browser-app"<% } %><% if (params.electron) { %>, "electron-app"<% } %>
