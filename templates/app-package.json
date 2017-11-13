@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "<%= appMode %>-app",
   "version": "<%= params.version %>",
   "dependencies": {
