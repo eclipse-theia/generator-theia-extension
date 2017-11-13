@@ -1,5 +1,5 @@
-# generator-theia-extension
-A [Yeoman](yeoman.io) generator that scaffolds a project for an extensions to the [Theia IDE](https://github.com/theia-ide/theia).
+# Theia extension generator
+A [Yeoman](yeoman.io) generator that scaffolds a project structure for developing extensions to the [Theia IDE](https://github.com/theia-ide/theia).
 
 To use it, install yo and then generator
 
@@ -18,3 +18,7 @@ For configuration options, see
 ```
 yo theia-extension --help 
 ```
+
+## License
+
+[Apache-2.0](LICENSE)

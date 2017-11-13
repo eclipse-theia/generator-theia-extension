@@ -4,8 +4,12 @@
   "description": "Helps to setup the project structure for developing extensions to the Theia IDE",
   "repository": {
     "type": "git",
-    "url": "generator-theia-extension"
+    "url": "https://github.com/theia-ide/generator-theia-extension"
   },
+  "bugs": {
+    "url": "https://github.com/theia-ide/generator-theia-extension/issues"
+  },
+  "homepage": "https://github.com/theia-ide/generator-theia-extension",
   "keywords": [
     "yeoman-generator"
   ],
