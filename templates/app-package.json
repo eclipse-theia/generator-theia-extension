@@ -15,6 +15,7 @@
     "@theia/markers": "<%= params.theiaVersion %>",
     "@theia/monaco": "<%= params.theiaVersion %>",
     "@theia/typescript": "<%= params.theiaVersion %>",
+    "@theia/messages": "<%= params.theiaVersion %>",
     "<%= params.extensionName %>-extension": "<%= params.version %>"
   },
   "devDependencies": {
