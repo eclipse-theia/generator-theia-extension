@@ -1,4 +1,4 @@
-# Hello World Extension Example
+# <%= params.extensionName %>-extension
 The example of how to build the Theia-based applications with the <%= params.extensionName %>-extension.
 
 ## Getting started
@@ -32,7 +32,7 @@ Open http://localhost:3000 in the browser.
 
 ## Developing with the browser example
 
-Start watching of the hello world extension.
+Start watching of <%= params.extensionName %>-extension.
 
     cd <%= params.extensionName %>-extension
     yarn watch
@@ -49,7 +49,7 @@ Open http://localhost:3000 in the browser.
 
 ## Developing with the Electron example
 
-Start watching of the hello world extension.
+Start watching of <%= params.extensionName %>-extension.
 
     cd <%= params.extensionName %>-extension
     yarn watch
