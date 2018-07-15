@@ -1,3 +1,4 @@
+import path = require('path');
 import Base = require('yeoman-generator');
 
 module.exports = class TheiaExtension extends Base {
@@ -7,8 +8,10 @@ module.exports = class TheiaExtension extends Base {
         version: string
         license: string
         extensionName: string
+        unscopedExtensionName: string
         githubURL: string
         extensionPrefix: string
+        extensionPath: string
         example: boolean
         browser: boolean
         electron: boolean
@@ -39,13 +42,13 @@ module.exports = class TheiaExtension extends Base {
         this.option('example', {
             alias: 'x',
             description: 'Generate an example contribution',
-            type: Boolean, 
+            type: Boolean,
             default: true
         });
         this.option('vscode', {
             alias: 'c',
             description: 'Generate VS Code configs',
-            type: Boolean, 
+            type: Boolean,
             default: true
         })
 
@@ -108,19 +111,18 @@ module.exports = class TheiaExtension extends Base {
     configuring() {
         const options = this.options as any
         const extensionName = options.extensionName as string
-        const extensionPrefix = extensionName.split('-').map(name => this._capitalize(name)).join('');
+        const unscopedExtensionName = extensionName[0] === '@' ?
+            extensionName.substring(extensionName.indexOf('/') + 1) :
+            extensionName;
+        const extensionPath = path.normalize(unscopedExtensionName).replace('/', '-');
+        const extensionPrefix = extensionPath.split('-').map(name => this._capitalize(name)).join('');
         this.log(extensionPrefix)
         this.params = {
-            author: options.author,
-            version: options.version,
-            license: options.license,
-            extensionName: extensionName,
-            githubURL: options.githubURL,
-            extensionPrefix: extensionPrefix,
-            example: options.example,
-            browser: options.browser,
-            electron: options.electron,
-            vscode: options.vscode,
+            ...options,
+            extensionName,
+            unscopedExtensionName,
+            extensionPath,
+            extensionPrefix,
             theiaVersion: options["theia-version"],
             lernaVersion: options["lerna-version"],
         }
@@ -162,26 +164,30 @@ module.exports = class TheiaExtension extends Base {
 
         this.fs.copyTpl(
             this.templatePath('extension-package.json'),
-            this.destinationPath(this.params.extensionName + '-extension/package.json'),
+            this.extensionPath('package.json'),
             { params: this.params }
         );
         this.fs.copyTpl(
             this.templatePath('tsconfig.json'),
-            this.destinationPath(this.params.extensionName + '-extension/tsconfig.json'),
+            this.extensionPath('tsconfig.json'),
             { params: this.params }
         );
         this.fs.copyTpl(
             this.templatePath('frontend-module.ts'),
-            this.destinationPath(this.params.extensionName + '-extension/src/browser/' + this.params.extensionName + '-frontend-module.ts'),
+            this.extensionPath('src/browser/' + this.params.extensionPath + '-frontend-module.ts'),
             { params: this.params }
         );
         if (this.params.example) {
             this.fs.copyTpl(
                 this.templatePath('contribution.ts'),
-                this.destinationPath(this.params.extensionName + '-extension/src/browser/' + this.params.extensionName + '-contribution.ts'),
+                this.extensionPath('src/browser/' + this.params.extensionPath + '-contribution.ts'),
                 { params: this.params }
             );
         }
+    }
+
+    protected extensionPath(...paths: string[]) {
+        return this.destinationPath(this.params.extensionPath, ...paths);
     }
 
     install() {

@@ -1,5 +1,5 @@
 {
-  "name": "<%= params.extensionName %>-extension",
+  "name": "<%= params.extensionName %>",
   "keywords": [
     "theia-extension"
   ],
@@ -41,7 +41,7 @@
   },
   "theiaExtensions": [
     {
-      "frontend": "lib/browser/<%= params.extensionName %>-frontend-module"
+      "frontend": "lib/browser/<%= params.extensionPath %>-frontend-module"
     }
   ]
 }

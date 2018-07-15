@@ -1,5 +1,5 @@
-# <%= params.extensionName %>-extension
-The example of how to build the Theia-based applications with the <%= params.extensionName %>-extension.
+# <%= params.extensionName %>
+The example of how to build the Theia-based applications with the <%= params.extensionName %>.
 
 ## Getting started
 
@@ -32,9 +32,9 @@ Open http://localhost:3000 in the browser.
 
 ## Developing with the browser example
 
-Start watching of <%= params.extensionName %>-extension.
+Start watching of <%= params.extensionName %>.
 
-    cd <%= params.extensionName %>-extension
+    cd <%= params.extensionPath %>
     yarn watch
 
 Start watching of the browser example.
@@ -49,9 +49,9 @@ Open http://localhost:3000 in the browser.
 
 ## Developing with the Electron example
 
-Start watching of <%= params.extensionName %>-extension.
+Start watching of <%= params.extensionName %>.
 
-    cd <%= params.extensionName %>-extension
+    cd <%= params.extensionPath %>
     yarn watch
 
 Start watching of the electron example.
@@ -62,7 +62,7 @@ Start watching of the electron example.
 
 Launch `Start Electron Backend` configuration from VS code.
 
-## Publishing <%= params.extensionName %>-extension
+## Publishing <%= params.extensionName %>
 
 Create a npm user and login to the npm registry, [more on npm publishing](https://docs.npmjs.com/getting-started/publishing-npm-packages).
 
