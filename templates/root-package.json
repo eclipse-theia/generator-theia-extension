@@ -9,6 +9,6 @@
     "lerna": "<%= params.lernaVersion %>"
   },
   "workspaces": [
-    "<%= params.extensionName %>-extension"<% if (params.browser) { %>, "browser-app"<% } %><% if (params.electron) { %>, "electron-app"<% } %>
+    "<%= params.extensionPath %>"<% if (params.browser) { %>, "browser-app"<% } %><% if (params.electron) { %>, "electron-app"<% } %>
   ]
 }

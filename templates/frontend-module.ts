@@ -2,7 +2,7 @@
  * Generated using theia-extension-generator
  */
 <% if (params.example) { %>
-import { <%= params.extensionPrefix %>CommandContribution, <%= params.extensionPrefix %>MenuContribution } from './<%= params.extensionName %>-contribution';
+import { <%= params.extensionPrefix %>CommandContribution, <%= params.extensionPrefix %>MenuContribution } from './<%= params.extensionPath %>-contribution';
 import {
     CommandContribution,
     MenuContribution

@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
       "strict": true,
+      "strictPropertyInitialization": false,
       "experimentalDecorators": true,
       "noUnusedLocals": true,
       "emitDecoratorMetadata": true,
