@@ -102,7 +102,7 @@ module.exports = class TheiaExtension extends Base {
                 type: 'input',
                 name: 'name',
                 message: "The extension's name",
-                default: this.appname // Default to current folder name
+                default: path.parse(process.cwd()).name
             }]).then((answers) => {
                 (this.options as any).extensionName = answers.name
             });
