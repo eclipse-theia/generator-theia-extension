@@ -10,7 +10,7 @@ npm install -g yo generator-theia-extension
 To create a sample project with a Theia extension, a browser app and an electron app, run
 
 ```
-mkdir my-extension
+mkdir my-extension && cd my-extension
 yo theia-extension
 ```
 
