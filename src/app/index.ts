@@ -8,6 +8,7 @@ module.exports = class TheiaExtension extends Base {
         version: string
         license: string
         extensionName: string
+        extensionType: number
         unscopedExtensionName: string
         githubURL: string
         extensionPrefix: string
@@ -103,8 +104,18 @@ module.exports = class TheiaExtension extends Base {
                 name: 'name',
                 message: "The extension's name",
                 default: path.parse(process.cwd()).name
+            },
+            {
+                type: 'list',
+                name: 'type',
+                message: "The extension's type",
+                choices: [
+                    { value: 1, name: 'hello-world' },
+                    { value: 2, name: 'widget' }
+                ]
             }]).then((answers) => {
-                (this.options as any).extensionName = answers.name
+                (this.options as any).extensionName = answers.name;
+                (this.options as any).extensionType = answers['type'];
             });
     }
 
@@ -116,6 +127,7 @@ module.exports = class TheiaExtension extends Base {
             extensionName;
         const extensionPath = path.normalize(unscopedExtensionName).replace('/', '-');
         const extensionPrefix = extensionPath.split('-').map(name => this._capitalize(name)).join('');
+        const extensionType = options.extensionType as number;
         this.log(extensionPrefix)
         this.params = {
             ...options,
@@ -123,6 +135,7 @@ module.exports = class TheiaExtension extends Base {
             unscopedExtensionName,
             extensionPath,
             extensionPrefix,
+            extensionType,
             theiaVersion: options["theia-version"],
             lernaVersion: options["lerna-version"],
         }
@@ -134,6 +147,7 @@ module.exports = class TheiaExtension extends Base {
     }
 
     writing() {
+        /** common templates */
         this.fs.copyTpl(
             this.templatePath('root-package.json'),
             this.destinationPath('package.json'),
@@ -161,7 +175,6 @@ module.exports = class TheiaExtension extends Base {
                 { params: this.params }
             )
         }
-
         this.fs.copyTpl(
             this.templatePath('extension-package.json'),
             this.extensionPath('package.json'),
@@ -172,18 +185,49 @@ module.exports = class TheiaExtension extends Base {
             this.extensionPath('tsconfig.json'),
             { params: this.params }
         );
-        this.fs.copyTpl(
-            this.templatePath('frontend-module.ts'),
-            this.extensionPath('src/browser/' + this.params.extensionPath + '-frontend-module.ts'),
-            { params: this.params }
-        );
-        if (this.params.example) {
+
+        /** hello-world */
+        if (this.params.extensionType === 1) {
             this.fs.copyTpl(
-                this.templatePath('contribution.ts'),
-                this.extensionPath('src/browser/' + this.params.extensionPath + '-contribution.ts'),
+                this.templatePath('hello-world/frontend-module.ts'),
+                this.extensionPath('src/browser/' + this.params.extensionPath + '-frontend-module.ts'),
                 { params: this.params }
             );
+            if (this.params.example) {
+                this.fs.copyTpl(
+                    this.templatePath('hello-world/contribution.ts'),
+                    this.extensionPath('src/browser/' + this.params.extensionPath + '-contribution.ts'),
+                    { params: this.params }
+                );
+            }
         }
+
+        /** widget */
+        if (this.params.extensionType === 2) {
+            this.fs.copyTpl(
+                this.templatePath('widget/frontend-module.ts'),
+                this.extensionPath('src/browser/' + this.params.extensionPath + '-frontend-module.ts'),
+                { params: this.params }
+            );
+            if (this.params.example) {
+                this.fs.copyTpl(
+                    this.templatePath('widget/contribution.ts'),
+                    this.extensionPath('src/browser/' + this.params.extensionPath + '-contribution.ts'),
+                    { params: this.params }
+                );
+                this.fs.copyTpl(
+                    this.templatePath('widget/widget.tsx'),
+                    this.extensionPath('src/browser/' + this.params.extensionPath + '-widget.tsx'),
+                    { params: this.params }
+                );
+                this.fs.copyTpl(
+                    this.templatePath('widget/index.css'),
+                    this.extensionPath('src/browser/style/index.css'),
+                    { params: this.params }
+                );
+            }
+        }
+
     }
 
     protected extensionPath(...paths: string[]) {
