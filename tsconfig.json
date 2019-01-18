@@ -5,6 +5,7 @@
       "experimentalDecorators": true,
       "noUnusedLocals": true,
       "emitDecoratorMetadata": true,
+      "skipLibCheck": true,
       "downlevelIteration": true,
       "module": "commonjs",
       "moduleResolution": "node",
