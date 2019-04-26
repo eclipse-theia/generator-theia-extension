@@ -14,6 +14,7 @@
     "@theia/languages": "<%= params.theiaVersion %>",
     "@theia/markers": "<%= params.theiaVersion %>",
     "@theia/monaco": "<%= params.theiaVersion %>",
+    "@theia/textmate-grammars": "<%= params.theiaVersion %>",
     "@theia/typescript": "<%= params.theiaVersion %>",
     "@theia/messages": "<%= params.theiaVersion %>",
     "<%= params.extensionName %>": "<%= params.version %>"
@@ -22,7 +23,7 @@
     "@theia/cli": "<%= params.theiaVersion %>"
   },
   "scripts": {
-    "prepare": "theia build --mode development",    
+    "prepare": "theia build --mode development",
     "start": "theia start",
     "watch": "theia build --watch --mode development"
   },
