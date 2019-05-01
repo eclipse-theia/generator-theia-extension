@@ -8,7 +8,7 @@ module.exports = class TheiaBrowser extends Base {
 
     writing() {
         this.fs.copyTpl(
-            this.templatePath('app-package.json'),
+            this.templatePath('app-browser-package.json'),
             this.destinationPath('browser-app/package.json'),
             {
                 appMode: 'browser',

@@ -1,0 +1,34 @@
+{
+  "private": true,
+  "name": "<%= appMode %>-app",
+  "version": "<%= params.version %>",
+  "dependencies": {
+    "@theia/core": "<%= params.theiaVersion %>",
+    "@theia/filesystem": "<%= params.theiaVersion %>",
+    "@theia/workspace": "<%= params.theiaVersion %>",
+    "@theia/preferences": "<%= params.theiaVersion %>",
+    "@theia/navigator": "<%= params.theiaVersion %>",
+    "@theia/process": "<%= params.theiaVersion %>",
+    "@theia/terminal": "<%= params.theiaVersion %>",
+    "@theia/editor": "<%= params.theiaVersion %>",
+    "@theia/languages": "<%= params.theiaVersion %>",
+    "@theia/markers": "<%= params.theiaVersion %>",
+    "@theia/monaco": "<%= params.theiaVersion %>",
+    "@theia/textmate-grammars": "<%= params.theiaVersion %>",
+    "@theia/typescript": "<%= params.theiaVersion %>",
+    "@theia/messages": "<%= params.theiaVersion %>",
+    "@theia/electron": "<%= params.theiaVersion %>",
+    "<%= params.extensionName %>": "<%= params.version %>"
+  },
+  "devDependencies": {
+    "@theia/cli": "<%= params.theiaVersion %>"
+  },
+  "scripts": {
+    "prepare": "theia build --mode development",
+    "start": "theia start",
+    "watch": "theia build --watch --mode development"
+  },
+  "theia": {
+    "target": "<%= appMode %>"
+  }
+}
