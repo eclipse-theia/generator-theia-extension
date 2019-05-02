@@ -8,7 +8,7 @@ module.exports = class TheiaElectron extends Base {
 
     writing() {
         this.fs.copyTpl(
-            this.templatePath('app-package.json'),
+            this.templatePath('app-electron-package.json'),
             this.destinationPath('electron-app/package.json'),
             { 
                 appMode: 'electron',
