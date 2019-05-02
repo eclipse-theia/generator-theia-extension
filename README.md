@@ -1,6 +1,6 @@
 <div align='center'>
 <br />
-<img src='./logo/theia.svg' alt='theia logo' width='125'>
+<img src='https://raw.githubusercontent.com/theia-ide/generator-theia-extension/master/logo/theia.svg?sanitize=true' alt='theia logo' width='125'>
 
 <h2>THEIA - EXTENSION GENERATOR</h2>
 
@@ -29,7 +29,7 @@ yo theia-extension
 For configuration options, see
 
 ```
-yo theia-extension --help 
+yo theia-extension --help
 ```
 
 
