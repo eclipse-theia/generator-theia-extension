@@ -127,7 +127,10 @@ module.exports = class TheiaExtension extends Base {
             extensionName;
         const extensionPath = path.normalize(unscopedExtensionName).replace('/', '-');
         const extensionPrefix = extensionPath.split('-').map(name => this._capitalize(name)).join('');
-        const extensionType = options.extensionType as number;
+        let extensionType = options.extensionType as number;
+        if(extensionType === undefined) {
+            extensionType = 1;
+        }
         this.log(extensionPrefix)
         this.params = {
             ...options,
