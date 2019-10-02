@@ -1,6 +1,6 @@
 {
   "name": "generator-theia-extension",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Helps to setup the project structure for developing extensions to the Theia IDE",
   "repository": {
     "type": "git",
