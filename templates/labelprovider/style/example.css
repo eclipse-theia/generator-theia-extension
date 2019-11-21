@@ -1,0 +1,12 @@
+.my-icon {
+    background-repeat: no-repeat;
+    background-size: 12px;
+    width: 15px;
+    height: 10px;
+}
+.light-plus .my-icon{
+    background-image: url('./baseline_code_black_18dp.png');
+}
+.dark-plus .my-icon{
+    background-image: url('./baseline_code_white_18dp.png');
+}
