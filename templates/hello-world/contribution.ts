@@ -4,7 +4,7 @@ import { CommonMenus } from "@theia/core/lib/browser";
 
 export const <%= params.extensionPrefix %>Command = {
     id: '<%= params.extensionPrefix %>.command',
-    label: "Shows a message"
+    label: "Say Hello"
 };
 
 @injectable()
@@ -27,7 +27,7 @@ export class <%= params.extensionPrefix %>MenuContribution implements MenuContri
     registerMenus(menus: MenuModelRegistry): void {
         menus.registerMenuAction(CommonMenus.EDIT_FIND, {
             commandId: <%= params.extensionPrefix %>Command.id,
-            label: 'Say Hello'
+            label: <%= params.extensionPrefix %>Command.label
         });
     }
 }
