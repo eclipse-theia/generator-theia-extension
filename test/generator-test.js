@@ -97,7 +97,37 @@ describe('test extension generation', function () {
                 }
             }, done);
     });
+    it('generate the empty extension', function (done) {
+        const name = 'empty-template-test';
+        helpers.run(path.join(__dirname, '../generators/app'))
+            .withPrompts({
+                type: 'empty',
+                name
+            })
+            .withOptions({
+                skipInstall: true
+            })
+            .toPromise().then(function () {
+                try {
+                    assert.file([
+                        'package.json',
+                        'README.md',
+                        `${name}/src/browser/${name}-contribution.ts`,
+                        `${name}/src/browser/${name}-frontend-module.ts`,
+                    ]);
+    
+                    var body = fs.readFileSync(`${name}/package.json`, 'utf8');
+                    var actual = JSON.parse(body);
+                    assert.equal(actual.name, name);
+                    done();
+                } catch (e) {
+                    done(e);
+                }
+            }, done);
+    });
+    
 });
+
 
 describe('test extension generation parameter', function () {
     this.timeout(10000);
@@ -153,20 +183,17 @@ describe('test extension generation parameter', function () {
     it('should not add files, that should not be added', function (done) {
         const name = 'no-file-test';
         const extensionType = 'widget';
-        const example = false;
         const vscode = false;
         helpers.run(path.join(__dirname, '../generators/app'))
             .withArguments([name])
             .withOptions({
                 skipInstall: true,
                 extensionType,
-                example,
                 vscode
             })
             .toPromise().then(function () {
                 try {
                     assert.noFile([
-                        `${name}/src/browser/${name}-contribution.ts`,
                         '.vscode/launch.json'
                     ]);
 

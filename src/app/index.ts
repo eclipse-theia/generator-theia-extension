@@ -4,7 +4,8 @@ import Base = require('yeoman-generator');
 enum ExtensionType {
     HelloWorld = 'hello-world',
     Widget = 'widget',
-    LabelProvider = 'labelprovider'
+    LabelProvider = 'labelprovider',
+    Empty = 'empty'
 }
 
 module.exports = class TheiaExtension extends Base {
@@ -19,7 +20,6 @@ module.exports = class TheiaExtension extends Base {
         githubURL: string
         extensionPrefix: string
         extensionPath: string
-        example: boolean
         browser: boolean
         electron: boolean
         vscode: boolean
@@ -36,7 +36,7 @@ module.exports = class TheiaExtension extends Base {
             required: false,
         });
 
-        this.option('extensionType', { 
+        this.option('extensionType', {
             alias: 'y',
             type: String
         });
@@ -49,12 +49,6 @@ module.exports = class TheiaExtension extends Base {
         this.option('electron', {
             alias: 'e',
             description: 'Generate an electron app',
-            type: Boolean,
-            default: true
-        });
-        this.option('example', {
-            alias: 'x',
-            description: 'Generate an example contribution',
             type: Boolean,
             default: true
         });
@@ -128,8 +122,9 @@ module.exports = class TheiaExtension extends Base {
                 choices: [
                     { value: ExtensionType.HelloWorld, name: 'Hello World' },
                     { value: ExtensionType.Widget, name: 'Widget' },
-                    { value: ExtensionType.LabelProvider, name: 'LabelProvider' }
-                ] 
+                    { value: ExtensionType.LabelProvider, name: 'LabelProvider' },
+                    { value: ExtensionType.Empty, name: 'Empty' }
+                ]
             });
             (this.options as any).extensionType = answer.type;
         }
@@ -143,7 +138,7 @@ module.exports = class TheiaExtension extends Base {
                 default: path.parse(process.cwd()).name
             });
             (this.options as any).extensionName = answer.name;
-        }        
+        }
     }
 
     configuring() {
@@ -222,13 +217,25 @@ module.exports = class TheiaExtension extends Base {
                 this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
                 { params: this.params }
             );
-            if (this.params.example) {
-                this.fs.copyTpl(
-                    this.templatePath('hello-world/contribution.ts'),
-                    this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
-                    { params: this.params }
-                );
-            }
+            this.fs.copyTpl(
+                this.templatePath('hello-world/contribution.ts'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
+                { params: this.params }
+            );
+        }
+
+        /** empty */
+        if (this.params.extensionType === ExtensionType.Empty) {
+            this.fs.copyTpl(
+                this.templatePath('empty/frontend-module.ts'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('empty/contribution.ts'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
+                { params: this.params }
+            );
         }
 
         /** widget */
@@ -238,23 +245,21 @@ module.exports = class TheiaExtension extends Base {
                 this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
                 { params: this.params }
             );
-            if (this.params.example) {
-                this.fs.copyTpl(
-                    this.templatePath('widget/contribution.ts'),
-                    this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
-                    { params: this.params }
-                );
-                this.fs.copyTpl(
-                    this.templatePath('widget/widget.tsx'),
-                    this.extensionPath(`src/browser/${this.params.extensionPath}-widget.tsx`),
-                    { params: this.params }
-                );
-                this.fs.copyTpl(
-                    this.templatePath('widget/index.css'),
-                    this.extensionPath('src/browser/style/index.css'),
-                    { params: this.params }
-                );
-            }
+            this.fs.copyTpl(
+                this.templatePath('widget/contribution.ts'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('widget/widget.tsx'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-widget.tsx`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('widget/index.css'),
+                this.extensionPath('src/browser/style/index.css'),
+                { params: this.params }
+            );
         }
 
         /** labelprovider */
@@ -264,28 +269,26 @@ module.exports = class TheiaExtension extends Base {
                 this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
                 { params: this.params }
             );
-            if (this.params.example) {
-                this.fs.copyTpl(
-                    this.templatePath('labelprovider/contribution.ts'),
-                    this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
-                    { params: this.params }
-                );
-                this.fs.copy(
-                    this.templatePath('labelprovider/style/baseline_code_black_18dp.png'),
-                    this.extensionPath('src/browser/style/baseline_code_black_18dp.png'),
-                    { params: this.params }
-                );
-                this.fs.copy(
-                    this.templatePath('labelprovider/style/baseline_code_white_18dp.png'),
-                    this.extensionPath('src/browser/style/baseline_code_white_18dp.png'),
-                    { params: this.params }
-                );
-                this.fs.copyTpl(
-                    this.templatePath('labelprovider/style/example.css'),
-                    this.extensionPath('src/browser/style/example.css'),
-                    { params: this.params }
-                );
-            }
+            this.fs.copyTpl(
+                this.templatePath('labelprovider/contribution.ts'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
+                { params: this.params }
+            );
+            this.fs.copy(
+                this.templatePath('labelprovider/style/baseline_code_black_18dp.png'),
+                this.extensionPath('src/browser/style/baseline_code_black_18dp.png'),
+                { params: this.params }
+            );
+            this.fs.copy(
+                this.templatePath('labelprovider/style/baseline_code_white_18dp.png'),
+                this.extensionPath('src/browser/style/baseline_code_white_18dp.png'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('labelprovider/style/example.css'),
+                this.extensionPath('src/browser/style/example.css'),
+                { params: this.params }
+            );
         }
 
     }
@@ -295,7 +298,7 @@ module.exports = class TheiaExtension extends Base {
     }
 
     install() {
-        if(!(this.options as any).skipInstall) {
+        if (!(this.options as any).skipInstall) {
             this.spawnCommand('yarn', []);
         }
     }
