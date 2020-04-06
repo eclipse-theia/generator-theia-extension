@@ -8,7 +8,5 @@ import '../../src/browser/style/example.css';
 
 export default new ContainerModule(bind => {
     // label binding
-    <% if (params.example) { %>
     bind(LabelProviderContribution).to(<%= params.extensionPrefix %>LabelProviderContribution);
-    <% } %>
 });
