@@ -274,16 +274,6 @@ module.exports = class TheiaExtension extends Base {
                 this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
                 { params: this.params }
             );
-            this.fs.copy(
-                this.templatePath('labelprovider/style/baseline_code_black_18dp.png'),
-                this.extensionPath('src/browser/style/baseline_code_black_18dp.png'),
-                { params: this.params }
-            );
-            this.fs.copy(
-                this.templatePath('labelprovider/style/baseline_code_white_18dp.png'),
-                this.extensionPath('src/browser/style/baseline_code_white_18dp.png'),
-                { params: this.params }
-            );
             this.fs.copyTpl(
                 this.templatePath('labelprovider/style/example.css'),
                 this.extensionPath('src/browser/style/example.css'),
