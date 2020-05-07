@@ -1,33 +1,26 @@
-import { MaybePromise } from "@theia/core";
-import { LabelProviderContribution } from "@theia/core/lib/browser";
 import URI from "@theia/core/lib/common/uri";
-import { FileStat } from "@theia/filesystem/lib/common";
-import { injectable } from "inversify";
+import { FileStatNode } from "@theia/filesystem/lib/browser/file-tree/file-tree";
+import { FileTreeLabelProvider } from "@theia/filesystem/lib/browser/file-tree/file-tree-label-provider";
+import { injectable,  } from "inversify";
 
 @injectable()
-export class <%= params.extensionPrefix %>LabelProviderContribution implements LabelProviderContribution {
-    canHandle(uri: object): number {
-        let toCheck = uri;
-        if (FileStat.is(toCheck)) {
-            toCheck = new URI(toCheck.uri);
-        }
-        if (toCheck instanceof URI) {
-            if (toCheck.path.ext === '.my') {
-                return 1000;
+export class <%= params.extensionPrefix %>LabelProviderContribution extends FileTreeLabelProvider {
+    
+    canHandle(element: object): number {
+        if (FileStatNode.is(element)) {
+            let uri = new URI(element.fileStat.uri);
+            if (uri.path.ext === '.my') {
+                return super.canHandle(element)+1;
             }
         }
         return 0;
     }
 
-    getIcon(): MaybePromise<string> {
-        return 'my-icon';
+    getIcon(): string {
+        return 'fa fa-star-o';
     }
 
-    getName(uri: URI): string {
-        return uri.displayName + " (with my label)";
-    }
-
-    getLongName(uri: URI): string {
-        return uri.path.toString();
+    getName(fileStatNode: FileStatNode): string {
+        return super.getName(fileStatNode) + ' (with my label)';
     }
 }

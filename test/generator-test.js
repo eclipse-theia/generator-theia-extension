@@ -83,9 +83,7 @@ describe('test extension generation', function () {
                         'README.md',
                         `${name}/src/browser/${name}-contribution.ts`,
                         `${name}/src/browser/${name}-frontend-module.ts`,
-                        `${name}/src/browser/style/example.css`,
-                        `${name}/src/browser/style/baseline_code_black_18dp.png`,
-                        `${name}/src/browser/style/baseline_code_white_18dp.png`
+                        `${name}/src/browser/style/example.css`
                     ]);
 
                     var body = fs.readFileSync(`${name}/package.json`, 'utf8');

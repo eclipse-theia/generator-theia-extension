@@ -7,6 +7,5 @@ import { <%= params.extensionPrefix %>LabelProviderContribution } from './<%= pa
 import '../../src/browser/style/example.css';
 
 export default new ContainerModule(bind => {
-    // label binding
     bind(LabelProviderContribution).to(<%= params.extensionPrefix %>LabelProviderContribution);
 });
