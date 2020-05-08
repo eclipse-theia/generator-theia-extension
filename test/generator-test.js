@@ -180,8 +180,8 @@ describe('test extension generation parameter', function () {
             }, done);
     });
 
-    it('should not add files, that should not be added', function (done) {
-        const name = 'no-file-test';
+    it('generate without vscode files', function (done) {
+        const name = 'no-vscode-test';
         const extensionType = 'widget';
         const vscode = false;
         helpers.run(path.join(__dirname, '../generators/app'))
@@ -195,6 +195,35 @@ describe('test extension generation parameter', function () {
                 try {
                     assert.noFile([
                         '.vscode/launch.json'
+                    ]);
+
+                    done();
+                } catch (e) {
+                    done(e);
+                }
+            }, done);
+    });
+
+    it('generate standalone', function (done) {
+        const name = 'standalone-test';
+        const extensionType = 'widget';
+        const standalone = true;
+        helpers.run(path.join(__dirname, '../generators/app'))
+            .withArguments([name])
+            .withOptions({
+                skipInstall: true,
+                extensionType,
+                standalone
+            })
+            .toPromise().then(function () {
+                try {
+                    assert.noFile([
+                        '.vscode/launch.json',
+                        'package.json',
+                        'lena.json',
+                        'README.md',
+                        'browser-app/package.json',
+                        'electron-app/package.json'
                     ]);
 
                     done();

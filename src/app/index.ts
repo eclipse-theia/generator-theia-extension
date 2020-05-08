@@ -26,6 +26,7 @@ module.exports = class TheiaExtension extends Base {
         theiaVersion: string
         lernaVersion: string
         skipInstall: boolean
+        standalone: boolean
     };
 
     constructor(args: string | string[], options: any) {
@@ -102,6 +103,12 @@ module.exports = class TheiaExtension extends Base {
             type: Boolean,
             default: false
         });
+        this.option('standalone', {
+            alias: 's',
+            description: 'Generate only the extension, no root project, browser app or electron app. Skips install after generation.',
+            type: Boolean,
+            default: false
+        });
     }
 
     path() {
@@ -164,40 +171,48 @@ module.exports = class TheiaExtension extends Base {
             lernaVersion: options["lerna-version"],
         }
         options.params = this.params
-        if ((this.options as any).browser)
-            this.composeWith(require.resolve('../browser'), this.options);
-        if ((this.options as any).electron)
-            this.composeWith(require.resolve('../electron'), this.options);
+        if (!options.standalone) {
+            if ((options).browser)
+                this.composeWith(require.resolve('../browser'), this.options);
+            if ((options).electron)
+                this.composeWith(require.resolve('../electron'), this.options);
+        }
+        if(options.standalone){
+            options.skipInstall=true;
+            this.log('Please remember to add the standalone extension manually to your root package.json and to your product, e.g. in browser-app/package.json')
+        }
     }
 
     writing() {
-        /** common templates */
-        this.fs.copyTpl(
-            this.templatePath('root-package.json'),
-            this.destinationPath('package.json'),
-            { params: this.params }
-        );
-        this.fs.copyTpl(
-            this.templatePath('lerna.json'),
-            this.destinationPath('lerna.json'),
-            { params: this.params }
-        );
-        this.fs.copyTpl(
-            this.templatePath('gitignore'),
-            this.destinationPath('.gitignore'),
-            { params: this.params }
-        );
-        this.fs.copyTpl(
-            this.templatePath('README.md'),
-            this.destinationPath('README.md'),
-            { params: this.params }
-        )
-        if (this.params.vscode) {
+        if (!this.options.standalone) {
+            /** common templates */
             this.fs.copyTpl(
-                this.templatePath('launch.json'),
-                this.destinationPath('.vscode/launch.json'),
+                this.templatePath('root-package.json'),
+                this.destinationPath('package.json'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('lerna.json'),
+                this.destinationPath('lerna.json'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('gitignore'),
+                this.destinationPath('.gitignore'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('README.md'),
+                this.destinationPath('README.md'),
                 { params: this.params }
             )
+            if (this.params.vscode) {
+                this.fs.copyTpl(
+                    this.templatePath('launch.json'),
+                    this.destinationPath('.vscode/launch.json'),
+                    { params: this.params }
+                )
+            }
         }
         this.fs.copyTpl(
             this.templatePath('extension-package.json'),
