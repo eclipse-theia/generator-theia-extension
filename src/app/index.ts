@@ -5,7 +5,8 @@ enum ExtensionType {
     HelloWorld = 'hello-world',
     Widget = 'widget',
     LabelProvider = 'labelprovider',
-    Empty = 'empty'
+    Empty = 'empty',
+    Backend = 'backend'
 }
 
 module.exports = class TheiaExtension extends Base {
@@ -130,6 +131,7 @@ module.exports = class TheiaExtension extends Base {
                     { value: ExtensionType.HelloWorld, name: 'Hello World' },
                     { value: ExtensionType.Widget, name: 'Widget' },
                     { value: ExtensionType.LabelProvider, name: 'LabelProvider' },
+                    { value: ExtensionType.Backend, name: 'Backend Communication' },
                     { value: ExtensionType.Empty, name: 'Empty' }
                 ]
             });
@@ -169,6 +171,7 @@ module.exports = class TheiaExtension extends Base {
             githubURL,
             theiaVersion: options["theia-version"],
             lernaVersion: options["lerna-version"],
+            backend: options["extensionType"] === ExtensionType.Backend
         }
         options.params = this.params
         if (!options.standalone) {
@@ -177,8 +180,8 @@ module.exports = class TheiaExtension extends Base {
             if ((options).electron)
                 this.composeWith(require.resolve('../electron'), this.options);
         }
-        if(options.standalone){
-            options.skipInstall=true;
+        if (options.standalone) {
+            options.skipInstall = true;
             this.log('Please remember to add the standalone extension manually to your root package.json and to your product, e.g. in browser-app/package.json')
         }
     }
@@ -273,6 +276,40 @@ module.exports = class TheiaExtension extends Base {
             this.fs.copyTpl(
                 this.templatePath('widget/index.css'),
                 this.extensionPath('src/browser/style/index.css'),
+                { params: this.params }
+            );
+        }
+
+        /** backend */
+        if (this.params.extensionType === ExtensionType.Backend) {
+            this.fs.copyTpl(
+                this.templatePath('backend/frontend-module.ts'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('backend/contribution.ts'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('backend/protocol.ts'),
+                this.extensionPath(`src/common/protocol.ts`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('backend/hello-backend-service.ts'),
+                this.extensionPath(`src/node/hello-backend-service.ts`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('backend/backend-module.ts'),
+                this.extensionPath(`src/node/${this.params.extensionPath}-backend-module.ts`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('backend/hello-backend-with-client-service.ts'),
+                this.extensionPath(`src/node/hello-backend-with-client-service.ts`),
                 { params: this.params }
             );
         }
