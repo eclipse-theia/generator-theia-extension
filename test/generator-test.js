@@ -123,6 +123,38 @@ describe('test extension generation', function () {
                 }
             }, done);
     });
+    it('generate the backend extension', function (done) {
+        const name = 'backend-template-test';
+        helpers.run(path.join(__dirname, '../generators/app'))
+            .withPrompts({
+                type: 'backend',
+                name
+            })
+            .withOptions({
+                skipInstall: true
+            })
+            .toPromise().then(function () {
+                try {
+                    assert.file([
+                        'package.json',
+                        'README.md',
+                        `${name}/src/browser/${name}-contribution.ts`,
+                        `${name}/src/browser/${name}-frontend-module.ts`,
+                        `${name}/src/common/protocol.ts`,
+                        `${name}/src/node/${name}-backend-module.ts`,
+                        `${name}/src/node/hello-backend-service.ts`,
+                        `${name}/src/node/hello-backend-with-client-service.ts`,
+                    ]);
+    
+                    var body = fs.readFileSync(`${name}/package.json`, 'utf8');
+                    var actual = JSON.parse(body);
+                    assert.equal(actual.name, name);
+                    done();
+                } catch (e) {
+                    done(e);
+                }
+            }, done);
+    });
     
 });
 

@@ -41,7 +41,8 @@
   },
   "theiaExtensions": [
     {
-      "frontend": "lib/browser/<%= params.extensionPath %>-frontend-module"
+      "frontend": "lib/browser/<%= params.extensionPath %>-frontend-module"<% if (params.backend) { %>,
+      "backend": "lib/node/<%= params.extensionPath %>-backend-module"<% } %>
     }
   ]
 }
