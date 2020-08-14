@@ -7,7 +7,6 @@
     "@theia/editor": "<%= params.theiaVersion %>",
     "@theia/electron": "<%= params.theiaVersion %>",
     "@theia/filesystem": "<%= params.theiaVersion %>",
-    "@theia/languages": "<%= params.theiaVersion %>",
     "@theia/markers": "<%= params.theiaVersion %>",
     "@theia/messages": "<%= params.theiaVersion %>",
     "@theia/monaco": "<%= params.theiaVersion %>",
