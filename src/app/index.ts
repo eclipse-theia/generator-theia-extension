@@ -21,6 +21,7 @@ enum ExtensionType {
     HelloWorld = 'hello-world',
     Widget = 'widget',
     LabelProvider = 'labelprovider',
+    TreeEditor = 'tree-editor',
     Empty = 'empty',
     Backend = 'backend'
 }
@@ -44,6 +45,7 @@ module.exports = class TheiaExtension extends Base {
         lernaVersion: string
         skipInstall: boolean
         standalone: boolean
+        dependencies: string
     };
 
     constructor(args: string | string[], options: any) {
@@ -147,6 +149,7 @@ module.exports = class TheiaExtension extends Base {
                     { value: ExtensionType.HelloWorld, name: 'Hello World' },
                     { value: ExtensionType.Widget, name: 'Widget' },
                     { value: ExtensionType.LabelProvider, name: 'LabelProvider' },
+                    { value: ExtensionType.TreeEditor, name: 'TreeEditor' },
                     { value: ExtensionType.Backend, name: 'Backend Communication' },
                     { value: ExtensionType.Empty, name: 'Empty' }
                 ]
@@ -188,6 +191,11 @@ module.exports = class TheiaExtension extends Base {
             theiaVersion: options["theia-version"],
             lernaVersion: options["lerna-version"],
             backend: options["extensionType"] === ExtensionType.Backend
+        }
+        if (this.params.extensionType === ExtensionType.TreeEditor) {
+            this.params.dependencies = `,\n    "@theia/editor": "${this.params.theiaVersion}",\n    "@theia/filesystem": "${this.params.theiaVersion}",\n    "@theia/workspace": "${this.params.theiaVersion}",\n    "@eclipse-emfcloud/theia-tree-editor": "latest",\n    "uuid": "^3.3.2"`;
+        } else {
+            this.params.dependencies = '';
         }
         options.params = this.params
         if (!options.standalone) {
@@ -345,6 +353,25 @@ module.exports = class TheiaExtension extends Base {
             this.fs.copyTpl(
                 this.templatePath('labelprovider/style/example.css'),
                 this.extensionPath('src/browser/style/example.css'),
+                { params: this.params }
+            );
+        }
+
+        /** tree-editor */
+        if (this.params.extensionType === ExtensionType.TreeEditor) {
+            this.fs.copyTpl(
+                this.templatePath('tree-editor/'),
+                this.extensionPath(`src/browser/`),
+                { params: this.params }
+            );
+            this.fs.move(
+                this.extensionPath('src/browser/README.md'),
+                this.extensionPath(`README.md`),
+                { params: this.params }
+            );
+            this.fs.move(
+                this.extensionPath('src/browser/tree-frontend-module.ts'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
                 { params: this.params }
             );
         }

@@ -27,7 +27,7 @@
     "src"
   ],
   "dependencies": {
-    "@theia/core": "<%= params.theiaVersion %>"
+    "@theia/core": "<%= params.theiaVersion %>"<% if (params.dependencies) { %><%- params.dependencies %><% } %>
   },
   "devDependencies": {
     "rimraf": "latest",
