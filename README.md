@@ -4,7 +4,7 @@
 
 <h2>THEIA - EXTENSION GENERATOR</h2>
 
-<img src="https://api.travis-ci.com/theia-ide/generator-theia-extension.svg?branch=master" alt="Travis Status" />
+[![Build](https://github.com/theia-ide/generator-theia-extension/workflows/Build/badge.svg)](https://github.com/theia-ide/generator-theia-extension/actions)
 
 A [Yeoman](yeoman.io) generator that scaffolds a project structure for developing extensions to the [Theia IDE](https://github.com/theia-ide/theia).
 
