@@ -4,7 +4,7 @@
 
 <h2>THEIA - EXTENSION GENERATOR</h2>
 
-[![Build](https://github.com/theia-ide/generator-theia-extension/workflows/Build/badge.svg)](https://github.com/theia-ide/generator-theia-extension/actions)
+[![Build](https://github.com/theia-ide/generator-theia-extension/workflows/Build/badge.svg?branch=master)](https://github.com/theia-ide/generator-theia-extension/actions?query=branch%3Amaster)
 
 A [Yeoman](yeoman.io) generator that scaffolds a project structure for developing extensions to the [Theia IDE](https://github.com/theia-ide/theia).
 
