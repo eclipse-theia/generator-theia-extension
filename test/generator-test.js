@@ -74,7 +74,7 @@ describe('test extension generation', function () {
 
                     var body = fs.readFileSync(`${name}/package.json`, 'utf8');
                     var actual = JSON.parse(body);
-                    assert.equal(actual.name, name);
+                    assert.equal(actual.name, 'fake name');
                     done();
                 } catch (e) {
                     done(e);
@@ -129,7 +129,7 @@ describe('test extension generation', function () {
                         `${name}/src/browser/${name}-contribution.ts`,
                         `${name}/src/browser/${name}-frontend-module.ts`,
                     ]);
-    
+
                     var body = fs.readFileSync(`${name}/package.json`, 'utf8');
                     var actual = JSON.parse(body);
                     assert.equal(actual.name, name);
@@ -161,7 +161,7 @@ describe('test extension generation', function () {
                         `${name}/src/node/hello-backend-service.ts`,
                         `${name}/src/node/hello-backend-with-client-service.ts`,
                     ]);
-    
+
                     var body = fs.readFileSync(`${name}/package.json`, 'utf8');
                     var actual = JSON.parse(body);
                     assert.equal(actual.name, name);
@@ -171,7 +171,7 @@ describe('test extension generation', function () {
                 }
             }, done);
     });
-    
+
 });
 
 
