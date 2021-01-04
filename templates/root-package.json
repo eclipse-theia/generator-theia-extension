@@ -3,7 +3,9 @@
   "scripts": {
     "prepare": "lerna run prepare",
     "rebuild:browser": "theia rebuild:browser",
-    "rebuild:electron": "theia rebuild:electron"
+    "rebuild:electron": "theia rebuild:electron",
+    "start:browser": "yarn rebuild:browser && yarn --cwd browser-app start",
+    "start:electron": "yarn rebuild:electron && yarn --cwd electron-app start"
   },
   "devDependencies": {
     "lerna": "<%= params.lernaVersion %>"
