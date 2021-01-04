@@ -18,6 +18,10 @@ Install yarn.
 
 ## Running the browser example
 
+    yarn start:browser
+
+or
+
     yarn rebuild:browser
     cd browser-app
     yarn start
@@ -25,6 +29,10 @@ Install yarn.
 Open http://localhost:3000 in the browser.
 
 ## Running the Electron example
+
+    yarn start:electron
+
+or
 
     yarn rebuild:electron
     cd electron-app
