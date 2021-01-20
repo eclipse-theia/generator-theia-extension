@@ -40,16 +40,23 @@ or
 
 ## Developing with the browser example
 
-Start watching of <%= params.extensionName %>.
+Start watching all packages, including `browser-app`, of your application with
+
+    yarn watch
+
+*or* watch only specific packages with
 
     cd <%= params.extensionPath %>
     yarn watch
 
-Start watching of the browser example.
+and the browser example.
 
-    yarn rebuild:browser
     cd browser-app
     yarn watch
+
+In a new terminal, rebuild the browser example.
+
+    yarn rebuild:browser
 
 Launch `Start Browser Backend` configuration from VS code.
 
@@ -57,16 +64,24 @@ Open http://localhost:3000 in the browser.
 
 ## Developing with the Electron example
 
-Start watching of <%= params.extensionName %>.
+Start watching all packages, including `electron-app`, of your application with
+
+    yarn watch
+
+*or* watch only specific packages with
 
     cd <%= params.extensionPath %>
     yarn watch
 
-Start watching of the electron example.
+and the Electron example.
 
-    yarn rebuild:electron
     cd electron-app
     yarn watch
+
+In a new terminal, rebuild the Electron example.
+
+    yarn rebuild:electron
+
 
 Launch `Start Electron Backend` configuration from VS code.
 
