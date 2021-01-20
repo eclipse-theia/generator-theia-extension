@@ -20,7 +20,7 @@
             "sourceMaps": true,
             "outFiles": [
                 "${workspaceRoot}/node_modules/@theia/*/lib/**/*.js",
-                "${workspaceRoot}/browser-app/lib/**/*.js",
+                "${workspaceRoot}/*/lib/**/*.js",
                 "${workspaceRoot}/browser-app/src-gen/**/*.js"
             ],
             "smartStep": true,
@@ -49,7 +49,7 @@
             "outFiles": [
                 "${workspaceRoot}/electron-app/src-gen/frontend/electron-main.js",
                 "${workspaceRoot}/electron-app/src-gen/backend/main.js",
-                "${workspaceRoot}/electron-app/lib/**/*.js",
+                "${workspaceRoot}/*/lib/**/*.js",
                 "${workspaceRoot}/node_modules/@theia/*/lib/**/*.js"
             ],
             "smartStep": true,
