@@ -264,6 +264,11 @@ module.exports = class TheiaExtension extends Base {
                 this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
                 { params: this.params }
             );
+            this.fs.copyTpl(
+                this.templatePath('hello-world/README.md'),
+                this.extensionPath('README.md'),
+                { params: this.params }
+            );
         }
 
         /** empty */
@@ -276,6 +281,11 @@ module.exports = class TheiaExtension extends Base {
             this.fs.copyTpl(
                 this.templatePath('empty/contribution.ts'),
                 this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('empty/README.md'),
+                this.extensionPath('README.md'),
                 { params: this.params }
             );
         }
@@ -300,6 +310,11 @@ module.exports = class TheiaExtension extends Base {
             this.fs.copyTpl(
                 this.templatePath('widget/index.css'),
                 this.extensionPath('src/browser/style/index.css'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('widget/README.md'),
+                this.extensionPath('README.md'),
                 { params: this.params }
             );
         }
@@ -336,6 +351,11 @@ module.exports = class TheiaExtension extends Base {
                 this.extensionPath(`src/node/hello-backend-with-client-service.ts`),
                 { params: this.params }
             );
+            this.fs.copyTpl(
+                this.templatePath('backend/README.md'),
+                this.extensionPath('README.md'),
+                { params: this.params }
+            );
         }
 
         /** labelprovider */
@@ -353,6 +373,11 @@ module.exports = class TheiaExtension extends Base {
             this.fs.copyTpl(
                 this.templatePath('labelprovider/style/example.css'),
                 this.extensionPath('src/browser/style/example.css'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('labelprovider/README.md'),
+                this.extensionPath('README.md'),
                 { params: this.params }
             );
         }

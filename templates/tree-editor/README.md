@@ -1,4 +1,4 @@
-# Example tree editor
+# Example Tree Editor
 
 The example extension demonstrates how to build tree editors in Eclipse Theia, which show the content of JSON files.
 
