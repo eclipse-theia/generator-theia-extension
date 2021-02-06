@@ -8,6 +8,7 @@ import { FileService } from '@theia/filesystem/lib/browser/file-service';
 import { FileSystemUtils } from '@theia/filesystem/lib/common';
 import { inject, injectable } from 'inversify';
 import { OpenerService } from '@theia/core/lib/browser';
+import { WorkspaceService } from '@theia/workspace/lib/browser';
 
 export const NewTreeExampleFileCommand: Command = {
     id: '<%= params.extensionPath %>-tree.newExampleFile',
@@ -23,8 +24,14 @@ export class NewTreeExampleFileCommandHandler implements SingleUriCommandHandler
         protected readonly fileService: FileService,
         @inject(ILogger)
         protected readonly logger: ILogger,
+        @inject(WorkspaceService)
+        protected readonly workspaceService: WorkspaceService
     ) { }
     
+    isEnabled() {
+        return this.workspaceService.opened;
+    }
+
     async execute(uri: URI) {
         const stat = await this.fileService.resolve(uri);
         if (!stat) {
