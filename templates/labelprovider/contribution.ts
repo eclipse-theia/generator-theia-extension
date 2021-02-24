@@ -1,4 +1,3 @@
-import URI from "@theia/core/lib/common/uri";
 import { FileStatNode } from "@theia/filesystem/lib/browser/file-tree/file-tree";
 import { FileTreeLabelProvider } from "@theia/filesystem/lib/browser/file-tree/file-tree-label-provider";
 import { injectable,  } from "inversify";
@@ -8,7 +7,7 @@ export class <%= params.extensionPrefix %>LabelProviderContribution extends File
     
     canHandle(element: object): number {
         if (FileStatNode.is(element)) {
-            let uri = new URI(element.fileStat.uri);
+            let uri = element.uri;
             if (uri.path.ext === '.my') {
                 return super.canHandle(element)+1;
             }
