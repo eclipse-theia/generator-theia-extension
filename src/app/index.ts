@@ -409,7 +409,13 @@ module.exports = class TheiaExtension extends Base {
 
     install() {
         if (!(this.options as any).skipInstall) {
-            this.spawnCommand('yarn', []);
+            var command = this.spawnCommand('yarn', []);
+
+            command.on('close', function(code: number){
+                if (code !== 0 ) {
+                    process.exit(code);
+                }
+            })
         }
     }
 
