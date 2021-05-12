@@ -12,12 +12,12 @@ export class <%= params.extensionPrefix %>Contribution extends AbstractViewContr
     /**
      * `AbstractViewContribution` handles the creation and registering
      *  of the widget including commands, menus, and keybindings.
-     * 
-     * We can pass `defaultWidgetOptions` which define widget properties such as 
+     *
+     * We can pass `defaultWidgetOptions` which define widget properties such as
      * its location `area` (`main`, `left`, `right`, `bottom`), `mode`, and `ref`.
-     * 
+     *
      */
-    constructor() {
+    constructor() 
         super({
             widgetId: <%= params.extensionPrefix %>Widget.ID,
             widgetName: <%= params.extensionPrefix %>Widget.LABEL,
@@ -33,9 +33,9 @@ export class <%= params.extensionPrefix %>Contribution extends AbstractViewContr
         super.registerCommands(commands)
      ```
      *
-     * For more flexibility, we can pass `OpenViewArguments` which define 
+     * For more flexibility, we can pass `OpenViewArguments` which define
      * options on how to handle opening the widget:
-     * 
+     *
      ```ts
         toggle?: boolean
         activate?: boolean;
@@ -53,7 +53,7 @@ export class <%= params.extensionPrefix %>Contribution extends AbstractViewContr
     /**
      * Example menu registration to contribute a menu item used to open the widget.
      * Default location when extending the `AbstractViewContribution` is the `View` main-menu item.
-     * 
+     *
      * We can however define new menu path locations in the following way:
      ```ts
         menus.registerMenuAction(CommonMenus.HELP, {
@@ -61,7 +61,7 @@ export class <%= params.extensionPrefix %>Contribution extends AbstractViewContr
             label: 'label'
         });
      ```
-     * 
+     *
      * @param menus
      */
     registerMenus(menus: MenuModelRegistry): void {
