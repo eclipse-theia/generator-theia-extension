@@ -8,7 +8,7 @@ export const <%= params.extensionPrefix %>Command = {
 };
 
 @injectable()
-export class <%= params.extensionPrefix %>CommandContribution implements CommandContribution {
+export class <%= params.extensionPrefix %>CommandContribution implements CommandContribution
 
     constructor(
         @inject(MessageService) private readonly messageService: MessageService,
