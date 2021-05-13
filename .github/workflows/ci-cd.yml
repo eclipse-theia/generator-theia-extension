@@ -35,3 +35,7 @@ jobs:
       - name: Test
         shell: bash
         run: yarn test
+
+      - name: Generate and Build Templates
+        shell: bash
+        run: ./.github/workflows/generate-and-build-all-templates.sh
