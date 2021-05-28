@@ -31,13 +31,13 @@
   },
   "devDependencies": {
     "rimraf": "latest",
-    "typescript": "latest"
+    "typescript": "latest"<% if (params.devdependencies) { %><%- params.devdependencies %><% } %>
   },
   "scripts": {
     "prepare": "yarn run clean && yarn run build",
     "clean": "rimraf lib",
     "build": "tsc",
-    "watch": "tsc -w"
+    "watch": "tsc -w"<% if (params.scripts) { %><%- params.scripts %><% } %>
   },
   "theiaExtensions": [
     {
