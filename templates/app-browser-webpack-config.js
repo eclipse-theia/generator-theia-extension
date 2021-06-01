@@ -14,9 +14,8 @@ config.module.rules.push({
     loader: require.resolve('@theia/application-manager/lib/expose-loader')
 }); */
 
-// Load relevant node polyfills as they are no longer automatically included with webpack 5.
-config.resolve.fallback.http = require.resolve("stream-http");
-config.resolve.fallback.https = require.resolve("https-browserify");
-config.resolve.fallback.url = require.resolve("url");
+// Load node polyfills as they are no longer automatically included with webpack 5.
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
+config.plugins.push(new NodePolyfillPlugin());
 
 module.exports = config;
