@@ -46,6 +46,7 @@ module.exports = class TheiaExtension extends Base {
         skipInstall: boolean
         standalone: boolean
         dependencies: string
+        browserDevDependencies: string
     };
 
     constructor(args: string | string[], options: any) {
@@ -194,8 +195,10 @@ module.exports = class TheiaExtension extends Base {
         }
         if (this.params.extensionType === ExtensionType.TreeEditor) {
             this.params.dependencies = `,\n    "@theia/editor": "${this.params.theiaVersion}",\n    "@theia/filesystem": "${this.params.theiaVersion}",\n    "@theia/workspace": "${this.params.theiaVersion}",\n    "@eclipse-emfcloud/theia-tree-editor": "latest",\n    "uuid": "^3.3.2"`;
+            this.params.browserDevDependencies = `,\n    "https-browserify": "latest",\n    "stream-http": "latest",\n    "url": "latest"`;
         } else {
             this.params.dependencies = '';
+            this.params.browserDevDependencies = '';
         }
         options.params = this.params
         if (!options.standalone) {
@@ -423,3 +426,5 @@ module.exports = class TheiaExtension extends Base {
         return name.substring(0, 1).toUpperCase() + name.substring(1)
     }
 }
+
+module.exports.ExtensionType = ExtensionType;

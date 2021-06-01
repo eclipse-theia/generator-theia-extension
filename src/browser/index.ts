@@ -23,13 +23,21 @@ module.exports = class TheiaBrowser extends Base {
     }
 
     writing() {
+        const params = (this.options as any).params
         this.fs.copyTpl(
             this.templatePath('app-browser-package.json'),
             this.destinationPath('browser-app/package.json'),
             {
                 appMode: 'browser',
-                params: (this.options as any).params
+                params
             }
         );
+        if (params.extensionType === 'tree-editor') {
+            this.fs.copyTpl(
+                this.templatePath('app-browser-webpack-config.js'),
+                this.destinationPath('browser-app/webpack.config.js'),
+                {}
+            );
+        }
     }
 }
