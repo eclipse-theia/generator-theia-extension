@@ -330,13 +330,8 @@ module.exports = class TheiaExtension extends Base {
                 { params: this.params }
             );
             this.fs.copyTpl(
-                this.templatePath('widget/__tests__/widget.test.ts'),
-                this.extensionPath(`src/browser/__tests__/${this.params.extensionPath}-widget.test.ts`),
-                { params: this.params }
-            );
-            this.fs.copyTpl(
-                this.templatePath('widget/__tests__/mock-objects/mock-message-service.ts'),
-                this.extensionPath(`src/browser/__tests__/mock-objects/mock-message-service.ts`),
+                this.templatePath('widget/widget.test.ts'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-widget.test.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(

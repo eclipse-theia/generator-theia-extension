@@ -23,7 +23,7 @@ export class <%= params.extensionPrefix %>Widget extends ReactWidget {
         this.update();
     }
 
-    protected render(): React.ReactNode {
+    render(): React.ReactElement {
         const header = `This is a sample widget which simply calls the messageService
         in order to display an info message to end users.`;
         return <div id='widget-container'>
@@ -32,7 +32,7 @@ export class <%= params.extensionPrefix %>Widget extends ReactWidget {
         </div>
     }
 
-    protected displayMessage(): void {
+    displayMessage(): void {
         this.messageService.info('Congratulations: <%= params.extensionPrefix %> Widget Successfully Created!');
     }
 

@@ -1,18 +1,20 @@
 import 'reflect-metadata';
-import { MessageClient, MessageService } from '@theia/core';
+import { MessageService } from '@theia/core';
 import { ContainerModule, Container } from 'inversify';
-import { MockMessageClient, MockMessageService } from './mock-objects/mock-message-service';
-import { <%= params.extensionPrefix %>Widget } from '../<%= params.extensionPath %>-widget';
+import { <%= params.extensionPrefix %>Widget } from './<%= params.extensionPath %>-widget';
 import { render } from '@testing-library/react'
 
-describe('widget extension unit tests', () => {
+describe('<%= params.extensionPrefix %> widget extension unit tests', () => {
 
-    let widget: any;
+    let widget: <%= params.extensionPrefix %>Widget;
 
     beforeEach(async () => {
         const module = new ContainerModule( bind => {
-            bind(MessageClient).to(MockMessageClient).inSingletonScope();
-            bind(MessageService).to(MockMessageService).inSingletonScope();
+            bind(MessageService).toConstantValue({
+                info(message: string): void {
+                    console.log(message);
+                }
+            } as MessageService);
             bind(<%= params.extensionPrefix %>Widget).toSelf();
         });
         const container = new Container();
@@ -25,9 +27,10 @@ describe('widget extension unit tests', () => {
         expect(element.queryByText('Display Message')).toBeTruthy();
     });
 
-    it('should inject the message service', async () => {
+    it('should inject \'MessageService\'', () => {
+        const spy = jest.spyOn(widget, 'displayMessage')
         widget.displayMessage();
-        expect(widget.messageService.infoWasCalled).toBe(true);
+        expect(spy).toBeCalled();
     });
 
 });
