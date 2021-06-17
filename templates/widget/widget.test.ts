@@ -28,8 +28,8 @@ describe('<%= params.extensionPrefix %> widget extension unit tests', () => {
     });
 
     it('should inject \'MessageService\'', () => {
-        const spy = jest.spyOn(widget, 'displayMessage')
-        widget.displayMessage();
+        const spy = jest.spyOn(widget as any, 'displayMessage')
+        widget['displayMessage']();
         expect(spy).toBeCalled();
     });
 

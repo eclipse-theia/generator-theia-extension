@@ -32,7 +32,7 @@ export class <%= params.extensionPrefix %>Widget extends ReactWidget {
         </div>
     }
 
-    displayMessage(): void {
+    protected displayMessage(): void {
         this.messageService.info('Congratulations: <%= params.extensionPrefix %> Widget Successfully Created!');
     }
 
