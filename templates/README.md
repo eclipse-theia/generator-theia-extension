@@ -41,6 +41,18 @@ Open http://localhost:3000 in the browser.
     yarn start
 
 *or:* launch `Start Electron Backend` configuration from VS code.
+
+<%if(params.containsTests){%>
+## Running the tests
+
+    yarn test
+
+*or* run the tests of a specific package with
+
+    cd <%= params.extensionPath %>
+    yarn test
+    
+<%}%>
 ## Developing with the browser example
 
 Start watching all packages, including `browser-app`, of your application with

@@ -6,7 +6,7 @@
     "rebuild:electron": "theia rebuild:electron",
     "start:browser": "yarn rebuild:browser && yarn --cwd browser-app start",
     "start:electron": "yarn rebuild:electron && yarn --cwd electron-app start",
-    "watch": "lerna run --parallel watch"
+    "watch": "lerna run --parallel watch"<% if (params.rootscripts) { %><%- params.rootscripts %><% } %>
   },
   "devDependencies": {
     "lerna": "<%= params.lernaVersion %>"
