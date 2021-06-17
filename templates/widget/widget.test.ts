@@ -4,7 +4,7 @@ import { ContainerModule, Container } from 'inversify';
 import { <%= params.extensionPrefix %>Widget } from './<%= params.extensionPath %>-widget';
 import { render } from '@testing-library/react'
 
-describe('<%= params.extensionPrefix %> widget extension unit tests', () => {
+describe('<%= params.extensionPrefix %>Widget', () => {
 
     let widget: <%= params.extensionPrefix %>Widget;
 
