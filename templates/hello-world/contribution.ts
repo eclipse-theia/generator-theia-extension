@@ -1,10 +1,10 @@
-import { injectable, inject } from "inversify";
-import { CommandContribution, CommandRegistry, MenuContribution, MenuModelRegistry, MessageService } from "@theia/core/lib/common";
-import { CommonMenus } from "@theia/core/lib/browser";
+import { injectable, inject } from '@theia/core/shared/inversify';
+import { CommandContribution, CommandRegistry, MenuContribution, MenuModelRegistry, MessageService } from '@theia/core/lib/common';
+import { CommonMenus } from '@theia/core/lib/browser';
 
 export const <%= params.extensionPrefix %>Command = {
     id: '<%= params.extensionPrefix %>.command',
-    label: "Say Hello"
+    label: 'Say Hello'
 };
 
 @injectable()

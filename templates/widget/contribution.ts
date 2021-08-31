@@ -1,4 +1,4 @@
-import { injectable } from 'inversify';
+import { injectable } from '@theia/core/shared/inversify';
 import { MenuModelRegistry } from '@theia/core';
 import { <%= params.extensionPrefix %>Widget } from './<%= params.extensionPath %>-widget';
 import { AbstractViewContribution } from '@theia/core/lib/browser';

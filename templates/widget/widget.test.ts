@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { MessageService } from '@theia/core';
-import { ContainerModule, Container } from 'inversify';
+import { ContainerModule, Container } from '@theia/core/shared/inversify';
 import { <%= params.extensionPrefix %>Widget } from './<%= params.extensionPath %>-widget';
 import { render } from '@testing-library/react'
 

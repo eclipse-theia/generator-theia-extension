@@ -1,5 +1,5 @@
 import { CommandContribution, CommandRegistry, MenuContribution, MenuModelRegistry, SelectionService, MAIN_MENU_BAR } from '@theia/core/lib/common';
-import { inject, injectable } from 'inversify';
+import { inject, injectable } from '@theia/core/shared/inversify';
 import { WorkspaceRootUriAwareCommandHandler } from '@theia/workspace/lib/browser/workspace-commands';
 import { WorkspaceService } from '@theia/workspace/lib/browser';
 import { NewTreeExampleFileCommandHandler, NewTreeExampleFileCommand } from './example-file-command';

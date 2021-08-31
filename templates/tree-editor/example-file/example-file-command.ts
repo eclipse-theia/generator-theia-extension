@@ -6,7 +6,7 @@ import URI from '@theia/core/lib/common/uri';
 import { SingleUriCommandHandler } from '@theia/core/lib/common/uri-command-handler';
 import { FileService } from '@theia/filesystem/lib/browser/file-service';
 import { FileSystemUtils } from '@theia/filesystem/lib/common';
-import { inject, injectable } from 'inversify';
+import { inject, injectable } from '@theia/core/shared/inversify';
 import { OpenerService } from '@theia/core/lib/browser';
 import { WorkspaceService } from '@theia/workspace/lib/browser';
 

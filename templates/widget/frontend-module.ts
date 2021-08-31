@@ -1,4 +1,4 @@
-import { ContainerModule } from 'inversify';
+import { ContainerModule } from '@theia/core/shared/inversify';
 import { <%= params.extensionPrefix %>Widget } from './<%= params.extensionPath %>-widget';
 import { <%= params.extensionPrefix %>Contribution } from './<%= params.extensionPath %>-contribution';
 import { bindViewContribution, FrontendApplicationContribution, WidgetFactory } from '@theia/core/lib/browser';

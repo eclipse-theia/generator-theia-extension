@@ -1,9 +1,8 @@
+import { injectable } from '@theia/core/shared/inversify';
 import { LabelProviderContribution } from '@theia/core/lib/browser';
-import { injectable } from 'inversify';
-import { TreeEditor } from '@eclipse-emfcloud/theia-tree-editor';
-
 import { CoffeeModel } from './tree-model';
 import { TreeEditorWidget } from './tree-editor-widget';
+import { TreeEditor } from '@eclipse-emfcloud/theia-tree-editor';
 
 const DEFAULT_COLOR = 'black';
 

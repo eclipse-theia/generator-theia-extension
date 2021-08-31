@@ -1,8 +1,7 @@
 import { ILogger } from '@theia/core';
-import { inject, injectable } from 'inversify';
-import { TreeEditor } from '@eclipse-emfcloud/theia-tree-editor';
-
+import { inject, injectable } from '@theia/core/shared/inversify';
 import { CoffeeModel } from './tree-model';
+import { TreeEditor } from '@eclipse-emfcloud/theia-tree-editor';
 import {
     brewingView,
     coffeeSchema,

@@ -1,16 +1,11 @@
+import URI from '@theia/core/lib/common/uri';
 import { CommandRegistry, MenuModelRegistry } from '@theia/core';
 import { ApplicationShell, NavigatableWidgetOptions, OpenerService, WidgetOpenerOptions } from '@theia/core/lib/browser';
-import URI from '@theia/core/lib/common/uri';
-import { inject, injectable } from 'inversify';
-import {
-  BaseTreeEditorContribution,
-  MasterTreeWidget,
-  TreeEditor,
-} from '@eclipse-emfcloud/theia-tree-editor';
-
+import { inject, injectable } from '@theia/core/shared/inversify';
 import { TreeModelService } from './tree/tree-model-service';
 import { TreeEditorWidget } from './tree/tree-editor-widget';
 import { TreeLabelProvider } from './tree/tree-label-provider';
+import {   BaseTreeEditorContribution,  MasterTreeWidget,  TreeEditor,} from '@eclipse-emfcloud/theia-tree-editor';
 
 @injectable()
 export class TreeContribution extends BaseTreeEditorContribution {

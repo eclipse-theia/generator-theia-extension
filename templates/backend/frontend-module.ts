@@ -1,6 +1,6 @@
 import { CommandContribution} from '@theia/core';
-import { WebSocketConnectionProvider } from "@theia/core/lib/browser";
-import { ContainerModule, injectable } from "inversify";
+import { WebSocketConnectionProvider } from '@theia/core/lib/browser';
+import { ContainerModule, injectable } from '@theia/core/shared/inversify';
 import { BackendClient, HelloBackendWithClientService, HelloBackendService, HELLO_BACKEND_PATH, HELLO_BACKEND_WITH_CLIENT_PATH } from '../common/protocol';
 import { <%= params.extensionPrefix %>CommandContribution} from './<%= params.extensionPath %>-contribution';
 
