@@ -1,7 +1,7 @@
 /**
  * Generated using theia-extension-generator
  */
-import { ContainerModule } from 'inversify';
+import { ContainerModule } from '@theia/core/shared/inversify';
 import { <%= params.extensionPrefix %>Contribution } from './<%= params.extensionPath %>-contribution';
 
 

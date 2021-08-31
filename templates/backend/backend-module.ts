@@ -1,8 +1,8 @@
-import { ConnectionHandler, JsonRpcConnectionHandler } from "@theia/core";
-import { ContainerModule } from "inversify";
-import { BackendClient, HelloBackendWithClientService, HelloBackendService, HELLO_BACKEND_PATH, HELLO_BACKEND_WITH_CLIENT_PATH } from "../common/protocol";
-import { HelloBackendWithClientServiceImpl } from "./hello-backend-with-client-service";
-import { HelloBackendServiceImpl } from "./hello-backend-service";
+import { ConnectionHandler, JsonRpcConnectionHandler } from '@theia/core';
+import { ContainerModule } from '@theia/core/shared/inversify';
+import { BackendClient, HelloBackendWithClientService, HelloBackendService, HELLO_BACKEND_PATH, HELLO_BACKEND_WITH_CLIENT_PATH } from '../common/protocol';
+import { HelloBackendWithClientServiceImpl } from './hello-backend-with-client-service';
+import { HelloBackendServiceImpl } from './hello-backend-service';
 
 export default new ContainerModule(bind => {
     bind(HelloBackendService).to(HelloBackendServiceImpl).inSingletonScope()

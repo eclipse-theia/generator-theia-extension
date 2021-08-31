@@ -5,9 +5,7 @@ import '../../src/browser/style/editor.css';
 import { CommandContribution, MenuContribution } from '@theia/core';
 import { LabelProviderContribution, NavigatableWidgetOptions, OpenHandler, WidgetFactory } from '@theia/core/lib/browser';
 import URI from '@theia/core/lib/common/uri';
-import { ContainerModule } from 'inversify';
-import { createBasicTreeContainer, NavigatableTreeEditorOptions } from '@eclipse-emfcloud/theia-tree-editor';
-
+import { ContainerModule } from '@theia/core/shared/inversify';
 import { TreeContribution } from './tree-contribution';
 import { TreeModelService } from './tree/tree-model-service';
 import { TreeNodeFactory } from './tree/tree-node-factory';
@@ -16,6 +14,7 @@ import { TreeLabelProvider } from './tree/tree-label-provider';
 import { TreeLabelProviderContribution } from './tree-label-provider-contribution';
 import { NewTreeExampleFileCommandHandler } from './example-file/example-file-command';
 import { NewTreeExampleFileCommandContribution, NewTreeExampleFileMenuContribution } from './example-file/example-file-contribution';
+import { createBasicTreeContainer, NavigatableTreeEditorOptions } from '@eclipse-emfcloud/theia-tree-editor';
 
 export default new ContainerModule(bind => {
     // Bind Theia IDE contributions for the example file creation menu entry.
