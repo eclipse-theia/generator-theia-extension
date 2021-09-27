@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { injectable, postConstruct, inject } from 'inversify';
+import { injectable, postConstruct, inject } from '@theia/core/shared/inversify';
 import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
 import { MessageService } from '@theia/core';
@@ -23,7 +23,7 @@ export class <%= params.extensionPrefix %>Widget extends ReactWidget {
         this.update();
     }
 
-    protected render(): React.ReactNode {
+    render(): React.ReactElement {
         const header = `This is a sample widget which simply calls the messageService
         in order to display an info message to end users.`;
         return <div id='widget-container'>

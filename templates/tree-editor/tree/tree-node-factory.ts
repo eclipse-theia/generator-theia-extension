@@ -1,11 +1,10 @@
-import { ILogger } from '@theia/core';
-import { inject, injectable } from 'inversify';
-import { TreeEditor } from '@eclipse-emfcloud/theia-tree-editor';
 import { v4 } from 'uuid';
-
+import { ILogger } from '@theia/core';
+import { inject, injectable } from '@theia/core/shared/inversify';
 import { CoffeeModel } from './tree-model';
 import { TreeEditorWidget } from './tree-editor-widget';
 import { TreeLabelProvider } from './tree-label-provider';
+import { TreeEditor } from '@eclipse-emfcloud/theia-tree-editor';
 
 @injectable()
 export class TreeNodeFactory implements TreeEditor.NodeFactory {

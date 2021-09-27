@@ -1,7 +1,7 @@
 import { LabelProviderContribution } from '@theia/core/lib/browser';
 import URI from '@theia/core/lib/common/uri';
 import { FileStat } from '@theia/filesystem/lib/common';
-import { injectable } from 'inversify';
+import { injectable } from '@theia/core/shared/inversify';
 
 @injectable()
 export class TreeLabelProviderContribution implements LabelProviderContribution {

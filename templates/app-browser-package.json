@@ -17,7 +17,7 @@
     "<%= params.extensionName %>": "<%= params.version %>"
   },
   "devDependencies": {
-    "@theia/cli": "<%= params.theiaVersion %>"
+    "@theia/cli": "<%= params.theiaVersion %>"<% if (params.browserDevDependencies) { %><%- params.browserDevDependencies %><% } %>
   },
   "scripts": {
     "prepare": "theia build --mode development",

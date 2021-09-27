@@ -2,7 +2,7 @@ import { Title, Widget } from '@theia/core/lib/browser';
 import { DefaultResourceProvider, ILogger } from '@theia/core/lib/common';
 import { EditorPreferences } from '@theia/editor/lib/browser';
 import { WorkspaceService } from '@theia/workspace/lib/browser/workspace-service';
-import { inject, injectable } from 'inversify';
+import { inject, injectable } from '@theia/core/shared/inversify';
 import {
   MasterTreeWidget,
   DetailFormWidget,

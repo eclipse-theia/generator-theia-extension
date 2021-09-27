@@ -1,5 +1,5 @@
 import { Command, CommandContribution, CommandRegistry} from '@theia/core/lib/common';
-import { inject, injectable } from 'inversify';
+import { inject, injectable } from '@theia/core/shared/inversify';
 import { HelloBackendWithClientService, HelloBackendService } from '../common/protocol';
 
 const SayHelloViaBackendCommandWithCallBack: Command = {

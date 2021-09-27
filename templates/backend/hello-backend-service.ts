@@ -1,5 +1,5 @@
-import { injectable } from "inversify";
-import { HelloBackendService } from "../common/protocol";
+import { injectable } from '@theia/core/shared/inversify';
+import { HelloBackendService } from '../common/protocol';
 
 @injectable()
 export class HelloBackendServiceImpl implements HelloBackendService {

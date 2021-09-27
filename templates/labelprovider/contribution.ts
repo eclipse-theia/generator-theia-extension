@@ -1,6 +1,6 @@
-import { FileStatNode } from "@theia/filesystem/lib/browser/file-tree/file-tree";
-import { FileTreeLabelProvider } from "@theia/filesystem/lib/browser/file-tree/file-tree-label-provider";
-import { injectable,  } from "inversify";
+import { FileStatNode } from '@theia/filesystem/lib/browser/file-tree/file-tree';
+import { FileTreeLabelProvider } from '@theia/filesystem/lib/browser/file-tree/file-tree-label-provider';
+import { injectable } from '@theia/core/shared/inversify';
 
 @injectable()
 export class <%= params.extensionPrefix %>LabelProviderContribution extends FileTreeLabelProvider {
