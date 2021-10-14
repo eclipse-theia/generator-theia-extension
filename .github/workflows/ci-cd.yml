@@ -40,4 +40,8 @@ jobs:
 
       - name: Generate and Build Templates
         shell: bash
-        run: ./.github/workflows/generate-and-build-all-templates.sh
+        run: ./.github/workflows/generate-and-build-all-templates.sh latest
+
+      - name: Generate and Build Templates with Next Theia version
+        shell: bash
+        run: ./.github/workflows/generate-and-build-all-templates.sh next
