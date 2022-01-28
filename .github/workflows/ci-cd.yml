@@ -38,9 +38,55 @@ jobs:
         shell: bash
         run: yarn test
 
-      - name: Generate and Build Templates
+  test-with-theia-latest:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+        node: [12]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install
+        shell: bash
+        run: yarn install
+
+      - name: Generate and Build Templates with Latest Theia version
         shell: bash
         run: ./.github/workflows/generate-and-build-all-templates.sh latest
+
+  test-with-theia-next:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+        node: [12]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install
+        shell: bash
+        run: yarn install
 
       - name: Generate and Build Templates with Next Theia version
         shell: bash
