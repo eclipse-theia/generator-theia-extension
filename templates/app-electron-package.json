@@ -18,7 +18,8 @@
     "<%= params.extensionName %>": "<%= params.version %>"
   },
   "devDependencies": {
-    "@theia/cli": "<%= params.theiaVersion %>"
+    "@theia/cli": "<%= params.theiaVersion %>",
+    "electron": "^15.3.5"
   },
   "scripts": {
     "prepare": "theia build --mode development",
