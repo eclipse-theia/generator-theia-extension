@@ -45,8 +45,8 @@ export class NewTreeExampleFileCommandHandler implements SingleUriCommandHandler
             return;
         }
 
-        const dirUri = dir.resource;
-        const preliminaryFileUri = FileSystemUtils.generateUniqueResourceURI(dirUri, dir, 'tree-example', '.tree');
+        const targetUri = dir.resource.resolve('tree-example.tree');
+        const preliminaryFileUri = FileSystemUtils.generateUniqueResourceURI(dir, targetUri, false);
         const dialog = new SingleTextInputDialog({
             title: 'New Example File',
             initialValue: preliminaryFileUri.path.base
@@ -54,7 +54,7 @@ export class NewTreeExampleFileCommandHandler implements SingleUriCommandHandler
 
         const fileName = await dialog.open();
         if (fileName) {
-            const fileUri = dirUri.resolve(fileName);
+            const fileUri = dir.resource.resolve(fileName);
             const contentBuffer = BinaryBuffer.fromString(JSON.stringify(defaultData, null, 2));
             this.fileService.createFile(fileUri, contentBuffer)
                 .then(_ => this.openerService.getOpener(fileUri))
