@@ -413,13 +413,11 @@ module.exports = class TheiaExtension extends Base {
             );
             this.fs.move(
                 this.extensionPath('src/browser/README.md'),
-                this.extensionPath(`README.md`),
-                { params: this.params }
+                this.extensionPath(`README.md`)
             );
             this.fs.move(
                 this.extensionPath('src/browser/tree-frontend-module.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
-                { params: this.params }
+                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`)
             );
         }
 
