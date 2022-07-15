@@ -204,7 +204,7 @@ module.exports = class TheiaExtension extends Base {
             this.params.browserDevDependencies = `,\n    "node-polyfill-webpack-plugin": "latest"`;
         }
         if (this.params.extensionType === ExtensionType.Widget) {
-            this.params.devdependencies = `,\n    "@testing-library/react": "^11.2.7",\n    "@types/jest": "^26.0.20",\n    "jest": "^26.6.3",\n    "ts-node": "^9.1.1",\n    "ts-jest": "^26.5.6"`;
+            this.params.devdependencies = `,\n    "@testing-library/react": "^11.2.7",\n    "@types/jest": "^26.0.20",\n    "jest": "^26.6.3",\n    "ts-node": "^10.9.1",\n    "ts-jest": "^26.5.6"`;
             this.params.scripts = `,\n    "test": "jest --config configs/jest.config.ts"`;
             this.params.rootscripts =`,\n    "test": "cd ${this.params.extensionPath} && yarn test"`;
             this.params.containsTests = true;
