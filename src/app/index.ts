@@ -168,7 +168,7 @@ module.exports = class TheiaExtension extends Base {
                 type: 'input',
                 name: 'name',
                 message: "The extension's name",
-                default: path.parse(process.cwd()).name
+                default: (this.options as any).extensionType
             });
             (this.options as any).extensionName = answer.name;
         }
