@@ -182,7 +182,7 @@ module.exports = class TheiaExtension extends Base {
                     message: 'Which backend do you want?',
                     choices: [
                         { value: TemplateType.Java, name: 'Java (requires maven!)' },
-                        { value: 'node', name: 'Node' },
+                        { value: 'node', name: 'Node (TypeScript)' },
                     ]
                 });
                 let template = answer.backend;
@@ -191,10 +191,10 @@ module.exports = class TheiaExtension extends Base {
                     const answer = await this.prompt({
                         type: 'list',
                         name: 'template',
-                        message: 'Which editor do you want?',
+                        message: 'Which extension mechanism do you want to use?',
                         choices: [
-                            { value: TemplateType.NodeTheia, name: 'Theia' },
-                            { value: TemplateType.NodeVSCode, name: 'VSCode' },
+                            { value: TemplateType.NodeTheia, name: 'Theia extension (more features)' },
+                            { value: TemplateType.NodeVSCode, name: 'VSCode extension (compatible with VS Code)' },
                         ]
                     });
                     template = answer.template;
@@ -203,13 +203,13 @@ module.exports = class TheiaExtension extends Base {
                 (this.options as any).templateType = template;
 
                 if(template === TemplateType.Java) {
-                    this.log('\x1b[32m%s\x1b[0m', 'The template will use an EMF source model and can be used for theia ✓')
+                    this.log('\x1b[32m%s\x1b[0m', 'The template will use an EMF source model on the server and generate a Theia extension ✓')
                 }
                 if(template === TemplateType.NodeTheia) {
-                    this.log('\x1b[32m%s\x1b[0m', 'The template will use a JSON based source model, node as a server and can be used for Theia ✓')
+                    this.log('\x1b[32m%s\x1b[0m', 'The template will use a JSON based source model, node as a server and generate a Theia extension ✓')
                 }
                 if(template === TemplateType.NodeVSCode) {
-                    this.log('\x1b[32m%s\x1b[0m', 'The template will use a JSON based source model, node as a server and can be used for VSCode ✓')
+                    this.log('\x1b[32m%s\x1b[0m', 'The template will use a JSON based source model, node as a server and generate a VSCode extension ✓')
                 }
             }
         }
