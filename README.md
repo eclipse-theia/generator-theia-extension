@@ -51,6 +51,7 @@ yo theia-extension --help
 | `tree-editor` | Creates a tree editor extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/tree-editor/README.md) |
 | `empty` | Creates a simple, minimal extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/empty/README.md) |
 | `backend` | Creates a backend communication extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/backend/README.md) |
+| `diagram-editor` | Creates a diagram editor extension | [readme](https://github.com/eclipse-glsp/glsp-examples/blob/master/README.md) |
 
 
 
