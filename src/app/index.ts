@@ -179,7 +179,7 @@ module.exports = class TheiaExtension extends Base {
                 const answer = await this.prompt({
                     type: 'list',
                     name: 'backend',
-                    message: 'Which backend do you want?',
+                    message: 'Which GLSP backend do you want to use, i.e. in which language do you prefer to develop your GLSP server?',
                     choices: [
                         { value: TemplateType.Java, name: 'Java (requires maven!)' },
                         { value: 'node', name: 'Node (TypeScript)' },
