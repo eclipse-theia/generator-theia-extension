@@ -34,8 +34,7 @@ enum ExtensionType {
 
 enum TemplateType {
     Java = 'java',
-    NodeTheia = 'node-theia',
-    NodeVSCode = 'node-vscode'
+    Node = 'node',
 }
 
 module.exports = class TheiaExtension extends Base {
@@ -182,34 +181,18 @@ module.exports = class TheiaExtension extends Base {
                     message: 'Which GLSP backend do you want to use, i.e. in which language do you prefer to develop your GLSP server?',
                     choices: [
                         { value: TemplateType.Java, name: 'Java (requires maven!)' },
-                        { value: 'node', name: 'Node (TypeScript)' },
+                        { value: TemplateType.Node, name: 'Node (TypeScript)' },
                     ]
                 });
                 let template = answer.backend;
-
-                if(template === 'node') {
-                    const answer = await this.prompt({
-                        type: 'list',
-                        name: 'template',
-                        message: 'Which extension mechanism do you want to use?',
-                        choices: [
-                            { value: TemplateType.NodeTheia, name: 'Theia extension (more features)' },
-                            { value: TemplateType.NodeVSCode, name: 'VSCode extension (compatible with VS Code)' },
-                        ]
-                    });
-                    template = answer.template;
-                }
 
                 (this.options as any).templateType = template;
 
                 if(template === TemplateType.Java) {
                     this.log('\x1b[32m%s\x1b[0m', 'The template will use an EMF source model on the server and generate a Theia extension ✓')
                 }
-                if(template === TemplateType.NodeTheia) {
+                if(template === TemplateType.Node) {
                     this.log('\x1b[32m%s\x1b[0m', 'The template will use a JSON based source model, node as a server and generate a Theia extension ✓')
-                }
-                if(template === TemplateType.NodeVSCode) {
-                    this.log('\x1b[32m%s\x1b[0m', 'The template will use a JSON based source model, node as a server and generate a VSCode extension ✓')
                 }
             }
         }
@@ -493,10 +476,8 @@ module.exports = class TheiaExtension extends Base {
             let templatePath = '';
             if(this.params.templateType == TemplateType.Java) {
                 templatePath = '/project-templates/java-emf-theia';
-            } else if (this.params.templateType == TemplateType.NodeTheia) {
+            } else if (this.params.templateType == TemplateType.Node) {
                 templatePath = '/project-templates/node-json-theia';
-            } else if (this.params.templateType == TemplateType.NodeVSCode) {
-                templatePath = '/project-templates/node-json-vscode';
             } else {
                 return;
             }
