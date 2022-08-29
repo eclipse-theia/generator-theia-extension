@@ -14,8 +14,11 @@
     "@theia/preferences": "<%= params.theiaVersion %>",
     "@theia/process": "<%= params.theiaVersion %>",
     "@theia/terminal": "<%= params.theiaVersion %>",
-    "@theia/workspace": "<%= params.theiaVersion %>",
-    "<%= params.extensionName %>": "<%= params.version %>"
+    "@theia/workspace": "<%= params.theiaVersion %>"<% if (params.includeExtension) { %>,
+    "<%= params.extensionName %>": "<%= params.version %>"<% } %><% if (params.includePlugins) { %>,
+    "@theia/plugin": "<%= params.theiaVersion %>",
+    "@theia/plugin-ext": "<%= params.theiaVersion %>",
+    "@theia/plugin-ext-vscode": "<%= params.theiaVersion %>"<% } %>
   },
   "devDependencies": {
     "@theia/cli": "<%= params.theiaVersion %>",
@@ -23,7 +26,7 @@
   },
   "scripts": {
     "prepare": "theia build --mode development",
-    "start": "theia start",
+    "start": "theia start<% if (params.includePlugins) { %> --plugins=local-dir:../plugins<% } %>",
     "watch": "theia build --watch --mode development"
   },
   "theia": {

@@ -29,7 +29,8 @@ enum ExtensionType {
     TreeEditor = 'tree-editor',
     Empty = 'empty',
     Backend = 'backend',
-    DiagramEditor = 'diagram-editor'
+    DiagramEditor = 'diagram-editor',
+    VsCodeHelloWorld = 'vs-code-hello-world'
 }
 
 enum TemplateType {
@@ -53,6 +54,7 @@ module.exports = class TheiaExtension extends Base {
         browser: boolean
         electron: boolean
         vscode: boolean
+        plugins: boolean
         theiaVersion: string
         lernaVersion: string
         skipInstall: boolean
@@ -94,6 +96,12 @@ module.exports = class TheiaExtension extends Base {
             description: 'Generate VS Code configs',
             type: Boolean,
             default: true
+        })
+        this.option('plugins', {
+            alias: 'p',
+            description: 'Generate plugins folder and extend configs',
+            type: Boolean,
+            default: false
         })
 
         this.option('author', {
@@ -164,6 +172,7 @@ module.exports = class TheiaExtension extends Base {
                 message: "The extension's type",
                 choices: [
                     { value: ExtensionType.HelloWorld, name: 'Hello World' },
+                    { value: ExtensionType.VsCodeHelloWorld, name: 'Hello World (VS Code extension)' },
                     { value: ExtensionType.Widget, name: 'Widget (with unit tests)' },
                     { value: ExtensionType.LabelProvider, name: 'LabelProvider' },
                     { value: ExtensionType.TreeEditor, name: 'TreeEditor' },
@@ -188,10 +197,10 @@ module.exports = class TheiaExtension extends Base {
 
                 (this.options as any).templateType = template;
 
-                if(template === TemplateType.Java) {
+                if (template === TemplateType.Java) {
                     this.log('\x1b[32m%s\x1b[0m', 'The template will use an EMF source model on the server and generate a Theia extension ✓')
                 }
-                if(template === TemplateType.Node) {
+                if (template === TemplateType.Node) {
                     this.log('\x1b[32m%s\x1b[0m', 'The template will use a JSON based source model, node as a server and generate a Theia extension ✓')
                 }
             }
@@ -216,7 +225,7 @@ module.exports = class TheiaExtension extends Base {
         let unscopedExtensionName = ''
         let extensionPath = ''
         let extensionPrefix = ''
-        if(extensionName) {
+        if (extensionName) {
             unscopedExtensionName = extensionName[0] === '@' ?
                 extensionName.substring(extensionName.indexOf('/') + 1) :
                 extensionName;
@@ -238,8 +247,10 @@ module.exports = class TheiaExtension extends Base {
             githubURL,
             theiaVersion: options["theia-version"],
             lernaVersion: options["lerna-version"],
-            backend: options["extensionType"] === ExtensionType.Backend
-        }
+            backend: options["extensionType"] === ExtensionType.Backend,
+            includeExtension: options["extensionType"] !== ExtensionType.VsCodeHelloWorld,
+            includePlugins: options.plugins || options["extensionType"] === ExtensionType.VsCodeHelloWorld,
+        };
         this.params.dependencies = '';
         this.params.browserDevDependencies = '';
         if (this.params.extensionType === ExtensionType.TreeEditor) {
@@ -249,7 +260,7 @@ module.exports = class TheiaExtension extends Base {
         if (this.params.extensionType === ExtensionType.Widget) {
             this.params.devdependencies = `,\n    "@testing-library/react": "^11.2.7",\n    "@types/jest": "^26.0.20",\n    "jest": "^26.6.3",\n    "ts-node": "^10.9.1",\n    "ts-jest": "^26.5.6"`;
             this.params.scripts = `,\n    "test": "jest --config configs/jest.config.ts"`;
-            this.params.rootscripts =`,\n    "test": "cd ${this.params.extensionPath} && yarn test"`;
+            this.params.rootscripts = `,\n    "test": "cd ${this.params.extensionPath} && yarn test"`;
             this.params.containsTests = true;
         }
         options.params = this.params
@@ -298,12 +309,17 @@ module.exports = class TheiaExtension extends Base {
                         { params: this.params }
                     );
                 }
+                if (this.params.plugins || this.params.extensionType === ExtensionType.VsCodeHelloWorld) {
+                    this.fs.write('plugins/.gitkeep', 'Folder of VS Code extensions (*.vsix) to be installed by default.');
+                }
             }
-            this.fs.copyTpl(
-                this.templatePath('extension-package.json'),
-                this.extensionPath('package.json'),
-                { params: this.params }
-            );
+            if (this.params.extensionType !== ExtensionType.VsCodeHelloWorld) {
+                this.fs.copyTpl(
+                    this.templatePath('extension-package.json'),
+                    this.extensionPath('package.json'),
+                    { params: this.params }
+                );
+            }
             this.fs.copyTpl(
                 this.templatePath('tsconfig.json'),
                 this.extensionPath('tsconfig.json'),
@@ -326,6 +342,25 @@ module.exports = class TheiaExtension extends Base {
             this.fs.copyTpl(
                 this.templatePath('hello-world/README.md'),
                 this.extensionPath('README.md'),
+                { params: this.params }
+            );
+        }
+
+        /** vs-code-hello-world */
+        if (this.params.extensionType === ExtensionType.VsCodeHelloWorld) {
+            this.fs.copyTpl(
+                this.templatePath('vscode-hello-world/package.json'),
+                this.extensionPath('package.json'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('vscode-hello-world/gitignore'),
+                this.extensionPath('.gitignore'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('vscode-hello-world/extension.ts'),
+                this.extensionPath(`src/extension.ts`),
                 { params: this.params }
             );
         }
@@ -474,7 +509,7 @@ module.exports = class TheiaExtension extends Base {
         if (this.params.extensionType === ExtensionType.DiagramEditor) {
             const baseDir = `./glsp-examples-${glspExamplesRepositoryTag}`;
             let templatePath = '';
-            if(this.params.templateType == TemplateType.Java) {
+            if (this.params.templateType == TemplateType.Java) {
                 templatePath = '/project-templates/java-emf-theia';
             } else if (this.params.templateType == TemplateType.Node) {
                 templatePath = '/project-templates/node-json-theia';
@@ -483,9 +518,9 @@ module.exports = class TheiaExtension extends Base {
             }
 
             const done = this.async();
-            request.get(`https://github.com/eclipse-glsp/glsp-examples/archive/refs/tags/${glspExamplesRepositoryTag}.tar.gz`).pipe(tar.x().on('close',() => {
-                fs.copy(baseDir+'/README.md', './README.md');
-                fs.copy(baseDir+templatePath, './').then(() => {
+            request.get(`https://github.com/eclipse-glsp/glsp-examples/archive/refs/tags/${glspExamplesRepositoryTag}.tar.gz`).pipe(tar.x().on('close', () => {
+                fs.copy(baseDir + '/README.md', './README.md');
+                fs.copy(baseDir + templatePath, './').then(() => {
                     fs.rm(baseDir, { recursive: true });
                     done();
                 });
@@ -504,22 +539,22 @@ module.exports = class TheiaExtension extends Base {
 
                 const command = this.spawnCommand('yarn', []);
 
-                command.on('close', (code:number) => {
-                    if (code === 0 ) {
+                command.on('close', (code: number) => {
+                    if (code === 0) {
                         this.log(
                             '\x1b[32m%s\x1b[0m',
                             '\nThe DiagramEditor Example has been generated and all dependencies installed\n\nCheck the Readme to get started.'
                         );
                     } else {
-                        this.log('\x1b[31m%s\x1b[0m','Command "yarn" failed. Please see above for the reported error message.');
+                        this.log('\x1b[31m%s\x1b[0m', 'Command "yarn" failed. Please see above for the reported error message.');
                         process.exit(code);
                     }
                 });
             } else {
                 const command = this.spawnCommand('yarn', []);
-    
-                command.on('close', function(code: number){
-                    if (code !== 0 ) {
+
+                command.on('close', function (code: number) {
+                    if (code !== 0) {
                         process.exit(code);
                     }
                 })
