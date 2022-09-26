@@ -6,6 +6,7 @@
   },
   "scripts": {
     "prepare": "lerna run prepare",
+    "postinstall": "theia check:theia-version",
     "rebuild:browser": "theia rebuild:browser",
     "rebuild:electron": "theia rebuild:electron",
     "start:browser": "yarn rebuild:browser && yarn --cwd browser-app start",
