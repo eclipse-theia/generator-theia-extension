@@ -3,18 +3,7 @@ The example of how to build the Theia-based applications with the <%= params.ext
 
 ## Getting started
 
-Install [nvm](https://github.com/creationix/nvm#install-script).
-
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
-
-Install npm and node.
-
-    nvm install 10
-    nvm use 10
-
-Install yarn.
-
-    npm install -g yarn
+Please install all necessary [prerequisites](https://github.com/eclipse-theia/theia/blob/master/doc/Developing.md#prerequisites).
 
 ## Running the browser example
 
@@ -51,7 +40,7 @@ Open http://localhost:3000 in the browser.
 
     cd <%= params.extensionPath %>
     yarn test
-    
+
 <%}%>
 ## Developing with the browser example
 

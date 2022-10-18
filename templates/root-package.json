@@ -1,5 +1,9 @@
 {
   "private": true,
+  "engines": {
+    "yarn": ">=1.7.0 <2",
+    "node": ">=14.18.0"
+  },
   "scripts": {
     "prepare": "lerna run prepare",
     "rebuild:browser": "theia rebuild:browser",
