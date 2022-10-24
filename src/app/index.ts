@@ -244,7 +244,6 @@ module.exports = class TheiaExtension extends Base {
         this.params.browserDevDependencies = '';
         if (this.params.extensionType === ExtensionType.TreeEditor) {
             this.params.dependencies = `,\n    "@theia/editor": "${this.params.theiaVersion}",\n    "@theia/filesystem": "${this.params.theiaVersion}",\n    "@theia/workspace": "${this.params.theiaVersion}",\n    "@eclipse-emfcloud/theia-tree-editor": "next",\n    "uuid": "^3.3.2"`;
-            this.params.browserDevDependencies = `,\n    "node-polyfill-webpack-plugin": "latest"`;
         }
         if (this.params.extensionType === ExtensionType.Widget) {
             this.params.devdependencies = `,\n    "@testing-library/react": "^11.2.7",\n    "@types/jest": "^26.0.20",\n    "jest": "^26.6.3",\n    "ts-node": "^10.9.1",\n    "ts-jest": "^26.5.6"`;

@@ -32,12 +32,5 @@ module.exports = class TheiaBrowser extends Base {
                 params
             }
         );
-        if (params.extensionType === 'tree-editor') {
-            this.fs.copyTpl(
-                this.templatePath('app-browser-webpack-config.js'),
-                this.destinationPath('browser-app/webpack.config.js'),
-                {}
-            );
-        }
     }
 }
