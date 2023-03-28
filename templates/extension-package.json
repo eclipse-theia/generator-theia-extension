@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "rimraf": "latest",
-    "typescript": "latest"<% if (params.devdependencies) { %><%- params.devdependencies %><% } %>
+    "typescript": "~4.5.5"<% if (params.devdependencies) { %><%- params.devdependencies %><% } %>
   },
   "scripts": {
     "prepare": "yarn run clean && yarn run build",
