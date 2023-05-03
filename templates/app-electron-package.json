@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@theia/cli": "<%= params.theiaVersion %>",
-    "electron": "^15.3.5"
+    "electron": "^23.2.4"
   },
   "scripts": {
     "prepare": "theia build --mode development",
