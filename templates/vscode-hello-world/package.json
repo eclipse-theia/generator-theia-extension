@@ -1,0 +1,55 @@
+{
+    "name": "<%= params.extensionName %>",
+    "displayName": "Hello World (VS Code extension)",
+    "engines": {
+        "vscode": "^1.32.0"
+    },
+    "version": "<%= params.version %>",<% 
+    if (params.description) { %>
+    "description": "<%= params.description %>",
+    <%} %><% 
+    if (params.author) { %>
+    "author": "<%= params.author %>",
+    <% } %><% 
+    if (params.license) { %>
+    "license": "<%= params.license %>",
+    <% } %><% 
+    if (params.githubURL) { %>
+    "repository": {
+        "type": "git",
+        "url": "<%= params.githubURL %>.git"
+    },
+    "bugs": {
+        "url": "<%= params.githubURL %>/issues"
+    },
+    "homepage": "<%= params.githubURL %>",<% } %>
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+		"onCommand:<%= params.extensionName %>.helloWorld"
+	],
+    "main": "./lib/extension.js",
+    "contributes": {
+		"commands": [
+			{
+				"command": "<%= params.extensionName %>.helloWorld",
+				"title": "Hello World (VS Code extension)"
+			}
+		]
+	},
+    "scripts": {
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "prepare": "yarn run clean && yarn run build && yarn symlink",
+        "clean": "rimraf lib",
+        "build": "yarn run compile",
+        "symlink": "symlink-dir . ../plugins/<%= params.extensionName %>"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.32.0",
+        "symlink-dir": "latest",
+        "rimraf": "latest",
+        "typescript": "latest"
+    }
+}

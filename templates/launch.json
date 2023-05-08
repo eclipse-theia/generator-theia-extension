@@ -12,10 +12,12 @@
             "args": [
                 "--loglevel=debug",
                 "--port=3000",
-                "--no-cluster"
+                "--no-cluster"<% if (params.includePlugins) { %>,
+                "--plugins=local-dir:${workspaceRoot}/plugins"<% } %>
             ],
             "env": {
-                "NODE_ENV": "development"
+                "NODE_ENV": "development",
+                "NODE_OPTIONS": "--enable-source-maps"
             },
             "sourceMaps": true,
             "outFiles": [
@@ -40,10 +42,12 @@
             "args": [
                 "--loglevel=debug",
                 "--hostname=localhost",
-                "--no-cluster"
+                "--no-cluster"<% if (params.includePlugins) { %>,
+                "--plugins=local-dir:${workspaceRoot}/plugins"<% } %>
             ],
             "env": {
-                "NODE_ENV": "development"
+                "NODE_ENV": "development",
+                "NODE_OPTIONS": "--enable-source-maps"
             },
             "sourceMaps": true,
             "outFiles": [

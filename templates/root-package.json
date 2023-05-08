@@ -18,5 +18,6 @@
   },
   "workspaces": [
     "<%= params.extensionPath %>"<% if (params.browser) { %>, "browser-app"<% } %><% if (params.electron) { %>, "electron-app"<% } %>
-  ]
+  ]<% if (params.includePlugins) { %>,
+  "theiaPluginsDir": "plugins"<% } %>
 }
