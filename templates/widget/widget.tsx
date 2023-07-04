@@ -15,7 +15,11 @@ export class <%= params.extensionPrefix %>Widget extends ReactWidget {
     protected readonly messageService!: MessageService;
 
     @postConstruct()
-    protected async init(): Promise < void> {
+    protected init(): void {
+        this.doInit()
+    }
+
+    protected async doInit(): Promise <void> {
         this.id = <%= params.extensionPrefix %>Widget.ID;
         this.title.label = <%= params.extensionPrefix %>Widget.LABEL;
         this.title.caption = <%= params.extensionPrefix %>Widget.LABEL;
