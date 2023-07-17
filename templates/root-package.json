@@ -5,12 +5,12 @@
     "node": ">=14.18.0"
   },
   "scripts": {
+    "build:browser": "yarn --cwd browser-app bundle",
+    "build:electron": "yarn --cwd electron-app bundle",
     "prepare": "lerna run prepare",
     "postinstall": "theia check:theia-version",
-    "rebuild:browser": "theia rebuild:browser",
-    "rebuild:electron": "theia rebuild:electron",
-    "start:browser": "yarn rebuild:browser && yarn --cwd browser-app start",
-    "start:electron": "yarn rebuild:electron && yarn --cwd electron-app start",
+    "start:browser": "yarn --cwd browser-app start",
+    "start:electron": "yarn --cwd electron-app start",
     "watch": "lerna run --parallel watch"<% if (params.rootscripts) { %><%- params.rootscripts %><% } %>
   },
   "devDependencies": {

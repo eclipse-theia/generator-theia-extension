@@ -20,9 +20,10 @@
     "@theia/cli": "<%= params.theiaVersion %>"<% if (params.browserDevDependencies) { %><%- params.browserDevDependencies %><% } %>
   },
   "scripts": {
-    "prepare": "theia build --mode development",
+    "bundle": "yarn rebuild && theia build --mode development",
+    "rebuild": "theia rebuild:browser",
     "start": "theia start",
-    "watch": "theia build --watch --mode development"
+    "watch": "yarn rebuild && theia build --watch --mode development"
   },
   "theia": {
     "target": "<%= appMode %>"
