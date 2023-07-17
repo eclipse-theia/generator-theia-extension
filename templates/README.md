@@ -7,11 +7,12 @@ Please install all necessary [prerequisites](https://github.com/eclipse-theia/th
 
 ## Running the browser example
 
+    yarn build:browser
     yarn start:browser
 
 *or:*
 
-    yarn rebuild:browser
+    yarn build:browser
     cd browser-app
     yarn start
 
@@ -21,11 +22,12 @@ Open http://localhost:3000 in the browser.
 
 ## Running the Electron example
 
+    yarn build:electron
     yarn start:electron
 
 *or:*
 
-    yarn rebuild:electron
+    yarn build:electron
     cd electron-app
     yarn start
 

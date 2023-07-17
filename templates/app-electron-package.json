@@ -22,9 +22,10 @@
     "electron": "^23.2.4"
   },
   "scripts": {
-    "prepare": "theia build --mode development",
+    "bundle": "yarn rebuild && theia build --mode development",
+    "rebuild": "theia rebuild:electron",
     "start": "theia start",
-    "watch": "theia build --watch --mode development"
+    "watch": "yarn rebuild && theia build --watch --mode development"
   },
   "theia": {
     "target": "<%= appMode %>"
