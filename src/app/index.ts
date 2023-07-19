@@ -21,6 +21,8 @@ const tar = require('tar');
 const fs = require('fs-extra');
 
 const glspExamplesRepositoryTag = "generator-latest";
+const backend = "backend";
+const frontend = "frontend";
 
 enum ExtensionType {
     HelloWorld = 'hello-world',
@@ -63,6 +65,7 @@ module.exports = class TheiaExtension extends Base {
         scripts: string
         rootscripts: string
         containsTests: boolean
+        electronMainLocation: string
     };
 
     constructor(args: string | string[], options: any) {
@@ -238,7 +241,8 @@ module.exports = class TheiaExtension extends Base {
             githubURL,
             theiaVersion: options["theia-version"],
             lernaVersion: options["lerna-version"],
-            backend: options["extensionType"] === ExtensionType.Backend
+            backend: options["extensionType"] === ExtensionType.Backend,
+            electronMainLocation: this.getElectronMainLocation(options["theia-version"])
         }
         this.params.dependencies = '';
         this.params.browserDevDependencies = '';
@@ -529,6 +533,24 @@ module.exports = class TheiaExtension extends Base {
     private _capitalize(name: string): string {
         return name.substring(0, 1).toUpperCase() + name.substring(1)
     }
+
+    private getElectronMainLocation(theiaVersion: string): string {
+        try {
+            const semVer = theiaVersion.split('.');
+            if (semVer.length < 3) {
+                return backend;
+            }
+            const major = Number(semVer[0]);
+            const minor = Number(semVer[1]);
+            if ((major === 0) || (major === 1 && minor < 39)) {
+                return frontend;
+            }
+            return backend;
+        } catch (e) {
+            return backend;
+        }
+    }
 }
 
 module.exports.ExtensionType = ExtensionType;
+
