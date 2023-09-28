@@ -48,7 +48,7 @@ Open http://localhost:3000 in the browser.
 
 Start watching all packages, including `browser-app`, of your application with
 
-    yarn watch
+    yarn watch:browser
 
 *or* watch only specific packages with
 
@@ -65,7 +65,7 @@ Run the example as [described above](#Running-the-browser-example)
 
 Start watching all packages, including `electron-app`, of your application with
 
-    yarn watch
+    yarn watch:electron
 
 *or* watch only specific packages with
 
