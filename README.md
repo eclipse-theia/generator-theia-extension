@@ -21,10 +21,10 @@ A [yeoman](https://yeoman.io/) generator that scaffolds a project structure for 
 
 ## How to use
 
-To use it, install `yo` and the `generator`.
+To use it, install `yo, the `generator`, and other tools.
 
 ```
-npm install -g yo generator-theia-extension
+npm install -g yo generator-theia-extension yarn
 ```
 
 To create a sample project with a Theia extension including a browser and electron app, run:
