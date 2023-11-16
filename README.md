@@ -21,7 +21,7 @@ A [yeoman](https://yeoman.io/) generator that scaffolds a project structure for 
 
 ## How to use
 
-To use it, install `yo` and the `generator`.
+To use it, install `yo` (version 4.x.x) and the `generator` (see next below).
 
 ```
 npm install -g yo generator-theia-extension
