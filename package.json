@@ -23,16 +23,17 @@
     "fs-extra": "^10.0.0",
     "request": "^2.88.2",
     "tar": "^6.1.1",
-    "yeoman-generator": "^4.0.2"
+    "yeoman-generator": "^5.0.0"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.7",
-    "@types/yeoman-generator": "^3.1.4",
+    "@types/yeoman-generator": "^5.0.0",
     "mocha": "^6.2.0",
     "rimraf": "^3.0.0",
     "typescript": "~4.5.5",
     "yeoman-assert": "^3.1.1",
-    "yeoman-test": "^2.0.0"
+    "yeoman-environment": "^3.0.0",
+    "yeoman-test": "^5.0.0"
   },
   "files": [
     "generators",
@@ -43,6 +44,8 @@
     "clean": "rimraf lib",
     "build": "tsc",
     "watch": "tsc -w",
-    "test": "mocha"
+    "test": "mocha",
+    "mkdir-debug-cwd": "mkdirp ./testing && rimraf ./testing/*",
+    "about:mkdir-debug-cwd": "echo 'Is used as preLaunchTask in .vscode/launch.json; mkdirp is transitively pulled by mocha'"
   }
 }
