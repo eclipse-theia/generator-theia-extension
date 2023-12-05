@@ -3,8 +3,9 @@
   "version": "0.1.38",
   "engines": {
     "yarn": ">=1.7.0 <2",
-    "node": ">=14.18.0"
+    "node": ">=16.7.0"
   },
+  "type": "module",
   "description": "Helps to setup the project structure for developing extensions to the Theia IDE",
   "repository": {
     "type": "git",
@@ -20,20 +21,20 @@
   "author": "TypeFox",
   "license": "EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0",
   "dependencies": {
-    "fs-extra": "^10.0.0",
     "request": "^2.88.2",
     "tar": "^6.1.1",
-    "yeoman-generator": "^5.0.0"
+    "yeoman-generator": "^6.0.0"
   },
   "devDependencies": {
+    "@types/request": "^2.48.0",
+    "@types/tar": "^6.1.1",
     "@types/mocha": "^5.2.7",
-    "@types/yeoman-generator": "^5.0.0",
-    "mocha": "^6.2.0",
+    "mocha": "^10.0.0",
     "rimraf": "^3.0.0",
-    "typescript": "~4.5.5",
+    "typescript": "~4.7.0",
     "yeoman-assert": "^3.1.1",
     "yeoman-environment": "^3.0.0",
-    "yeoman-test": "^5.0.0"
+    "yeoman-test": "^6.0.0"
   },
   "files": [
     "generators",
@@ -41,7 +42,7 @@
   ],
   "scripts": {
     "prepare": "yarn run clean && yarn run build",
-    "clean": "rimraf lib",
+    "clean": "rimraf generators",
     "build": "tsc",
     "watch": "tsc -w",
     "test": "mocha",

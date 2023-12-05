@@ -14,12 +14,14 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import Base  = require('yeoman-generator');
+import * as path from 'node:path';
+import * as url from 'node:url';
+import Base, { BaseOptions } from 'yeoman-generator';
 
-module.exports = class TheiaElectron extends Base {
+export default class TheiaElectron extends Base<BaseOptions & { params: unknown }> {
 
     path() {
-        this.sourceRoot(__dirname + '/../../templates')
+        this.sourceRoot(path.dirname(url.fileURLToPath(import.meta.url)) + '/../../templates')
     }
 
     writing() {
@@ -28,7 +30,7 @@ module.exports = class TheiaElectron extends Base {
             this.destinationPath('electron-app/package.json'),
             { 
                 appMode: 'electron',
-                params: (this.options as any).params
+                params: this.options.params
             }
         );
     }

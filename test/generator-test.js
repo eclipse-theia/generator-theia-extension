@@ -14,10 +14,13 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-var assert = require('yeoman-assert')
-var helpers = require('yeoman-test');
-var path = require('path');
-var fs = require('fs');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as url from 'url';
+import assert from 'yeoman-assert';
+import helpers from 'yeoman-test';
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 describe('test extension generation', function () {
     this.timeout(10000);
