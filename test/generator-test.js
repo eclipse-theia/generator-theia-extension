@@ -28,7 +28,7 @@ describe('test extension generation', function () {
     it('generate the hello world extension', function (done) {
         const name = 'hello-world-test';
         helpers.run(path.join(__dirname, '../generators/app'))
-            .withPrompts({
+            .withAnswers({
                 type: 'hello-world',
                 name
             })
@@ -57,7 +57,7 @@ describe('test extension generation', function () {
     it('generate the widget extension', function (done) {
         const name = 'widget-test';
         helpers.run(path.join(__dirname, '../generators/app'))
-            .withPrompts({
+            .withAnswers({
                 type: 'widget',
                 name
             })
@@ -88,7 +88,7 @@ describe('test extension generation', function () {
     it('generate the labelprovider extension', function (done) {
         const name = 'labelprovider-test';
         helpers.run(path.join(__dirname, '../generators/app'))
-            .withPrompts({
+            .withAnswers({
                 type: 'labelprovider',
                 name
             })
@@ -117,7 +117,7 @@ describe('test extension generation', function () {
     it('generate the empty extension', function (done) {
         const name = 'empty-template-test';
         helpers.run(path.join(__dirname, '../generators/app'))
-            .withPrompts({
+            .withAnswers({
                 type: 'empty',
                 name
             })
@@ -145,7 +145,7 @@ describe('test extension generation', function () {
     it('generate the backend extension', function (done) {
         const name = 'backend-template-test';
         helpers.run(path.join(__dirname, '../generators/app'))
-            .withPrompts({
+            .withAnswers({
                 type: 'backend',
                 name
             })
