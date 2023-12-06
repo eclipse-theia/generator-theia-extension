@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Yo via NPM",
+            "type": "node",
+            "request": "launch",
+            "preLaunchTask": "npm: mkdir-debug-cwd",
+            "runtimeExecutable": "npx",
+            "program": "yo",
+            "args": [
+                "theia-extension"
+            ],
+            "cwd": "${workspaceFolder}/testing",
+            "console": "integratedTerminal",            
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+        }
+    ]
+}

@@ -14,6 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
+import type execa = require('execa');
 import path = require('path');
 import Base = require('yeoman-generator');
 const request = require('request');
@@ -68,8 +69,11 @@ module.exports = class TheiaExtension extends Base {
         electronMainLocation: string
     };
 
-    constructor(args: string | string[], options: any) {
-        super(args, options);
+    constructor(args: string | string[], options: Base.GeneratorOptions) {
+        // For v5 generators the '<npm|pnpm|yarn> install' task is implicitely invoked by 'yeoman-environment' since 'yeoman-environment@3', see
+        //  https://github.com/yeoman/environment/commit/ab9582a70073203c7a6b58fb6dbf1f4eba249d48#diff-54bc5f4bd40f22e081d54b6c20bbf2523e438cf2f2716b91714a1f596e4d87cd
+        // since we spawn the pm processes on our own in 'install()', we need to declare that here in order to avoid errors because of concurrent runs!
+        super(args, options, { customInstallTask: true });
 
         this.argument('extensionName', {
             type: String,
@@ -270,7 +274,7 @@ module.exports = class TheiaExtension extends Base {
         }
     }
 
-    writing() {
+    async writing() {
         if (this.params.extensionType !== ExtensionType.DiagramEditor) {
             if (!this.options.standalone) {
                 /** common templates */
@@ -464,12 +468,10 @@ module.exports = class TheiaExtension extends Base {
             this.fs.move(
                 this.extensionPath('src/browser/README.md'),
                 this.extensionPath(`README.md`),
-                { params: this.params }
             );
             this.fs.move(
                 this.extensionPath('src/browser/tree-frontend-module.ts'),
                 this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
-                { params: this.params }
             );
         }
 
@@ -485,14 +487,15 @@ module.exports = class TheiaExtension extends Base {
                 return;
             }
 
-            const done = this.async();
-            request.get(`https://github.com/eclipse-glsp/glsp-examples/archive/refs/tags/${glspExamplesRepositoryTag}.tar.gz`).pipe(tar.x().on('close',() => {
-                fs.copy(baseDir+'/README.md', './README.md');
-                fs.copy(baseDir+templatePath, './').then(() => {
-                    fs.rm(baseDir, { recursive: true });
-                    done();
-                });
-            }));
+            return new Promise<void>((resolve) => {
+                request.get(`https://github.com/eclipse-glsp/glsp-examples/archive/refs/tags/${glspExamplesRepositoryTag}.tar.gz`).pipe(tar.x().on('close',() => {
+                    fs.copy(baseDir+'/README.md', './README.md');
+                    fs.copy(baseDir+templatePath, './').then(() => {
+                        fs.rm(baseDir, { recursive: true });
+                        resolve();
+                    });
+                }));
+            });
         }
     }
 
@@ -500,13 +503,12 @@ module.exports = class TheiaExtension extends Base {
         return this.destinationPath(this.params.extensionPath, ...paths);
     }
 
-    install() {
+    async install() {
         if (!(this.options as any).skipInstall) {
+            this.log('Installing dependencies');
+            const command: execa.ExecaChildProcess = this.spawnCommand('yarn', []);
+
             if (this.params.extensionType == ExtensionType.DiagramEditor) {
-                this.log('Installing dependencies');
-
-                const command = this.spawnCommand('yarn', []);
-
                 command.on('close', (code:number) => {
                     if (code === 0 ) {
                         this.log(
@@ -518,15 +520,15 @@ module.exports = class TheiaExtension extends Base {
                         process.exit(code);
                     }
                 });
-            } else {
-                const command = this.spawnCommand('yarn', []);
-    
+            } else {    
                 command.on('close', function(code: number){
                     if (code !== 0 ) {
                         process.exit(code);
                     }
                 })
             }
+
+            return command;
         }
     }
 
