@@ -461,17 +461,37 @@ module.exports = class TheiaExtension extends Base {
         /** tree-editor */
         if (this.params.extensionType === ExtensionType.TreeEditor) {
             this.fs.copyTpl(
-                this.templatePath('tree-editor/'),
-                this.extensionPath(`src/browser/`),
+                this.templatePath('tree-editor/example-file'),
+                this.extensionPath(`src/browser/example-file`),
                 { params: this.params }
             );
-            this.fs.move(
-                this.extensionPath('src/browser/README.md'),
+            this.fs.copyTpl(
+                this.templatePath('tree-editor/style'),
+                this.extensionPath(`src/browser/style`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('tree-editor/tree'),
+                this.extensionPath(`src/browser/tree`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('tree-editor/README.md'),
                 this.extensionPath(`README.md`),
             );
-            this.fs.move(
-                this.extensionPath('src/browser/tree-frontend-module.ts'),
+            this.fs.copyTpl(
+                this.templatePath('tree-editor/tree-contribution.ts'),
+                this.extensionPath(`src/browser/tree-contribution.ts`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('tree-editor/tree-frontend-module.ts'),
                 this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
+            );
+            this.fs.copyTpl(
+                this.templatePath('tree-editor/tree-label-provider-contribution.ts'),
+                this.extensionPath(`src/browser/tree-label-provider-contribution.ts`),
+                { params: this.params }
             );
         }
 
