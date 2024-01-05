@@ -23,7 +23,7 @@
   },
   "scripts": {
     "bundle": "yarn rebuild && theia build --mode development",
-    "rebuild": "theia rebuild:electron",
+    "rebuild": "theia rebuild:electron --cacheRoot ..",
     "start": "theia start",
     "watch": "yarn rebuild && theia build --watch --mode development"
   },

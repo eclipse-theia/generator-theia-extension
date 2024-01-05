@@ -21,7 +21,7 @@
   },
   "scripts": {
     "bundle": "yarn rebuild && theia build --mode development",
-    "rebuild": "theia rebuild:browser",
+    "rebuild": "theia rebuild:browser --cacheRoot ..",
     "start": "theia start",
     "watch": "yarn rebuild && theia build --watch --mode development"
   },
