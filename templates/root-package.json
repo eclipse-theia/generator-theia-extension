@@ -11,7 +11,8 @@
     "postinstall": "theia check:theia-version",
     "start:browser": "yarn --cwd browser-app start",
     "start:electron": "yarn --cwd electron-app start",
-    "watch": "lerna run --parallel watch"<% if (params.rootscripts) { %><%- params.rootscripts %><% } %>
+    "watch:browser": "lerna run --parallel watch --ignore electron-app"<% if (params.rootscripts) { %><%- params.rootscripts %><% } %>,
+    "watch:electron": "lerna run --parallel watch --ignore browser-app"<% if (params.rootscripts) { %><%- params.rootscripts %><% } %>
   },
   "devDependencies": {
     "lerna": "<%= params.lernaVersion %>"
