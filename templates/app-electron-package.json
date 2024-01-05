@@ -2,6 +2,7 @@
   "private": true,
   "name": "<%= appMode %>-app",
   "version": "<%= params.version %>",
+  "main": "lib/backend/electron-main.js",
   "dependencies": {
     "@theia/core": "<%= params.theiaVersion %>",
     "@theia/editor": "<%= params.theiaVersion %>",
