@@ -36,7 +36,6 @@
                 "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
             },
             "program": "${workspaceRoot}/electron-app/src-gen/<%= params.electronMainLocation %>/electron-main.js",
-            "protocol": "inspector",
             "args": [
                 "--loglevel=debug",
                 "--hostname=localhost",
