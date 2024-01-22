@@ -14,10 +14,13 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-var assert = require('yeoman-assert')
-var helpers = require('yeoman-test');
-var path = require('path');
-var fs = require('fs');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as url from 'url';
+import assert from 'yeoman-assert';
+import helpers from 'yeoman-test';
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 describe('test extension generation', function () {
     this.timeout(10000);
@@ -25,7 +28,7 @@ describe('test extension generation', function () {
     it('generate the hello world extension', function (done) {
         const name = 'hello-world-test';
         helpers.run(path.join(__dirname, '../generators/app'))
-            .withPrompts({
+            .withAnswers({
                 type: 'hello-world',
                 name
             })
@@ -54,7 +57,7 @@ describe('test extension generation', function () {
     it('generate the widget extension', function (done) {
         const name = 'widget-test';
         helpers.run(path.join(__dirname, '../generators/app'))
-            .withPrompts({
+            .withAnswers({
                 type: 'widget',
                 name
             })
@@ -85,7 +88,7 @@ describe('test extension generation', function () {
     it('generate the labelprovider extension', function (done) {
         const name = 'labelprovider-test';
         helpers.run(path.join(__dirname, '../generators/app'))
-            .withPrompts({
+            .withAnswers({
                 type: 'labelprovider',
                 name
             })
@@ -114,7 +117,7 @@ describe('test extension generation', function () {
     it('generate the empty extension', function (done) {
         const name = 'empty-template-test';
         helpers.run(path.join(__dirname, '../generators/app'))
-            .withPrompts({
+            .withAnswers({
                 type: 'empty',
                 name
             })
@@ -142,7 +145,7 @@ describe('test extension generation', function () {
     it('generate the backend extension', function (done) {
         const name = 'backend-template-test';
         helpers.run(path.join(__dirname, '../generators/app'))
-            .withPrompts({
+            .withAnswers({
                 type: 'backend',
                 name
             })

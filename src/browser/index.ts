@@ -14,22 +14,23 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import Base  = require('yeoman-generator');
+import * as path from 'node:path';
+import * as url from 'node:url';
+import Base, { BaseOptions } from 'yeoman-generator';
 
-module.exports = class TheiaBrowser extends Base {
+export default class TheiaBrowser extends Base<BaseOptions & { params: unknown }> {
 
     path() {
-        this.sourceRoot(__dirname + '/../../templates')
+        this.sourceRoot(path.dirname(url.fileURLToPath(import.meta.url)) + '/../../templates')
     }
 
     writing() {
-        const params = (this.options as any).params
         this.fs.copyTpl(
             this.templatePath('app-browser-package.json'),
             this.destinationPath('browser-app/package.json'),
             {
                 appMode: 'browser',
-                params
+                params: this.options.params
             }
         );
     }

@@ -15,10 +15,21 @@
                 "theia-extension"
             ],
             "cwd": "${workspaceFolder}/testing",
-            "console": "integratedTerminal",            
+            "console": "integratedTerminal",
             "skipFiles": [
                 "<node_internals>/**"
             ],
+        },
+        {
+            "name": "Run tests via YARN",
+            "request": "launch",
+            "nodeVersionHint": 18,
+            "runtimeExecutable": "yarn",
+            "args": [ "test" ],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
         }
     ]
 }

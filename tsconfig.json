@@ -7,8 +7,9 @@
       "emitDecoratorMetadata": true,
       "skipLibCheck": true,
       "downlevelIteration": true,
-      "module": "commonjs",
-      "moduleResolution": "node",
+      "module": "Node16",
+      "moduleResolution": "Node16",
+      "allowSyntheticDefaultImports": false,   // to force us writing proper imports of contents of third-party CommonJS modules
       "target": "es6",
       "lib": [
         "es6",

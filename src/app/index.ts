@@ -14,12 +14,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import type execa = require('execa');
-import path = require('path');
-import Base = require('yeoman-generator');
-const request = require('request');
-const tar = require('tar');
-const fs = require('fs-extra');
+import * as fs from 'node:fs/promises';
+import * as path from 'node:path';
+import * as url from 'node:url';
+import request from 'request';
+import tar from 'tar';
+import Base, { BaseFeatures, BaseOptions } from 'yeoman-generator/typed';
 
 const glspExamplesRepositoryTag = "generator-latest";
 const backend = "backend";
@@ -40,13 +40,26 @@ enum TemplateType {
     Node = 'node',
 }
 
-module.exports = class TheiaExtension extends Base {
+type ExtensionOptions = {
+    extensionType: ExtensionType;
+    extensionName?: string;
+    browser: boolean;
+    electron: boolean;
+    standalone?: boolean;
+    templateType: string;
+    "theia-version": string;
+    "lerna-version": string;
+    githubURL: string;
+    params: unknown;
+}
+
+export default class TheiaExtension extends Base<BaseOptions & ExtensionOptions> {
 
     params: {
         author: string
         version: string
         license: string
-        extensionName: string
+        extensionName?: string
         extensionType: string
         templateType: string
         unscopedExtensionName: string
@@ -67,13 +80,14 @@ module.exports = class TheiaExtension extends Base {
         rootscripts: string
         containsTests: boolean
         electronMainLocation: string
+        backend?: boolean
     };
 
-    constructor(args: string | string[], options: Base.GeneratorOptions) {
+    constructor(args: string | string[], options: BaseOptions & ExtensionOptions) {
         // For v5 generators the '<npm|pnpm|yarn> install' task is implicitely invoked by 'yeoman-environment' since 'yeoman-environment@3', see
         //  https://github.com/yeoman/environment/commit/ab9582a70073203c7a6b58fb6dbf1f4eba249d48#diff-54bc5f4bd40f22e081d54b6c20bbf2523e438cf2f2716b91714a1f596e4d87cd
         // since we spawn the pm processes on our own in 'install()', we need to declare that here in order to avoid errors because of concurrent runs!
-        super(args, options, { customInstallTask: true });
+        super(args, options, <BaseFeatures>{ customInstallTask: true });
 
         this.argument('extensionName', {
             type: String,
@@ -155,12 +169,12 @@ module.exports = class TheiaExtension extends Base {
     }
 
     path() {
-        this.sourceRoot(__dirname + '/../../templates');
+        this.sourceRoot(path.dirname(url.fileURLToPath(import.meta.url)) + '/../../templates');
     }
 
     async prompting() {
-        let extensionType = (this.options as any).extensionType;
-        const inExtensionType = (<any>Object).values(ExtensionType).includes(extensionType);
+        let extensionType = this.options.extensionType;
+        const inExtensionType = Object.values(ExtensionType).includes(extensionType);
         if ((extensionType === undefined) || !inExtensionType) {
             if (!(extensionType === undefined)) {
                 this.log(`Invalid extension type: ${extensionType}`);
@@ -179,7 +193,7 @@ module.exports = class TheiaExtension extends Base {
                     { value: ExtensionType.DiagramEditor, name: 'DiagramEditor' }
                 ]
             });
-            (this.options as any).extensionType = answer.type;
+            this.options.extensionType = answer.type;
 
             if (answer.type === ExtensionType.DiagramEditor) {
                 const answer = await this.prompt({
@@ -193,7 +207,7 @@ module.exports = class TheiaExtension extends Base {
                 });
                 let template = answer.backend;
 
-                (this.options as any).templateType = template;
+                this.options.templateType = template;
 
                 if(template === TemplateType.Java) {
                     this.log('\x1b[32m%s\x1b[0m', 'The template will use an EMF source model on the server and generate a Theia extension ✓')
@@ -204,22 +218,22 @@ module.exports = class TheiaExtension extends Base {
             }
         }
 
-        let extensionName = (this.options as any).extensionName;
+        let extensionName = this.options.extensionName;
         // extensionName is not used within the DiagramEditor
         if (!extensionName && this.options.extensionType !== ExtensionType.DiagramEditor) {
             const answer = await this.prompt({
                 type: 'input',
                 name: 'name',
                 message: 'The extension\'s name',
-                default: (this.options as any).extensionType
+                default: this.options.extensionType
             });
-            (this.options as any).extensionName = answer.name;
+            this.options.extensionName = answer.name;
         }
     }
 
     configuring() {
-        const options = this.options as any
-        const extensionName = options.extensionName as string
+        const options = this.options
+        const extensionName = options.extensionName
         let unscopedExtensionName = ''
         let extensionPath = ''
         let extensionPrefix = ''
@@ -234,7 +248,7 @@ module.exports = class TheiaExtension extends Base {
         const templateType = options.templateType;
         const githubURL = options.githubURL;
         this.log(extensionPrefix);
-        this.params = {
+        this.params = <any>{
             ...options,
             extensionName,
             unscopedExtensionName,
@@ -245,7 +259,7 @@ module.exports = class TheiaExtension extends Base {
             githubURL,
             theiaVersion: options["theia-version"],
             lernaVersion: options["lerna-version"],
-            backend: options["extensionType"] === ExtensionType.Backend,
+            backend: options.extensionType === ExtensionType.Backend,
             electronMainLocation: this.getElectronMainLocation(options["theia-version"])
         }
         this.params.dependencies = '';
@@ -259,13 +273,13 @@ module.exports = class TheiaExtension extends Base {
             this.params.rootscripts =`,\n    "test": "cd ${this.params.extensionPath} && yarn test"`;
             this.params.containsTests = true;
         }
-        options.params = this.params
+        options.params = this.params    // piggyback the params to options and hand them over to the child generators
         if (!options.standalone && this.params.extensionType !== ExtensionType.DiagramEditor) {
             if (options.browser) {
-                this.composeWith(require.resolve('../browser'), this.options);
+                this.composeWith('../browser/index.js', this.options);
             }
             if (options.electron) {
-                this.composeWith(require.resolve('../electron'), this.options);
+                this.composeWith('../electron/index.js', this.options);
             }
         }
         if (options.standalone) {
@@ -497,7 +511,7 @@ module.exports = class TheiaExtension extends Base {
 
         /** DiagramEditor */
         if (this.params.extensionType === ExtensionType.DiagramEditor) {
-            const baseDir = `./glsp-examples-${glspExamplesRepositoryTag}`;
+            const baseDir = `glsp-examples-${glspExamplesRepositoryTag}`;
             let templatePath = '';
             if(this.params.templateType == TemplateType.Java) {
                 templatePath = '/project-templates/java-emf-theia';
@@ -507,13 +521,18 @@ module.exports = class TheiaExtension extends Base {
                 return;
             }
 
-            return new Promise<void>((resolve) => {
-                request.get(`https://github.com/eclipse-glsp/glsp-examples/archive/refs/tags/${glspExamplesRepositoryTag}.tar.gz`).pipe(tar.x().on('close',() => {
-                    fs.copy(baseDir+'/README.md', './README.md');
-                    fs.copy(baseDir+templatePath, './').then(() => {
-                        fs.rm(baseDir, { recursive: true });
+            const dest = this.destinationPath.bind(this);
+
+            return new Promise<void>((resolve, reject) => {
+                request.get(`https://github.com/eclipse-glsp/glsp-examples/archive/refs/tags/${glspExamplesRepositoryTag}.tar.gz`).pipe(tar.x({ cwd: dest() }).on('close', async () => {
+                    try {
+                        await fs.cp(dest(baseDir, 'README.md'), dest('./README.md'));
+                        await fs.cp(dest(baseDir, templatePath), dest(), { recursive: true });
+                        await fs.rm(dest(baseDir), { recursive: true });
                         resolve();
-                    });
+                    } catch (e) {
+                        reject(e);
+                    }
                 }));
             });
         }
@@ -524,9 +543,9 @@ module.exports = class TheiaExtension extends Base {
     }
 
     async install() {
-        if (!(this.options as any).skipInstall) {
+        if (!this.options.skipInstall) {
             this.log('Installing dependencies');
-            const command: execa.ExecaChildProcess = this.spawnCommand('yarn', []);
+            const command = this.spawn('yarn', []);
 
             if (this.params.extensionType == ExtensionType.DiagramEditor) {
                 command.on('close', (code:number) => {
@@ -573,6 +592,3 @@ module.exports = class TheiaExtension extends Base {
         }
     }
 }
-
-module.exports.ExtensionType = ExtensionType;
-
