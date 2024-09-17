@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import type execa = require('execa');
+const { spawn } = require('child_process');
 import path = require('path');
 import Base = require('yeoman-generator');
 const request = require('request');
@@ -526,7 +526,17 @@ module.exports = class TheiaExtension extends Base {
     async install() {
         if (!(this.options as any).skipInstall) {
             this.log('Installing dependencies');
-            const command: execa.ExecaChildProcess = this.spawnCommand('yarn', []);
+            const command = spawn('yarn', []);
+
+            command.stdout.on('data', (data: Buffer) => {
+                console.log(`stdout: ${data}`);
+            });
+            command.stderr.on('data', (data: Buffer) => {
+                console.warn(`stderr: ${data}`);
+            });
+            command.on('close', (code: number) => {
+                console.log(`yarn process exited with code ${code}`);
+            });
 
             if (this.params.extensionType == ExtensionType.DiagramEditor) {
                 command.on('close', (code:number) => {
