@@ -2,7 +2,7 @@
   "private": true,
   "engines": {
     "yarn": ">=1.7.0 <2",
-    "node": ">=16"
+    "node": ">=18"
   },
   "scripts": {
     "build:browser": "yarn --cwd browser-app bundle",
