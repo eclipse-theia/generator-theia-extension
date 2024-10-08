@@ -9,10 +9,9 @@ export const <%= params.extensionPrefix %>Command: Command = {
 
 @injectable()
 export class <%= params.extensionPrefix %>CommandContribution implements CommandContribution {
-
-    constructor(
-        @inject(MessageService) private readonly messageService: MessageService,
-    ) { }
+    
+    @inject(MessageService)
+    protected readonly messageService!: MessageService;
 
     registerCommands(registry: CommandRegistry): void {
         registry.registerCommand(<%= params.extensionPrefix %>Command, {
