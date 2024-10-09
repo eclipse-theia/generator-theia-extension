@@ -30,7 +30,7 @@
     "@theia/core": "<%= params.theiaVersion %>"<% if (params.dependencies) { %><%- params.dependencies %><% } %>
   },
   "devDependencies": {
-    "rimraf": "latest",
+    "rimraf": "^5.0.0",
     "typescript": "~5.4.5"<% if (params.devdependencies) { %><%- params.devdependencies %><% } %>
   },
   "scripts": {
