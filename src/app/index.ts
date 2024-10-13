@@ -529,11 +529,21 @@ module.exports = class TheiaExtension extends Base {
             const command = spawn('yarn', []);
 
             command.stdout.on('data', (data: Buffer) => {
-                console.log(`stdout: ${data}`);
+                const output = data.toString().trim();
+                if (output) {
+                    console.log(output);
+                }
             });
+
             command.stderr.on('data', (data: Buffer) => {
-                console.warn(`stderr: ${data}`);
+                const output = data.toString().trim();
+                if (output.includes('warning')) {
+                    console.warn(output);
+                } else if (output) {
+                    console.error(output);
+                }
             });
+
             command.on('close', (code: number) => {
                 console.log(`yarn process exited with code ${code}`);
             });
