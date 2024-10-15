@@ -32,7 +32,8 @@ enum ExtensionType {
     TreeEditor = 'tree-editor',
     Empty = 'empty',
     Backend = 'backend',
-    DiagramEditor = 'diagram-editor'
+    DiagramEditor = 'diagram-editor',
+    NoExtension = 'no-extension'
 }
 
 enum TemplateType {
@@ -176,7 +177,8 @@ module.exports = class TheiaExtension extends Base {
                     { value: ExtensionType.TreeEditor, name: 'TreeEditor' },
                     { value: ExtensionType.Backend, name: 'Backend Communication' },
                     { value: ExtensionType.Empty, name: 'Empty' },
-                    { value: ExtensionType.DiagramEditor, name: 'DiagramEditor' }
+                    { value: ExtensionType.DiagramEditor, name: 'DiagramEditor' },
+                    { value: ExtensionType.NoExtension, name: 'No Extension (just a Theia application)' }
                 ]
             });
             (this.options as any).extensionType = answer.type;
@@ -206,7 +208,7 @@ module.exports = class TheiaExtension extends Base {
 
         let extensionName = (this.options as any).extensionName;
         // extensionName is not used within the DiagramEditor
-        if (!extensionName && this.options.extensionType !== ExtensionType.DiagramEditor) {
+        if (!extensionName && this.options.extensionType !== ExtensionType.DiagramEditor && this.options.extensionType !== ExtensionType.NoExtension) {
             const answer = await this.prompt({
                 type: 'input',
                 name: 'name',
@@ -306,16 +308,18 @@ module.exports = class TheiaExtension extends Base {
                     );
                 }
             }
-            this.fs.copyTpl(
-                this.templatePath('extension-package.json'),
-                this.extensionPath('package.json'),
-                { params: this.params }
-            );
-            this.fs.copyTpl(
-                this.templatePath('tsconfig.json'),
-                this.extensionPath('tsconfig.json'),
-                { params: this.params }
-            );
+            if(this.params.extensionType !== ExtensionType.NoExtension){
+                this.fs.copyTpl(
+                    this.templatePath('extension-package.json'),
+                    this.extensionPath('package.json'),
+                    { params: this.params }
+                );
+                this.fs.copyTpl(
+                    this.templatePath('tsconfig.json'),
+                    this.extensionPath('tsconfig.json'),
+                    { params: this.params }
+                );
+            }
         }
 
         /** hello-world */
