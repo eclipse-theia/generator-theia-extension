@@ -18,6 +18,6 @@
     "lerna": "<%= params.lernaVersion %>"
   },
   "workspaces": [
-    "<%= params.extensionPath %>"<% if (params.browser) { %>, "browser-app"<% } %><% if (params.electron) { %>, "electron-app"<% } %>
+    <% if (params.extensionName) { %>"<%= params.extensionPath %>"<% } %><% if (params.browser) { %><% if (params.extensionName) { %>,<% } %> "browser-app"<% } %><% if (params.electron) { %><% if (params.extensionName||params.browser) { %>,<% } %> "electron-app"<% } %>
   ]
 }

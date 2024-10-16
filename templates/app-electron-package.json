@@ -15,8 +15,8 @@
     "@theia/preferences": "<%= params.theiaVersion %>",
     "@theia/process": "<%= params.theiaVersion %>",
     "@theia/terminal": "<%= params.theiaVersion %>",
-    "@theia/workspace": "<%= params.theiaVersion %>",
-    "<%= params.extensionName %>": "<%= params.version %>"
+    "@theia/workspace": "<%= params.theiaVersion %>"<% if (params.extensionName) { %>,
+    "<%= params.extensionName %>": "<%= params.version %>"<% } %>
   },
   "devDependencies": {
     "@theia/cli": "<%= params.theiaVersion %>",

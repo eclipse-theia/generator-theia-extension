@@ -2,7 +2,7 @@
 <br />
 <img src='https://raw.githubusercontent.com/theia-ide/generator-theia-extension/master/logo/theia.svg?sanitize=true' alt='theia logo' width='125'>
 
-<h2>ECLIPSE THEIA - EXTENSION GENERATOR</h2>
+<h2>ECLIPSE THEIA - GENERATOR</h2>
 
 
 
@@ -11,8 +11,12 @@
 
 <br />
 
-A [yeoman](https://yeoman.io/) generator that scaffolds a project structure for developing [Eclipse Theia](https://github.com/eclipse-theia/theia) extensions.
+A [yeoman](https://yeoman.io/) generator that scaffolds a project structure for developing custom [Eclipse Theia](https://github.com/eclipse-theia/theia) applications and extensions.
 
+Please also see:
+
+- [Build your own IDE/Tool based on Eclipse Theia](https://theia-ide.org/docs/composing_applications/)
+- [Authoring Theia Extensions](https://theia-ide.org/docs/authoring_extensions/)
 
 <br />
 
@@ -27,10 +31,10 @@ To use it, install `yo` (version 4.x.x) and the `generator` (see next below).
 npm install -g yo generator-theia-extension
 ```
 
-To create a sample project with a Theia extension including a browser and electron app, run:
+To create a sample Theia project (optionally with custom Theia extensions) including a browser and electron app, run:
 
 ```
-mkdir my-extension && cd my-extension
+mkdir my-theia-app && cd my-theia-app
 yo theia-extension
 ```
 
@@ -42,6 +46,7 @@ yo theia-extension --help
 
 ## Extension Options
 
+The generator allows to generate an example extension that is directly part of the generated Theia application. Alternativly, you can select 'no-extension' to just generate a Theia application without a custom extension.
 
 | Template Option | Description | Documentation |
 |:---|:---|:---|
@@ -52,6 +57,7 @@ yo theia-extension --help
 | `empty` | Creates a simple, minimal extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/empty/README.md) |
 | `backend` | Creates a backend communication extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/backend/README.md) |
 | `diagram-editor` | Creates a diagram editor extension | [readme](https://github.com/eclipse-glsp/glsp-examples/blob/master/README.md) |
+| `no-extension` | Creates a Theia application without any extension | |
 
 
 
