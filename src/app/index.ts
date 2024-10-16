@@ -15,6 +15,7 @@
  ********************************************************************************/
 
 const { spawn } = require('child_process');
+import { execSync } from 'child_process';
 import path = require('path');
 import Base = require('yeoman-generator');
 const request = require('request');
@@ -130,12 +131,12 @@ module.exports = class TheiaExtension extends Base {
             description: 'The extension\'s Github URL',
             type: String
         });
-
+        const latestTheiaVersion = this.getLatestPackageVersion('@theia/core');
         this.option('theia-version', {
             alias: 't',
             description: 'The version of Theia to use',
             type: String,
-            default: 'latest'
+            default: latestTheiaVersion
         });
         this.option('lerna-version', {
             description: 'The version of lerna to use',
@@ -153,6 +154,17 @@ module.exports = class TheiaExtension extends Base {
             type: Boolean,
             default: false
         });
+    }
+
+    getLatestPackageVersion(packageName: string): string {
+        try {
+            // Run the npm command to get the latest version of the package
+            const result = execSync(`npm show ${packageName} version`, { encoding: 'utf-8' });
+            return result.trim();
+        } catch (error) {
+            console.error('Error fetching the latest package version:', error);
+            return 'latest';
+        }
     }
 
     path() {
