@@ -31,6 +31,7 @@ enum ExtensionType {
     Widget = 'widget',
     LabelProvider = 'labelprovider',
     TreeEditor = 'tree-editor',
+    TreeWidget = 'tree-widget',
     Empty = 'empty',
     Backend = 'backend',
     DiagramEditor = 'diagram-editor',
@@ -186,6 +187,7 @@ module.exports = class TheiaExtension extends Base {
                     { value: ExtensionType.HelloWorld, name: 'Hello World' },
                     { value: ExtensionType.Widget, name: 'Widget (with unit tests)' },
                     { value: ExtensionType.LabelProvider, name: 'LabelProvider' },
+                    { value: ExtensionType.TreeWidget, name: 'TreeWidget View' },
                     { value: ExtensionType.TreeEditor, name: 'TreeEditor' },
                     { value: ExtensionType.Backend, name: 'Backend Communication' },
                     { value: ExtensionType.Empty, name: 'Empty' },
@@ -511,6 +513,28 @@ module.exports = class TheiaExtension extends Base {
             );
         }
 
+        /** TreeWidget */
+        if (this.params.extensionType === ExtensionType.TreeWidget) {
+            ['treeview-example-widget.tsx',
+                'treeview-example-view-contribution.ts',
+                'treeview-example-tree.ts',
+                'treeview-example-model.ts',
+                'treeview-example-label-provider.ts',
+                'README.md',
+                'styles',
+                'decorator'].forEach((file) =>
+                    this.fs.copyTpl(
+                        this.templatePath(`tree-widget/${file}`),
+                        this.extensionPath(`src/browser/${file}`),
+                        { params: this.params }
+                    ));
+
+            this.fs.copyTpl(
+                this.templatePath('tree-widget/treeview-example-frontend-module.ts'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
+            );
+        }
+
         /** DiagramEditor */
         if (this.params.extensionType === ExtensionType.DiagramEditor) {
             const baseDir = `./glsp-examples-${glspExamplesRepositoryTag}`;
@@ -576,7 +600,7 @@ module.exports = class TheiaExtension extends Base {
                         process.exit(code);
                     }
                 });
-            } else {    
+            } else {
                 command.on('close', function(code: number){
                     if (code !== 0 ) {
                         process.exit(code);
