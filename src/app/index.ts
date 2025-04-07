@@ -188,7 +188,6 @@ module.exports = class TheiaExtension extends Base {
                     { value: ExtensionType.Widget, name: 'Widget (with unit tests)' },
                     { value: ExtensionType.LabelProvider, name: 'LabelProvider' },
                     { value: ExtensionType.TreeWidget, name: 'TreeWidget View' },
-                    { value: ExtensionType.TreeEditor, name: 'TreeEditor' },
                     { value: ExtensionType.Backend, name: 'Backend Communication' },
                     { value: ExtensionType.Empty, name: 'Empty' },
                     { value: ExtensionType.DiagramEditor, name: 'DiagramEditor' },
@@ -266,9 +265,6 @@ module.exports = class TheiaExtension extends Base {
         }
         this.params.dependencies = '';
         this.params.browserDevDependencies = '';
-        if (this.params.extensionType === ExtensionType.TreeEditor) {
-            this.params.dependencies = `,\n    "@theia/editor": "${this.params.theiaVersion}",\n    "@theia/filesystem": "${this.params.theiaVersion}",\n    "@theia/workspace": "${this.params.theiaVersion}",\n    "@eclipse-emfcloud/theia-tree-editor": "next",\n    "@jsonforms/core": "^3.1.0",\n    "@jsonforms/react": "^3.1.0",\n    "@jsonforms/vanilla-renderers": "^3.1.0",\n    "uuid": "^3.3.2"`;
-        }
         if (this.params.extensionType === ExtensionType.Widget) {
             this.params.devdependencies = `,\n    "@testing-library/react": "^11.2.7",\n    "@types/jest": "^26.0.20",\n    "jest": "^26.6.3",\n    "ts-node": "^10.9.1",\n    "ts-jest": "^26.5.6"`;
             this.params.scripts = `,\n    "test": "jest --config configs/jest.config.ts"`;
@@ -476,43 +472,6 @@ module.exports = class TheiaExtension extends Base {
             );
         }
 
-        /** tree-editor */
-        if (this.params.extensionType === ExtensionType.TreeEditor) {
-            this.fs.copyTpl(
-                this.templatePath('tree-editor/example-file'),
-                this.extensionPath(`src/browser/example-file`),
-                { params: this.params }
-            );
-            this.fs.copyTpl(
-                this.templatePath('tree-editor/style'),
-                this.extensionPath(`src/browser/style`),
-                { params: this.params }
-            );
-            this.fs.copyTpl(
-                this.templatePath('tree-editor/tree'),
-                this.extensionPath(`src/browser/tree`),
-                { params: this.params }
-            );
-            this.fs.copyTpl(
-                this.templatePath('tree-editor/README.md'),
-                this.extensionPath(`README.md`),
-            );
-            this.fs.copyTpl(
-                this.templatePath('tree-editor/tree-contribution.ts'),
-                this.extensionPath(`src/browser/tree-contribution.ts`),
-                { params: this.params }
-            );
-            this.fs.copyTpl(
-                this.templatePath('tree-editor/tree-frontend-module.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
-            );
-            this.fs.copyTpl(
-                this.templatePath('tree-editor/tree-label-provider-contribution.ts'),
-                this.extensionPath(`src/browser/tree-label-provider-contribution.ts`),
-                { params: this.params }
-            );
-        }
-
         /** TreeWidget */
         if (this.params.extensionType === ExtensionType.TreeWidget) {
             ['treeview-example-widget.tsx',
@@ -534,7 +493,6 @@ module.exports = class TheiaExtension extends Base {
                 this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
             );
         }
-
         /** DiagramEditor */
         if (this.params.extensionType === ExtensionType.DiagramEditor) {
             const baseDir = `./glsp-examples-${glspExamplesRepositoryTag}`;
