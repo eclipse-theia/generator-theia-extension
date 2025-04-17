@@ -55,7 +55,6 @@ The generator allows to generate an example extension that is directly part of t
 | `labelprovider` | Creates a simple extension which adds a custom label (with icon) for .my files | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/labelprovider/README.md) |
 | `empty` | Creates a simple, minimal extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/empty/README.md) |
 | `backend` | Creates a backend communication extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/backend/README.md) |
-| `diagram-editor` | Creates a diagram editor extension | [readme](https://github.com/eclipse-glsp/glsp-examples/blob/master/README.md) |
 | `no-extension` | Creates a Theia application without any extension | |
 
 
