@@ -477,6 +477,7 @@ module.exports = class TheiaExtension extends Base {
             ['treeview-example-widget.tsx',
                 'treeview-example-view-contribution.ts',
                 'treeview-example-tree.ts',
+                'treeview-example-tree-item-factory.ts',
                 'treeview-example-model.ts',
                 'treeview-example-label-provider.ts',
                 'README.md',

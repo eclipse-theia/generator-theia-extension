@@ -1,4 +1,5 @@
 import { Emitter, Event } from '@theia/core';
+import { wait } from '@theia/core/lib/common/promise-util'
 import { DidChangeLabelEvent, LabelProviderContribution, TreeNode } from '@theia/core/lib/browser';
 import { injectable } from '@theia/core/shared/inversify';
 import { ExampleTreeLeaf, ExampleTreeNode } from './treeview-example-model';
@@ -51,15 +52,13 @@ export class TreeViewExampleLabelProvider implements LabelProviderContribution {
         if (ExampleTreeLeaf.is(element)) {
             if (!element.quantityLabel) {
                 // if the quantityLabel is not yet set (not even 'calculating ...'), we schedule its retrieval
-                // by simulating a delay using setTimeout().
+                // by simulating a delay using wait(). In practice, you would call an expensive function returnung an
+                // actual promise instead of calling wait().
                 element.quantityLabel = 'calculating ...';
-                element.quantityLabelPromise = new Promise(resolve => setTimeout(() => resolve(`${element.data.quantity}`), 1000));
-
-                // after the detail has been retrieved, set the quantityLabel to its final value and emit a change event
-                element.quantityLabelPromise.then(quantity => {
-                    element.quantityLabel = quantity;
+                wait(1000).then(() => {
+                    element.quantityLabel = `${element.data.quantity}`;
                     this.fireNodeChange(element);
-                });
+                });                
             }
 
             // assemble the complete name from its parts

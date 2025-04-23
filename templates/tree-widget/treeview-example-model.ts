@@ -1,50 +1,9 @@
 import { CompositeTreeNode, ExpandableTreeNode, SelectableTreeNode, TreeModelImpl, TreeNode } from '@theia/core/lib/browser';
-import { injectable, postConstruct } from '@theia/core/shared/inversify';
+import { inject, injectable, postConstruct } from '@theia/core/shared/inversify';
+import { Item, TreeViewExampleTreeItemFactory } from './treeview-example-tree-item-factory';
 
 /** well-known ID for the root node in our tree */
 export const ROOT_NODE_ID = 'treeview-example-root';
-
-/**
- * Interface for the "business model".
- *
- * (Note: this could be more elaborated, using different interfaces for containers and concrete items, but for this demonstration,
- * we keep the model like this...)
- */
-export interface Item {
-    name: string; // name of the category/container or item
-    children?: Item[]; // the directly contained items; only defined for categories/containers
-    quantity?: number; // the quantity of items available (to demonstrate decoration, ...); only defined for items
-    backOrdered?: boolean; // whether this item was backordered (to demonstrate checkboxes); only defined for items
-}
-
-/**
- * Function to map a given item to a tree node
- */
-export namespace Item {
-    export function toTreeNode(item: Item): ExampleTreeNode | ExampleTreeLeaf {
-        if (item.children) {
-            return <ExampleTreeNode>{
-                id: item.name,
-                data: item,
-                expanded: false,
-                children: [],
-                parent: undefined,
-                type: 'node',
-                selected: false
-            };
-        } else {
-            return <ExampleTreeLeaf>{
-                id: item.name,
-                data: item,
-                parent: undefined,
-                type: 'leaf',
-                checkboxInfo: {
-                    checked: item.backOrdered,
-                }
-            };
-        }
-    }
-}
 
 /** Interface for an container node (having children), along with a type-checking function */
 export interface ExampleTreeNode extends ExpandableTreeNode, SelectableTreeNode {
@@ -61,7 +20,6 @@ export namespace ExampleTreeNode {
 export interface ExampleTreeLeaf extends TreeNode {
     data: Item;
     quantityLabel?: string;
-    quantityLabelPromise?: Promise<string>;
     type: 'leaf';
 }
 export namespace ExampleTreeLeaf {
@@ -109,6 +67,7 @@ const EXAMPLE_DATA: Item[] = [{
  */
 @injectable()
 export class TreeViewExampleModel extends TreeModelImpl {
+    @inject(TreeViewExampleTreeItemFactory) private readonly itemFactory: TreeViewExampleTreeItemFactory;
 
     /**
      * Initialize the tree model from the business model
@@ -126,7 +85,7 @@ export class TreeViewExampleModel extends TreeModelImpl {
         };
 
         // populate the direct children
-        EXAMPLE_DATA.map(item => Item.toTreeNode(item))
+        EXAMPLE_DATA.map(item => this.itemFactory.toTreeNode(item))
             .forEach(node => CompositeTreeNode.addChild(root, node));
 
         // set the root node as root of the tree

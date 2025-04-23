@@ -42,6 +42,7 @@ export class TreeViewExampleWidget extends TreeWidget {
                 this.messageService.info(`Example node ${node.data.name} was opened.`);
             }
         }));
+        this.toDispose.push(this.toCancelNodeExpansion);
     }
 
     /**

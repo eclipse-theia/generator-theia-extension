@@ -8,6 +8,7 @@ import { TreeViewExampleModel } from './treeview-example-model';
 import { TreeviewExampleTree } from './treeview-example-tree';
 import { TreeviewExampleViewContribution } from './treeview-example-view-contribution';
 import { TREEVIEW_EXAMPLE_CONTEXT_MENU, TreeViewExampleWidget } from './treeview-example-widget';
+import { TreeViewExampleTreeItemFactory } from './treeview-example-tree-item-factory';
 
 /**
  * Frontend contribution bindings.
@@ -48,5 +49,6 @@ function createTreeViewExampleViewContainer(parent: interfaces.Container): Conta
         decoratorService: TreeviewExampleDecorationService,
     });
     bindContributionProvider(child, TreeviewExampleDecorator);
+    child.bind(TreeViewExampleTreeItemFactory).toSelf().inSingletonScope();
     return child;
 }

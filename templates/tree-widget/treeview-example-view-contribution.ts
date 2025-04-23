@@ -24,20 +24,13 @@ export class TreeviewExampleViewContribution extends AbstractViewContribution<Tr
         super({
             widgetId: TreeViewExampleWidget.ID,
             widgetName: TreeViewExampleWidget.LABEL,
-            defaultWidgetOptions: {
-                area: 'right' // Can be 'left', 'right', 'bottom', 'main'
-            },
+            defaultWidgetOptions: { area: 'right' },
             toggleCommandId: OpenTreeviewExampleView.id
         });
     }
 
     override registerCommands(commands: CommandRegistry): void {
         super.registerCommands(commands);
-
-        // register the "Open View" command
-        commands.registerCommand(OpenTreeviewExampleView, {
-            execute: () => super.openView({ activate: false, reveal: true })
-        });
 
         // register the "Add child item" command
         commands.registerCommand(TreeviewExampleTreeAddItem, {
