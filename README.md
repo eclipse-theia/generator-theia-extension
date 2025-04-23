@@ -56,7 +56,6 @@ The generator allows to generate an example extension that is directly part of t
 | `tree-widget` | Creates a tree view extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/tree-widget/README.md) |
 | `empty` | Creates a simple, minimal extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/empty/README.md) |
 | `backend` | Creates a backend communication extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/backend/README.md) |
-| `diagram-editor` | Creates a diagram editor extension | [readme](https://github.com/eclipse-glsp/glsp-examples/blob/master/README.md) |
 | `no-extension` | Creates a Theia application without any extension | |
 
 

@@ -23,9 +23,6 @@
   "author": "TypeFox",
   "license": "EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0",
   "dependencies": {
-    "fs-extra": "^10.0.0",
-    "request": "^2.88.2",
-    "tar": "^6.1.1",
     "yeoman-generator": "^5.0.0"
   },
   "devDependencies": {

@@ -18,11 +18,7 @@ const { spawn } = require('child_process');
 import { execSync } from 'child_process';
 import path = require('path');
 import Base = require('yeoman-generator');
-const request = require('request');
-const tar = require('tar');
-const fs = require('fs-extra');
 
-const glspExamplesRepositoryTag = "generator-latest";
 const backend = "backend";
 const frontend = "frontend";
 
@@ -34,13 +30,7 @@ enum ExtensionType {
     TreeWidget = 'tree-widget',
     Empty = 'empty',
     Backend = 'backend',
-    DiagramEditor = 'diagram-editor',
     NoExtension = 'no-extension'
-}
-
-enum TemplateType {
-    Java = 'java',
-    Node = 'node',
 }
 
 module.exports = class TheiaExtension extends Base {
@@ -51,7 +41,6 @@ module.exports = class TheiaExtension extends Base {
         license: string
         extensionName: string
         extensionType: string
-        templateType: string
         unscopedExtensionName: string
         githubURL: string
         extensionPrefix: string
@@ -190,38 +179,14 @@ module.exports = class TheiaExtension extends Base {
                     { value: ExtensionType.TreeWidget, name: 'TreeWidget View' },
                     { value: ExtensionType.Backend, name: 'Backend Communication' },
                     { value: ExtensionType.Empty, name: 'Empty' },
-                    { value: ExtensionType.DiagramEditor, name: 'DiagramEditor' },
                     { value: ExtensionType.NoExtension, name: 'No Extension (just a Theia application)' }
                 ]
             });
             (this.options as any).extensionType = answer.type;
-
-            if (answer.type === ExtensionType.DiagramEditor) {
-                const answer = await this.prompt({
-                    type: 'list',
-                    name: 'backend',
-                    message: 'Which GLSP backend do you want to use, i.e. in which language do you prefer to develop your GLSP server?',
-                    choices: [
-                        { value: TemplateType.Java, name: 'Java (requires maven!)' },
-                        { value: TemplateType.Node, name: 'Node (TypeScript)' },
-                    ]
-                });
-                let template = answer.backend;
-
-                (this.options as any).templateType = template;
-
-                if(template === TemplateType.Java) {
-                    this.log('\x1b[32m%s\x1b[0m', 'The template will use an EMF source model on the server and generate a Theia extension ✓')
-                }
-                if(template === TemplateType.Node) {
-                    this.log('\x1b[32m%s\x1b[0m', 'The template will use a JSON based source model, node as a server and generate a Theia extension ✓')
-                }
-            }
         }
 
         let extensionName = (this.options as any).extensionName;
-        // extensionName is not used within the DiagramEditor
-        if (!extensionName && this.options.extensionType !== ExtensionType.DiagramEditor && this.options.extensionType !== ExtensionType.NoExtension) {
+        if (!extensionName && this.options.extensionType !== ExtensionType.NoExtension) {
             const answer = await this.prompt({
                 type: 'input',
                 name: 'name',
@@ -246,7 +211,6 @@ module.exports = class TheiaExtension extends Base {
             extensionPrefix = extensionPath.split('-').map(name => this._capitalize(name)).join('');
         }
         const extensionType = options.extensionType;
-        const templateType = options.templateType;
         const githubURL = options.githubURL;
         this.log(extensionPrefix);
         this.params = {
@@ -256,7 +220,6 @@ module.exports = class TheiaExtension extends Base {
             extensionPath,
             extensionPrefix,
             extensionType,
-            templateType,
             githubURL,
             theiaVersion: options["theia-version"],
             lernaVersion: options["lerna-version"],
@@ -272,7 +235,7 @@ module.exports = class TheiaExtension extends Base {
             this.params.containsTests = true;
         }
         options.params = this.params
-        if (!options.standalone && this.params.extensionType !== ExtensionType.DiagramEditor) {
+        if (!options.standalone) {
             if (options.browser) {
                 this.composeWith(require.resolve('../browser'), this.options);
             }
@@ -287,49 +250,47 @@ module.exports = class TheiaExtension extends Base {
     }
 
     async writing() {
-        if (this.params.extensionType !== ExtensionType.DiagramEditor) {
-            if (!this.options.standalone) {
-                /** common templates */
+        if (!this.options.standalone) {
+            /** common templates */
+            this.fs.copyTpl(
+                this.templatePath('root-package.json'),
+                this.destinationPath('package.json'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('lerna.json'),
+                this.destinationPath('lerna.json'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('gitignore'),
+                this.destinationPath('.gitignore'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('README.md'),
+                this.destinationPath('README.md'),
+                { params: this.params }
+            );
+            if (this.params.vscode) {
                 this.fs.copyTpl(
-                    this.templatePath('root-package.json'),
-                    this.destinationPath('package.json'),
-                    { params: this.params }
-                );
-                this.fs.copyTpl(
-                    this.templatePath('lerna.json'),
-                    this.destinationPath('lerna.json'),
-                    { params: this.params }
-                );
-                this.fs.copyTpl(
-                    this.templatePath('gitignore'),
-                    this.destinationPath('.gitignore'),
-                    { params: this.params }
-                );
-                this.fs.copyTpl(
-                    this.templatePath('README.md'),
-                    this.destinationPath('README.md'),
-                    { params: this.params }
-                );
-                if (this.params.vscode) {
-                    this.fs.copyTpl(
-                        this.templatePath('launch.json'),
-                        this.destinationPath('.vscode/launch.json'),
-                        { params: this.params }
-                    );
-                }
-            }
-            if(this.params.extensionType !== ExtensionType.NoExtension){
-                this.fs.copyTpl(
-                    this.templatePath('extension-package.json'),
-                    this.extensionPath('package.json'),
-                    { params: this.params }
-                );
-                this.fs.copyTpl(
-                    this.templatePath('tsconfig.json'),
-                    this.extensionPath('tsconfig.json'),
+                    this.templatePath('launch.json'),
+                    this.destinationPath('.vscode/launch.json'),
                     { params: this.params }
                 );
             }
+        }
+        if(this.params.extensionType !== ExtensionType.NoExtension){
+            this.fs.copyTpl(
+                this.templatePath('extension-package.json'),
+                this.extensionPath('package.json'),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('tsconfig.json'),
+                this.extensionPath('tsconfig.json'),
+                { params: this.params }
+            );
         }
 
         /** hello-world */
@@ -494,28 +455,6 @@ module.exports = class TheiaExtension extends Base {
                 this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
             );
         }
-        /** DiagramEditor */
-        if (this.params.extensionType === ExtensionType.DiagramEditor) {
-            const baseDir = `./glsp-examples-${glspExamplesRepositoryTag}`;
-            let templatePath = '';
-            if(this.params.templateType == TemplateType.Java) {
-                templatePath = '/project-templates/java-emf-theia';
-            } else if (this.params.templateType == TemplateType.Node) {
-                templatePath = '/project-templates/node-json-theia';
-            } else {
-                return;
-            }
-
-            return new Promise<void>((resolve) => {
-                request.get(`https://github.com/eclipse-glsp/glsp-examples/archive/refs/tags/${glspExamplesRepositoryTag}.tar.gz`).pipe(tar.x().on('close',() => {
-                    fs.copy(baseDir+'/README.md', './README.md');
-                    fs.copy(baseDir+templatePath, './').then(() => {
-                        fs.rm(baseDir, { recursive: true });
-                        resolve();
-                    });
-                }));
-            });
-        }
     }
 
     protected extensionPath(...paths: string[]) {
@@ -547,25 +486,11 @@ module.exports = class TheiaExtension extends Base {
                 console.log(`yarn process exited with code ${code}`);
             });
 
-            if (this.params.extensionType == ExtensionType.DiagramEditor) {
-                command.on('close', (code:number) => {
-                    if (code === 0 ) {
-                        this.log(
-                            '\x1b[32m%s\x1b[0m',
-                            '\nThe DiagramEditor Example has been generated and all dependencies installed\n\nCheck the Readme to get started.'
-                        );
-                    } else {
-                        this.log('\x1b[31m%s\x1b[0m','Command "yarn" failed. Please see above for the reported error message.');
-                        process.exit(code);
-                    }
-                });
-            } else {
-                command.on('close', function(code: number){
-                    if (code !== 0 ) {
-                        process.exit(code);
-                    }
-                })
-            }
+            command.on('close', function(code: number){
+                if (code !== 0 ) {
+                    process.exit(code);
+                }
+            });
 
             return command;
         }
@@ -594,4 +519,3 @@ module.exports = class TheiaExtension extends Base {
 }
 
 module.exports.ExtensionType = ExtensionType;
-
