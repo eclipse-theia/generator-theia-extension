@@ -48,6 +48,13 @@ export class TreeViewExampleTreeItemFactory {
                 data: item,
                 parent: undefined,
                 type: 'leaf',
+
+                /* NOTE!
+                 * The checkboxInfo property can be used to add a checkbox to the tree node.
+                 * But at the moment (Theia 1.60.x), there is an issue with the UI in which the 
+                 * checkbox state is not properly reflected after the user clicks it.
+                 * See https://github.com/eclipse-theia/theia/issues/15521 for details.
+                 */
                 checkboxInfo: {
                     checked: item.backOrdered,
                 }
