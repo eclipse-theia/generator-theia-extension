@@ -53,6 +53,7 @@ The generator allows to generate an example extension that is directly part of t
 | `hello-world` | Creates a simple extension which provides a command and menu item which displays a message | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/hello-world/README.md) |
 | `widget` | Creates the basis for a simple widget including a toggle command, alert message and button displaying a message. The template also contains an example unit test. | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/widget/README.md) |
 | `labelprovider` | Creates a simple extension which adds a custom label (with icon) for .my files | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/labelprovider/README.md) |
+| `tree-widget` | Creates a tree view extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/tree-widget/README.md) |
 | `empty` | Creates a simple, minimal extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/empty/README.md) |
 | `backend` | Creates a backend communication extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/backend/README.md) |
 | `no-extension` | Creates a Theia application without any extension | |

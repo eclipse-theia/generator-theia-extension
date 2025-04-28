@@ -26,6 +26,8 @@ enum ExtensionType {
     HelloWorld = 'hello-world',
     Widget = 'widget',
     LabelProvider = 'labelprovider',
+    TreeEditor = 'tree-editor',
+    TreeWidget = 'tree-widget',
     Empty = 'empty',
     Backend = 'backend',
     NoExtension = 'no-extension'
@@ -174,6 +176,7 @@ module.exports = class TheiaExtension extends Base {
                     { value: ExtensionType.HelloWorld, name: 'Hello World' },
                     { value: ExtensionType.Widget, name: 'Widget (with unit tests)' },
                     { value: ExtensionType.LabelProvider, name: 'LabelProvider' },
+                    { value: ExtensionType.TreeWidget, name: 'TreeWidget View' },
                     { value: ExtensionType.Backend, name: 'Backend Communication' },
                     { value: ExtensionType.Empty, name: 'Empty' },
                     { value: ExtensionType.NoExtension, name: 'No Extension (just a Theia application)' }
@@ -427,6 +430,29 @@ module.exports = class TheiaExtension extends Base {
                 this.templatePath('labelprovider/README.md'),
                 this.extensionPath('README.md'),
                 { params: this.params }
+            );
+        }
+
+        /** TreeWidget */
+        if (this.params.extensionType === ExtensionType.TreeWidget) {
+            ['treeview-example-widget.tsx',
+                'treeview-example-view-contribution.ts',
+                'treeview-example-tree.ts',
+                'treeview-example-tree-item-factory.ts',
+                'treeview-example-model.ts',
+                'treeview-example-label-provider.ts',
+                'README.md',
+                'styles',
+                'decorator'].forEach((file) =>
+                    this.fs.copyTpl(
+                        this.templatePath(`tree-widget/${file}`),
+                        this.extensionPath(`src/browser/${file}`),
+                        { params: this.params }
+                    ));
+
+            this.fs.copyTpl(
+                this.templatePath('tree-widget/treeview-example-frontend-module.ts'),
+                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
             );
         }
     }
