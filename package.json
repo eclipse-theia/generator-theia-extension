@@ -1,6 +1,6 @@
 {
   "name": "generator-theia-extension",
-  "version": "0.1.42",
+  "version": "0.1.43",
   "engines": {
     "yarn": ">=1.7.0 <2",
     "node": ">=18"
