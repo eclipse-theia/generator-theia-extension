@@ -121,7 +121,16 @@ module.exports = class TheiaExtension extends Base {
             description: 'The extension\'s Github URL',
             type: String
         });
-        const latestTheiaVersion = this.getLatestPackageVersion('@theia/core');
+        
+        let latestTheiaVersion = 'latest';
+        try {
+            // Run the npm command to get the latest version of @theia/core
+            const result = execSync('npm show @theia/core version', { encoding: 'utf-8' });
+            latestTheiaVersion = result.trim();
+        } catch (error) {
+            console.error('Error fetching the latest package version:', error);
+        }
+        
         this.option('theia-version', {
             alias: 't',
             description: 'The version of Theia to use',
@@ -146,16 +155,6 @@ module.exports = class TheiaExtension extends Base {
         });
     }
 
-    getLatestPackageVersion(packageName: string): string {
-        try {
-            // Run the npm command to get the latest version of the package
-            const result = execSync(`npm show ${packageName} version`, { encoding: 'utf-8' });
-            return result.trim();
-        } catch (error) {
-            console.error('Error fetching the latest package version:', error);
-            return 'latest';
-        }
-    }
 
     path() {
         this.sourceRoot(__dirname + '/../../templates');
