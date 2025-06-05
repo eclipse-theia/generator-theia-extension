@@ -7,14 +7,14 @@ Please install all necessary [prerequisites](https://github.com/eclipse-theia/th
 
 ## Running the browser example
 
-    yarn build:browser
-    yarn start:browser
+    npm run build:browser
+    npm run start:browser
 
 *or:*
 
-    yarn build:browser
+    npm run build:browser
     cd browser-app
-    yarn start
+    npm start
 
 *or:* launch `Start Browser Backend` configuration from VS code.
 
@@ -22,60 +22,60 @@ Open http://localhost:3000 in the browser.
 
 ## Running the Electron example
 
-    yarn build:electron
-    yarn start:electron
+    npm run build:electron
+    npm run start:electron
 
 *or:*
 
-    yarn build:electron
+    npm run build:electron
     cd electron-app
-    yarn start
+    npm start
 
 *or:* launch `Start Electron Backend` configuration from VS code.
 
 <%if(params.containsTests){%>
 ## Running the tests
 
-    yarn test
+    npm test
 
 *or* run the tests of a specific package with
 
     cd <%= params.extensionPath %>
-    yarn test
+    npm test
 
 <%}%>
 ## Developing with the browser example
 
 Start watching all packages, including `browser-app`, of your application with
 
-    yarn watch:browser
+    npm run watch:browser
 
 *or* watch only specific packages with
 
     cd <%= params.extensionPath %>
-    yarn watch
+    npm run watch
 
 and the browser example.
 
     cd browser-app
-    yarn watch
+    npm run watch
 
 Run the example as [described above](#Running-the-browser-example)
 ## Developing with the Electron example
 
 Start watching all packages, including `electron-app`, of your application with
 
-    yarn watch:electron
+    npm run watch:electron
 
 *or* watch only specific packages with
 
     cd <%= params.extensionPath %>
-    yarn watch
+    npm run watch
 
 and the Electron example.
 
     cd electron-app
-    yarn watch
+    npm run watch
 
 Run the example as [described above](#Running-the-Electron-example)
 
