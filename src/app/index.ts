@@ -228,7 +228,7 @@ module.exports = class TheiaExtension extends Base {
         this.params.dependencies = '';
         this.params.browserDevDependencies = '';
         if (this.params.extensionType === ExtensionType.Widget) {
-            this.params.devdependencies = `,\n    "@testing-library/react": "^14.0.0",\n    "@types/jest": "^29.5.0",\n    "jest": "^29.5.0",\n    "ts-node": "^10.9.1",\n    "ts-jest": "^29.1.0"`;
+            this.params.devdependencies = `,\n    "@testing-library/react": "^14.0.0",\n    "@types/jest": "^29.5.0",\n    "jest": "^29.5.0",\n    "jest-environment-jsdom": "^29.5.0",\n    "ts-node": "^10.9.1",\n    "ts-jest": "^29.1.0"`;
             this.params.scripts = `,\n    "test": "jest --config configs/jest.config.ts"`;
             this.params.rootscripts =`,\n    "test": "cd ${this.params.extensionPath} && npm test"`;
             this.params.containsTests = true;
@@ -365,6 +365,11 @@ module.exports = class TheiaExtension extends Base {
             this.fs.copyTpl(
                 this.templatePath('widget/configs/jest.config.ts'),
                 this.extensionPath(`configs/jest.config.ts`),
+                { params: this.params }
+            );
+            this.fs.copyTpl(
+                this.templatePath('widget/configs/jest-setup.js'),
+                this.extensionPath(`configs/jest-setup.js`),
                 { params: this.params }
             );
         }
