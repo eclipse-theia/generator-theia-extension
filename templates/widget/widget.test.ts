@@ -2,7 +2,8 @@ import 'reflect-metadata';
 import { MessageService } from '@theia/core';
 import { ContainerModule, Container } from '@theia/core/shared/inversify';
 import { <%= params.extensionPrefix %>Widget } from './<%= params.extensionPath %>-widget';
-import { render } from '@testing-library/react'
+import { render } from '@testing-library/react';
+import { act } from 'react';
 
 describe('<%= params.extensionPrefix %>Widget', () => {
 
@@ -19,7 +20,9 @@ describe('<%= params.extensionPrefix %>Widget', () => {
         });
         const container = new Container();
         container.load(module);
-        widget = container.resolve<<%= params.extensionPrefix %>Widget>(<%= params.extensionPrefix %>Widget);
+        await act(async () => {
+            widget = container.resolve<<%= params.extensionPrefix %>Widget>(<%= params.extensionPrefix %>Widget);
+        });
     });
 
     it('should render react node correctly', async () => {
@@ -30,7 +33,7 @@ describe('<%= params.extensionPrefix %>Widget', () => {
     it('should inject \'MessageService\'', () => {
         const spy = jest.spyOn(widget as any, 'displayMessage')
         widget['displayMessage']();
-        expect(spy).toBeCalled();
+        expect(spy).toHaveBeenCalled();
     });
 
 });

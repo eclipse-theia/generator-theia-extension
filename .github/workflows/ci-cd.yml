@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04]
-        node: [20]
+        node: [22]
 
     steps:
       - name: Checkout
@@ -33,11 +33,11 @@ jobs:
 
       - name: Install
         shell: bash
-        run: yarn install
+        run: npm ci
 
       - name: Test
         shell: bash
-        run: yarn test
+        run: npm test
 
   test-with-theia-latest:
     runs-on: ${{ matrix.os }}
@@ -45,7 +45,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04]
-        node: [20]
+        node: [22]
 
     steps:
       - name: Checkout
@@ -60,7 +60,7 @@ jobs:
 
       - name: Install
         shell: bash
-        run: yarn install
+        run: npm ci
 
       - name: Generate and Build Templates with Latest Theia version
         shell: bash
@@ -72,7 +72,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04]
-        node: [20]
+        node: [22]
 
     steps:
       - name: Checkout
@@ -87,7 +87,7 @@ jobs:
 
       - name: Install
         shell: bash
-        run: yarn install
+        run: npm ci
 
       - name: Generate and Build Templates with Next Theia version
         shell: bash
