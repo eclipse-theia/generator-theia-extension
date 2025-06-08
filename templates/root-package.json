@@ -1,16 +1,16 @@
 {
   "private": true,
   "engines": {
-    "yarn": ">=1.7.0 <2",
-    "node": ">=18"
+    "node": ">=18",
+    "npm": ">=8"
   },
   "scripts": {
-    "build:browser": "yarn --cwd browser-app bundle",
-    "build:electron": "yarn --cwd electron-app bundle",
+    "build:browser": "npm --prefix browser-app run bundle",
+    "build:electron": "npm --prefix electron-app run bundle",
     "prepare": "lerna run prepare",
     "postinstall": "theia check:theia-version",
-    "start:browser": "yarn --cwd browser-app start",
-    "start:electron": "yarn --cwd electron-app start",
+    "start:browser": "npm --prefix browser-app start",
+    "start:electron": "npm --prefix electron-app start",
     "watch:browser": "lerna run --parallel watch --ignore electron-app"<% if (params.rootscripts) { %><%- params.rootscripts %><% } %>,
     "watch:electron": "lerna run --parallel watch --ignore browser-app"<% if (params.rootscripts) { %><%- params.rootscripts %><% } %>
   },

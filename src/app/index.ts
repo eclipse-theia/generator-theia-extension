@@ -228,9 +228,9 @@ module.exports = class TheiaExtension extends Base {
         this.params.dependencies = '';
         this.params.browserDevDependencies = '';
         if (this.params.extensionType === ExtensionType.Widget) {
-            this.params.devdependencies = `,\n    "@testing-library/react": "^11.2.7",\n    "@types/jest": "^26.0.20",\n    "jest": "^26.6.3",\n    "ts-node": "^10.9.1",\n    "ts-jest": "^26.5.6"`;
+            this.params.devdependencies = `,\n    "@testing-library/react": "^14.0.0",\n    "@types/jest": "^29.5.0",\n    "jest": "^29.5.0",\n    "jest-environment-jsdom": "^29.5.0",\n    "ts-node": "^10.9.1",\n    "ts-jest": "^29.1.0"`;
             this.params.scripts = `,\n    "test": "jest --config configs/jest.config.ts"`;
-            this.params.rootscripts =`,\n    "test": "cd ${this.params.extensionPath} && yarn test"`;
+            this.params.rootscripts =`,\n    "test": "cd ${this.params.extensionPath} && npm test"`;
             this.params.containsTests = true;
         }
         options.params = this.params
@@ -367,6 +367,11 @@ module.exports = class TheiaExtension extends Base {
                 this.extensionPath(`configs/jest.config.ts`),
                 { params: this.params }
             );
+            this.fs.copyTpl(
+                this.templatePath('widget/configs/jest-setup.js'),
+                this.extensionPath(`configs/jest-setup.js`),
+                { params: this.params }
+            );
         }
 
         /** backend */
@@ -463,7 +468,7 @@ module.exports = class TheiaExtension extends Base {
     async install() {
         if (!(this.options as any).skipInstall) {
             this.log('Installing dependencies');
-            const command = spawn('yarn', []);
+            const command = spawn('npm', ['install']);
 
             command.stdout.on('data', (data: Buffer) => {
                 const output = data.toString().trim();
@@ -482,7 +487,7 @@ module.exports = class TheiaExtension extends Base {
             });
 
             command.on('close', (code: number) => {
-                console.log(`yarn process exited with code ${code}`);
+                console.log(`npm process exited with code ${code}`);
             });
 
             command.on('close', function(code: number){
