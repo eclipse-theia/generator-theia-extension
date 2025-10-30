@@ -70,6 +70,11 @@ Publish with [np](https://github.com/sindresorhus/np#np--).
 
     npx np
 
+## Integrating Generated Extensions into Theia-based products
+
+If you want to incorporate your Yeoman-generated extension into a Theia-based product, see the official guide: [Adding Yeoman-Generated Extensions to Theia IDE](https://theia-ide.org/docs/blueprint_documentation/#adding-yeoman-generated-extensions-to-theia-ide).
+
+It explains how to add the extension as a dependency, configure it in your Theia product, and verify the integration.
 
 ## License
 
