@@ -1,7 +1,5 @@
 {
-  "lerna": "<%= params.lernaVersion %>",
   "version": "<%= params.version %>",
-  "useWorkspaces": true,
   "npmClient": "npm",
   "command": {
     "run": {

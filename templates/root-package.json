@@ -11,13 +11,13 @@
     "postinstall": "theia check:theia-version",
     "start:browser": "npm --prefix browser-app start",
     "start:electron": "npm --prefix electron-app start",
-    "watch:browser": "lerna run --parallel watch --ignore electron-app"<% if (params.rootscripts) { %><%- params.rootscripts %><% } %>,
-    "watch:electron": "lerna run --parallel watch --ignore browser-app"<% if (params.rootscripts) { %><%- params.rootscripts %><% } %>
+    "watch:browser": "lerna run --parallel watch --ignore electron-app",
+    "watch:electron": "lerna run --parallel watch --ignore browser-app"<% if (params.rootscripts) { %><%- params.rootscripts %><% } %>
   },
   "devDependencies": {
     "lerna": "<%= params.lernaVersion %>"
   },
   "workspaces": [
-    <% if (params.extensionName) { %>"<%= params.extensionPath %>"<% } %><% if (params.browser) { %><% if (params.extensionName) { %>,<% } %> "browser-app"<% } %><% if (params.electron) { %><% if (params.extensionName||params.browser) { %>,<% } %> "electron-app"<% } %>
+    <% if (params.extensionName) { %>"<%= params.extensionPath %>"<% } %><% if (params.browser) { %><% if (params.extensionName) { %>,<% } %> "browser-app"<% } %><% if (params.electron) { %><% if (params.extensionName||params.browser) { %>,<% } %> "electron-app"<% } %>
   ]
 }
