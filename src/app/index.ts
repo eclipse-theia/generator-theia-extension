@@ -230,10 +230,15 @@ module.exports = class TheiaExtension extends Base {
         this.params.dependencies = '';
         this.params.browserDevDependencies = '';
         if (this.params.extensionType === ExtensionType.Widget) {
-            this.params.devdependencies = `,\n    "@testing-library/react": "^14.0.0",\n    "@types/jest": "^29.5.0",\n    "jest": "^29.5.0",\n    "jest-environment-jsdom": "^29.5.0",\n    "ts-node": "^10.9.1",\n    "ts-jest": "^29.1.0"`;
+            this.params.devdependencies = `,\n    "@testing-library/react": "^14.0.0",\n    "@types/jest": "^29.5.0",\n    "@types/react": "^18.3.0",\n    "jest": "^29.5.0",\n    "jest-environment-jsdom": "^29.5.0",\n    "ts-node": "^10.9.1",\n    "ts-jest": "^29.1.0"`;
             this.params.scripts = `,\n    "test": "jest --config configs/jest.config.ts"`;
             this.params.rootscripts =`,\n    "test": "cd ${this.params.extensionPath} && npm test"`;
             this.params.containsTests = true;
+        }
+        if (this.params.extensionType === ExtensionType.TreeWidget) {
+            // '@types/react' is an optional peer dependency of '@theia/core' and
+            // therefore not installed automatically, but required to compile TSX
+            this.params.devdependencies = `,\n    "@types/react": "^18.3.0"`;
         }
         options.params = this.params
         if (!options.standalone) {
