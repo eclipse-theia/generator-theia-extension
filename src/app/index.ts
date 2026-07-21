@@ -140,7 +140,7 @@ module.exports = class TheiaExtension extends Base {
         this.option('lerna-version', {
             description: 'The version of lerna to use',
             type: String,
-            default: '2.4.0'
+            default: '^8.2.4'
         });
         this.option('skip-install', {
             description: 'Skip install after generation',
