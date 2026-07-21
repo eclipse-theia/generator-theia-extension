@@ -49,6 +49,7 @@ module.exports = class TheiaExtension extends Base {
         electron: boolean
         vscode: boolean
         theiaVersion: string
+        electronVersion: string
         lernaVersion: string
         skipInstall: boolean
         standalone: boolean
@@ -221,6 +222,7 @@ module.exports = class TheiaExtension extends Base {
             extensionType,
             githubURL,
             theiaVersion: options["theia-version"],
+            electronVersion: this.getElectronVersion(options["theia-version"]),
             lernaVersion: options["lerna-version"],
             backend: options["extensionType"] === ExtensionType.Backend,
             electronMainLocation: this.getElectronMainLocation(options["theia-version"])
@@ -502,6 +504,30 @@ module.exports = class TheiaExtension extends Base {
 
     private _capitalize(name: string): string {
         return name.substring(0, 1).toUpperCase() + name.substring(1)
+    }
+
+    /**
+     * Resolves the electron version required by the '@theia/electron' peer dependency
+     * of the given Theia version, so the generated electron-app always matches it.
+     */
+    private getElectronVersion(theiaVersion: string): string {
+        const fallbackElectronVersion = '39.8.7';
+        try {
+            const result = execSync(`npm show "@theia/electron@${theiaVersion}" peerDependencies.electron`,
+                { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'ignore'] });
+            const lines = result.trim().split('\n').filter(line => line.trim());
+            if (lines.length === 0) {
+                return fallbackElectronVersion;
+            }
+            // For version ranges npm prints one line per match, e.g. "@theia/electron@1.73.1 '39.8.7'";
+            // for tags and exact versions it prints the plain value. Use the highest matching version.
+            const lastLine = lines[lines.length - 1].trim();
+            const quoted = lastLine.match(/'([^']+)'$/);
+            return quoted ? quoted[1] : lastLine;
+        } catch (error) {
+            console.error(`Error fetching the electron version for Theia ${theiaVersion}, falling back to ${fallbackElectronVersion}:`, error);
+            return fallbackElectronVersion;
+        }
     }
 
     private getElectronMainLocation(theiaVersion: string): string {

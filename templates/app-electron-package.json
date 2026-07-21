@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@theia/cli": "<%= params.theiaVersion %>",
-    "electron": "39.8.7"
+    "electron": "<%= params.electronVersion %>"
   },
   "scripts": {
     "bundle": "npm run rebuild && theia build --mode development",
