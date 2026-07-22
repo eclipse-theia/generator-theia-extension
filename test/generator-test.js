@@ -219,6 +219,13 @@ describe('test extension generation parameter', function () {
                     const rootBody = fs.readFileSync('package.json', 'utf8');
                     const rootActual = JSON.parse(rootBody);
                     assert.equal(rootActual.devDependencies['lerna'], lernaVersion);
+
+                    // The electron version is resolved at generation time; ensure a
+                    // concrete version (not a tag or 'undefined') ends up in the app.
+                    const electronBody = fs.readFileSync('electron-app/package.json', 'utf8');
+                    const electronActual = JSON.parse(electronBody);
+                    assert(/^\^?\d+\.\d+\.\d+/.test(electronActual.devDependencies['electron']),
+                        `expected a concrete electron version, got '${electronActual.devDependencies['electron']}'`);
                     done();
                 } catch (e) {
                     done(e);
@@ -277,5 +284,29 @@ describe('test extension generation parameter', function () {
                     done(e);
                 }
             }, done);
+    });
+});
+
+describe('generator hygiene', function () {
+
+    // yeoman-generator queues every public prototype method (whose name does not
+    // start with '_') as a run-loop task and invokes it with the positional CLI
+    // arguments. TypeScript's 'private'/'protected' modifiers are erased at runtime,
+    // so a helper that is only 'private' still gets auto-run with the wrong argument
+    // (see the 'prevent yeoman from invoking internal helpers as run-loop tasks' fix).
+    // Helper methods must therefore be '_'-prefixed; only intentional task methods
+    // may be public. This test fails if a new helper is added without the prefix.
+    it('exposes no public helper methods that yeoman would auto-run as tasks', function () {
+        const Generator = require(path.join(__dirname, '../generators/app'));
+        const allowedTaskMethods = [
+            'constructor', 'path', 'prompting', 'configuring', 'writing', 'install'
+        ];
+        const leaked = Object.getOwnPropertyNames(Generator.prototype)
+            .filter(name => typeof Generator.prototype[name] === 'function')
+            .filter(name => !name.startsWith('_'))
+            .filter(name => !allowedTaskMethods.includes(name));
+        assert.deepEqual(leaked, [],
+            `These methods are public and will be auto-run by yeoman with the CLI arguments; ` +
+            `prefix them with '_' or add them to the allow-list: ${leaked.join(', ')}`);
     });
 });
