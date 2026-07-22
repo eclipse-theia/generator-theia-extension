@@ -75,6 +75,43 @@ describe('test extension generation', function () {
                     var body = fs.readFileSync(`${name}/package.json`, 'utf8');
                     var actual = JSON.parse(body);
                     assert.equal(actual.name, name);
+                    // TSX sources need '@types/react'; it is not pulled in
+                    // automatically, so it must be declared explicitly.
+                    assert(actual.devDependencies['@types/react'],
+                        'expected @types/react in the widget devDependencies');
+                    done();
+                } catch (e) {
+                    done(e);
+                }
+            }, done);
+    });
+
+    it('generate the tree-widget extension', function (done) {
+        const name = 'tree-widget-test';
+        helpers.run(path.join(__dirname, '../generators/app'))
+            .withPrompts({
+                type: 'tree-widget',
+                name
+            })
+            .withOptions({
+                skipInstall: true
+            })
+            .toPromise().then(function () {
+                try {
+                    assert.file([
+                        'package.json',
+                        `${name}/package.json`,
+                        `${name}/src/browser/${name}-frontend-module.ts`,
+                        `${name}/src/browser/treeview-example-widget.tsx`,
+                        `${name}/src/browser/treeview-example-model.ts`,
+                    ]);
+
+                    var body = fs.readFileSync(`${name}/package.json`, 'utf8');
+                    var actual = JSON.parse(body);
+                    assert.equal(actual.name, name);
+                    // The tree-widget template also compiles TSX and needs '@types/react'.
+                    assert(actual.devDependencies['@types/react'],
+                        'expected @types/react in the tree-widget devDependencies');
                     done();
                 } catch (e) {
                     done(e);
@@ -219,6 +256,13 @@ describe('test extension generation parameter', function () {
                     const rootBody = fs.readFileSync('package.json', 'utf8');
                     const rootActual = JSON.parse(rootBody);
                     assert.equal(rootActual.devDependencies['lerna'], lernaVersion);
+
+                    // The widget adds a root 'test' script; it must appear exactly once.
+                    // A duplicate key (JSON.parse silently keeps the last) would slip past
+                    // the parsed assertions, so check the raw text.
+                    const testKeyCount = (rootBody.match(/"test"\s*:/g) || []).length;
+                    assert.equal(testKeyCount, 1,
+                        `expected a single root "test" script, found ${testKeyCount}`);
 
                     // The electron version is resolved at generation time; ensure a
                     // concrete version (not a tag or 'undefined') ends up in the app.
