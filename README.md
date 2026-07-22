@@ -1,15 +1,15 @@
 <div align='center'>
 <br />
-<img src='https://raw.githubusercontent.com/theia-ide/generator-theia-extension/master/logo/theia.svg?sanitize=true' alt='theia logo' width='125'>
+<img src='https://raw.githubusercontent.com/eclipse-theia/generator-theia-extension/master/logo/theia.svg?sanitize=true' alt='theia logo' width='125'>
 
 <h2>ECLIPSE THEIA - GENERATOR</h2>
 
-
-
-[![Build](https://github.com/theia-ide/generator-theia-extension/workflows/Build/badge.svg?branch=master)](https://github.com/theia-ide/generator-theia-extension/actions?query=branch%3Amaster)
+[![Build](https://github.com/eclipse-theia/generator-theia-extension/actions/workflows/ci-cd.yml/badge.svg?branch=master)](https://github.com/eclipse-theia/generator-theia-extension/actions/workflows/ci-cd.yml)
 ![npm](https://img.shields.io/npm/v/generator-theia-extension?color=blue)
 
 <br />
+
+</div>
 
 A [yeoman](https://yeoman.io/) generator that scaffolds a project structure for developing custom [Eclipse Theia](https://github.com/eclipse-theia/theia) applications and extensions.
 
@@ -18,14 +18,9 @@ Please also see:
 - [Build your own IDE/Tool based on Eclipse Theia](https://theia-ide.org/docs/composing_applications/)
 - [Authoring Theia Extensions](https://theia-ide.org/docs/authoring_extensions/)
 
-<br />
-
-</div>
-
-
 ## How to use
 
-To use it, install `yo` (version 4.x.x) and the `generator` (see next below).
+To use it, install `yo` and the `generator` (see next below).
 
 ```
 npm install -g yo generator-theia-extension
@@ -46,7 +41,7 @@ yo theia-extension --help
 
 ## Extension Options
 
-The generator allows to generate an example extension that is directly part of the generated Theia application. Alternativly, you can select 'no-extension' to just generate a Theia application without a custom extension.
+The generator allows to generate an example extension that is directly part of the generated Theia application. Alternatively, you can select 'no-extension' to just generate a Theia application without a custom extension.
 
 | Template Option | Description | Documentation |
 |:---|:---|:---|
@@ -57,8 +52,6 @@ The generator allows to generate an example extension that is directly part of t
 | `empty` | Creates a simple, minimal extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/empty/README.md) |
 | `backend` | Creates a backend communication extension | [readme](https://github.com/eclipse-theia/generator-theia-extension/blob/master/templates/backend/README.md) |
 | `no-extension` | Creates a Theia application without any extension | |
-
-
 
 ## Publishing
 
@@ -81,7 +74,7 @@ It explains how to add the extension as a dependency, configure it in your Theia
 - [Eclipse Public License 2.0](LICENSE)
 - [一 (Secondary) GNU General Public License, version 2 with the GNU Classpath Exception](LICENSE)
 
-
 ## Trademark
+
 "Theia" is a trademark of the Eclipse Foundation
-https://www.eclipse.org/theia
+<https://www.eclipse.org/theia>
