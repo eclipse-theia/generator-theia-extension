@@ -129,7 +129,7 @@ module.exports = class TheiaExtension extends Base {
             const result = execSync('npm show @theia/core version', { encoding: 'utf-8' });
             latestTheiaVersion = result.trim();
         } catch (error) {
-            console.error('Error fetching the latest package version:', error);
+            console.error(`Error fetching the latest package version: ${error}`);
         }
         
         this.option('theia-version', {
@@ -222,10 +222,10 @@ module.exports = class TheiaExtension extends Base {
             extensionType,
             githubURL,
             theiaVersion: options["theia-version"],
-            electronVersion: this.getElectronVersion(options["theia-version"]),
+            electronVersion: this._getElectronVersion(options["theia-version"]),
             lernaVersion: options["lerna-version"],
             backend: options["extensionType"] === ExtensionType.Backend,
-            electronMainLocation: this.getElectronMainLocation(options["theia-version"])
+            electronMainLocation: this._getElectronMainLocation(options["theia-version"])
         }
         this.params.dependencies = '';
         this.params.browserDevDependencies = '';
@@ -289,12 +289,12 @@ module.exports = class TheiaExtension extends Base {
         if(this.params.extensionType !== ExtensionType.NoExtension){
             this.fs.copyTpl(
                 this.templatePath('extension-package.json'),
-                this.extensionPath('package.json'),
+                this._extensionPath('package.json'),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('tsconfig.json'),
-                this.extensionPath('tsconfig.json'),
+                this._extensionPath('tsconfig.json'),
                 { params: this.params }
             );
         }
@@ -303,17 +303,17 @@ module.exports = class TheiaExtension extends Base {
         if (this.params.extensionType === ExtensionType.HelloWorld) {
             this.fs.copyTpl(
                 this.templatePath('hello-world/frontend-module.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('hello-world/contribution.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('hello-world/README.md'),
-                this.extensionPath('README.md'),
+                this._extensionPath('README.md'),
                 { params: this.params }
             );
         }
@@ -322,17 +322,17 @@ module.exports = class TheiaExtension extends Base {
         if (this.params.extensionType === ExtensionType.Empty) {
             this.fs.copyTpl(
                 this.templatePath('empty/frontend-module.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('empty/contribution.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('empty/README.md'),
-                this.extensionPath('README.md'),
+                this._extensionPath('README.md'),
                 { params: this.params }
             );
         }
@@ -341,42 +341,42 @@ module.exports = class TheiaExtension extends Base {
         if (this.params.extensionType === ExtensionType.Widget) {
             this.fs.copyTpl(
                 this.templatePath('widget/frontend-module.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('widget/contribution.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('widget/widget.tsx'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-widget.tsx`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-widget.tsx`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('widget/index.css'),
-                this.extensionPath('src/browser/style/index.css'),
+                this._extensionPath('src/browser/style/index.css'),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('widget/README.md'),
-                this.extensionPath('README.md'),
+                this._extensionPath('README.md'),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('widget/widget.test.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-widget.test.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-widget.test.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('widget/configs/jest.config.ts'),
-                this.extensionPath(`configs/jest.config.ts`),
+                this._extensionPath(`configs/jest.config.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('widget/configs/jest-setup.js'),
-                this.extensionPath(`configs/jest-setup.js`),
+                this._extensionPath(`configs/jest-setup.js`),
                 { params: this.params }
             );
         }
@@ -385,37 +385,37 @@ module.exports = class TheiaExtension extends Base {
         if (this.params.extensionType === ExtensionType.Backend) {
             this.fs.copyTpl(
                 this.templatePath('backend/frontend-module.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('backend/contribution.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('backend/protocol.ts'),
-                this.extensionPath(`src/common/protocol.ts`),
+                this._extensionPath(`src/common/protocol.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('backend/hello-backend-service.ts'),
-                this.extensionPath(`src/node/hello-backend-service.ts`),
+                this._extensionPath(`src/node/hello-backend-service.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('backend/backend-module.ts'),
-                this.extensionPath(`src/node/${this.params.extensionPath}-backend-module.ts`),
+                this._extensionPath(`src/node/${this.params.extensionPath}-backend-module.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('backend/hello-backend-with-client-service.ts'),
-                this.extensionPath(`src/node/hello-backend-with-client-service.ts`),
+                this._extensionPath(`src/node/hello-backend-with-client-service.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('backend/README.md'),
-                this.extensionPath('README.md'),
+                this._extensionPath('README.md'),
                 { params: this.params }
             );
         }
@@ -424,22 +424,22 @@ module.exports = class TheiaExtension extends Base {
         if (this.params.extensionType === ExtensionType.LabelProvider) {
             this.fs.copyTpl(
                 this.templatePath('labelprovider/frontend-module.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('labelprovider/contribution.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-contribution.ts`),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('labelprovider/style/example.css'),
-                this.extensionPath('src/browser/style/example.css'),
+                this._extensionPath('src/browser/style/example.css'),
                 { params: this.params }
             );
             this.fs.copyTpl(
                 this.templatePath('labelprovider/README.md'),
-                this.extensionPath('README.md'),
+                this._extensionPath('README.md'),
                 { params: this.params }
             );
         }
@@ -457,18 +457,22 @@ module.exports = class TheiaExtension extends Base {
                 'decorator'].forEach((file) =>
                     this.fs.copyTpl(
                         this.templatePath(`tree-widget/${file}`),
-                        this.extensionPath(`src/browser/${file}`),
+                        this._extensionPath(`src/browser/${file}`),
                         { params: this.params }
                     ));
 
             this.fs.copyTpl(
                 this.templatePath('tree-widget/treeview-example-frontend-module.ts'),
-                this.extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
+                this._extensionPath(`src/browser/${this.params.extensionPath}-frontend-module.ts`),
             );
         }
     }
 
-    protected extensionPath(...paths: string[]) {
+    /**
+     * The '_' prefix keeps yeoman from queueing this method as a run-loop task,
+     * which would invoke it a second time with the positional CLI arguments.
+     */
+    protected _extensionPath(...paths: string[]) {
         return this.destinationPath(this.params.extensionPath, ...paths);
     }
 
@@ -507,6 +511,10 @@ module.exports = class TheiaExtension extends Base {
         }
     }
 
+    /**
+     * The '_' prefix keeps yeoman from queueing this method as a run-loop task,
+     * which would invoke it a second time with the positional CLI arguments.
+     */
     private _capitalize(name: string): string {
         return name.substring(0, 1).toUpperCase() + name.substring(1)
     }
@@ -514,8 +522,11 @@ module.exports = class TheiaExtension extends Base {
     /**
      * Resolves the electron version required by the '@theia/electron' peer dependency
      * of the given Theia version, so the generated electron-app always matches it.
+     *
+     * The '_' prefix keeps yeoman from queueing this method as a run-loop task,
+     * which would invoke it a second time with the positional CLI arguments.
      */
-    private getElectronVersion(theiaVersion: string): string {
+    private _getElectronVersion(theiaVersion: string): string {
         const fallbackElectronVersion = '39.8.7';
         try {
             const result = execSync(`npm show "@theia/electron@${theiaVersion}" peerDependencies.electron`,
@@ -530,12 +541,16 @@ module.exports = class TheiaExtension extends Base {
             const quoted = lastLine.match(/'([^']+)'$/);
             return quoted ? quoted[1] : lastLine;
         } catch (error) {
-            console.error(`Error fetching the electron version for Theia ${theiaVersion}, falling back to ${fallbackElectronVersion}:`, error);
+            console.error(`Error fetching the electron version for Theia ${theiaVersion}, falling back to ${fallbackElectronVersion}: ${error}`);
             return fallbackElectronVersion;
         }
     }
 
-    private getElectronMainLocation(theiaVersion: string): string {
+    /**
+     * The '_' prefix keeps yeoman from queueing this method as a run-loop task,
+     * which would invoke it a second time with the positional CLI arguments.
+     */
+    private _getElectronMainLocation(theiaVersion: string): string {
         try {
             const semVer = theiaVersion.split('.');
             if (semVer.length < 3) {
