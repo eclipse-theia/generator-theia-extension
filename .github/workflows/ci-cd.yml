@@ -9,7 +9,9 @@ on:
     branches:
       - master
   schedule:
-    - cron: '0 23 * * *'
+    # Run on weekday mornings, a few hours after Theia publishes its `next`
+    # version (00:00 UTC on weekdays), so we validate the freshly released `next`.
+    - cron: '0 4 * * 1-5'
 
 jobs:
   build:
