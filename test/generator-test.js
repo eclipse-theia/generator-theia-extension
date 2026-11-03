@@ -226,6 +226,32 @@ describe('test extension generation parameter', function () {
             }, done);
     });
 
+    it('writes author and description with special characters verbatim', function (done) {
+        const name = 'special-characters-test';
+        const extensionType = 'hello-world';
+        const author = 'Jane Doe <jane@example.com> (https://example.com)';
+        const description = 'A "quoted" extension for Theia & friends, isn\'t it? C:\\path';
+        helpers.run(path.join(__dirname, '../generators/app'))
+            .withArguments([name])
+            .withOptions({
+                skipInstall: true,
+                extensionType,
+                author,
+                description
+            })
+            .toPromise().then(function () {
+                try {
+                    const body = fs.readFileSync(`${name}/package.json`, 'utf8');
+                    const actual = JSON.parse(body);
+                    assert.equal(actual.author, author);
+                    assert.equal(actual.description, description);
+                    done();
+                } catch (e) {
+                    done(e);
+                }
+            }, done);
+    });
+
     it('generate without vscode files', function (done) {
         const name = 'no-vscode-test';
         const extensionType = 'widget';
