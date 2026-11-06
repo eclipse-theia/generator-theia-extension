@@ -5,10 +5,10 @@
   ],
   "version": "<%= params.version %>",<% 
   if (params.description) { %>
-  "description": "<%= params.description %>",
+  "description": <%- JSON.stringify(params.description) %>,
   <%} %><% 
   if (params.author) { %>
-  "author": "<%= params.author %>",
+  "author": <%- JSON.stringify(params.author) %>,
   <% } %><% 
   if (params.license) { %>
   "license": "<%= params.license %>",
